@@ -7,20 +7,19 @@ This C# application is meant to support office workers. Unless they have automat
 
 Notice: Be aware that this programm creates a human readable activity protocoll on your computer which might expose sensitive data to non authorized persons. At this point everyone is sesponsible himself to keep that data save.
 
-So far nothing special.
 
 Features:
   - tracks mouse or keyboard activity once every minute and writes information about it to an XML File(human readable)
-  - analyses the activity information in order to create worktime information
+  - analyses the activity information in order to create worktime information  
+  - runs as a notify icon in the system tray which shows, information summary about current day in a baloon tip when right-clicked
+  - left clicked notify icon opens a GUI which shows a colorcoded list of days including all related working time information
+  - GUI enables user to edit the calculated working time information while original activity information is kept(usecases: vacatation, sickness, individual work which cant be tracked, etc )
   
-  - runs as a notify icon which shows, information summary about current day in a baloon tip when clicked
-  - double clicked notify icon opens a GUI which shows a list of days including all related working time information
-  - GUI enables user to edit the calculated working time information while original activity information is kept
-  
-  Stability: Not guaranteed. All features are just hand tested and might be buggy.
-  
+Stability: Not guaranteed. All features are just hand tested and might be buggy.
+
+
 Planned steps:
-  - Refactor code to eliminate bugs
+  - Refactor code 
   - output to excel files
   - output to matlab, *.mat files as well as complete scripts to display worktime information
   
