@@ -304,7 +304,7 @@ namespace WorkingTimeTracker
                 // determine plus minus time for each day
                 if (workday.getStartofWorkday().Year != 0001)
                 {
-                    TimeSpan legal_working_time = new TimeSpan(8, 0, 0);
+                    TimeSpan legal_working_time = new TimeSpan(8, 24, 0);
                     TimeSpan hours_worked = workday.getEndofWorkday() - workday.getStartofWorkday();
                     TimeSpan pause = new TimeSpan(0, 0, 0);
                     if (hours_worked > new TimeSpan(6, 0, 0)) // substract pause after 6 hours
