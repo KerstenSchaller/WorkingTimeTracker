@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gma.System.MouseKeyHook">
-      <HintPath>..\..\..\Documents\Visual Studio 2015\Projects\WorkingTimeTracker_console\globalmousekeyhook-vNext\MouseKeyHook\obj\Debug\Gma.System.MouseKeyHook.dll</HintPath>
+      <HintPath>..\WindowsHooks\Gma.System.MouseKeyHook.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

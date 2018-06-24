@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfWorkTimeInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <WorkTimeInfo>
+    <date>2018-06-24T13:38:32.885656+02:00</date>
+    <start_of_workday>2018-06-24T13:38:32.9006674+02:00</start_of_workday>
+    <end_of_workday>2018-06-24T13:40:42.8282873+02:00</end_of_workday>
+    <last_active>2018-06-24T13:40:42.8282873+02:00</last_active>
+    <first_active>2018-06-24T13:38:32.885656+02:00</first_active>
+    <activitys>
+      <dateTime>2018-06-24T13:38:32.9006674+02:00</dateTime>
+      <dateTime>2018-06-24T13:39:42.3036914+02:00</dateTime>
+      <dateTime>2018-06-24T13:40:42.8282873+02:00</dateTime>
+    </activitys>
+    <plus_minus_time>-08:21:50.0723801</plus_minus_time>
+    <edit_flag>false</edit_flag>
+    <special_flag>false</special_flag>
+    <sick_flag>false</sick_flag>
+    <vacation_flag>false</vacation_flag>
+    <individual_break>00:00:00</individual_break>
+    <total_break>00:00:00</total_break>
+    <legal_worktime>08:24:00</legal_worktime>
+    <worktime>00:02:09.9276199</worktime>
+  </WorkTimeInfo>
+</ArrayOfWorkTimeInfo>
