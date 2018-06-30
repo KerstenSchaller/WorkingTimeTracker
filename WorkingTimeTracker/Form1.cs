@@ -165,23 +165,19 @@ namespace WorkingTimeTracker
 
         private void notifyIcon1_MouseDown(object sender, MouseEventArgs e)
         {
-            //if (e.Button == MouseButtons.Left)
-            //{
-            showBallonTipClickedInfo();
-               //}
-            //if (e.Button == MouseButtons.Right)
-            //{
-            //    //show balloon tip
-            //    WorkTimeInfo day = workTimeCalculator.get_current_day();
-
-            //    //string[] text = this.generate_Info_string(day);
-            //    string text = "Hallo test";
-
-            //    notifyIcon1.ShowBalloonTip(5000,"WorkingTimeTracker",text  + "\n" + text[3] + "\n" + text[5], ToolTipIcon.Info);
-            //}
+            if (e.Button == MouseButtons.Right)
+            {
+                showBallonTipClickedInfo();
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+            }
         }
 
-        public void showBallonTipClickedInfo()
+
+public void showBallonTipClickedInfo()
         {
             //show balloon tip
             WorkTimeInfo day = workTimeCalculator.get_current_day();
