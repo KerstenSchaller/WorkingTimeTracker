@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using Gma.System.MouseKeyHook;
 using Gma.System.MouseKeyHook.Implementation;
-
+using System.Globalization;
 
 namespace WorkingTimeTracker
 {
@@ -18,6 +18,8 @@ namespace WorkingTimeTracker
     {
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
+
+        List<int> calenderweeks_present = new List<int>();
         
 
         public Form1()
@@ -50,6 +52,32 @@ namespace WorkingTimeTracker
                 strings.Add(day.getDate_S());
             }
             listBox1.DataSource = strings;
+
+            /*Also Pouplate Calenderweek listview*/
+            populateCWListView();
+
+        }
+
+        public void populateCWListView()
+        {
+            var days = workTimeCalculator.get_days();
+
+            int cw = -1;
+            int cw_ll = -1;
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            Calendar calendar = dfi.Calendar;
+            foreach (var day in days)
+            {
+
+                cw = calendar.GetWeekOfYear(day.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+                if (cw != cw_ll)
+                {
+                    ... todo: Add calender week logic
+                }
+                cw_ll = cw;
+            }
+
+
 
         }
 
@@ -259,14 +287,15 @@ namespace WorkingTimeTracker
                 string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
                 Lines.Add(line);
             }
-            //Lines[Lines.Count] = null;/*Delete last line since it is the actual day*/
+            Lines[Lines.Count] = null;/*Delete last line since it is the actual day*/
             System.IO.File.WriteAllLines(Path,Lines);
 
 
         }
 
-        
-        
-        
+        private void calenderweek_listBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

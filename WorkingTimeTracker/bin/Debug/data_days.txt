@@ -3,8 +3,8 @@
   <WorkTimeInfo>
     <date>2018-06-30T15:10:56.321686+02:00</date>
     <start_of_workday>2018-06-30T15:10:55.7123538+02:00</start_of_workday>
-    <end_of_workday>2018-06-30T19:12:55.2106565+02:00</end_of_workday>
-    <last_active>2018-06-30T19:12:55.2106565+02:00</last_active>
+    <end_of_workday>2018-06-30T19:21:34.0050505+02:00</end_of_workday>
+    <last_active>2018-06-30T19:21:34.0050505+02:00</last_active>
     <first_active>0001-01-01T00:00:00</first_active>
     <activitys>
       <dateTime>2018-06-30T15:10:55.7123538+02:00</dateTime>
@@ -50,6 +50,7 @@
       <dateTime>2018-06-30T18:43:42.9832067+02:00</dateTime>
       <dateTime>2018-06-30T19:11:52.0617579+02:00</dateTime>
       <dateTime>2018-06-30T19:12:55.2106565+02:00</dateTime>
+      <dateTime>2018-06-30T19:21:34.0050505+02:00</dateTime>
     </activitys>
   </WorkTimeInfo>
 </ArrayOfWorkTimeInfo>

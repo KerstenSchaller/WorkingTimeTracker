@@ -38,6 +38,9 @@
             this.UpdateButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.ExportToCSVButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.calenderweek_listBox = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -78,7 +81,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(28, 32);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(202, 277);
+            this.listBox1.Size = new System.Drawing.Size(99, 277);
             this.listBox1.TabIndex = 24;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -107,17 +110,47 @@
             // 
             this.ExportToCSVButton.Location = new System.Drawing.Point(28, 314);
             this.ExportToCSVButton.Name = "ExportToCSVButton";
-            this.ExportToCSVButton.Size = new System.Drawing.Size(202, 32);
+            this.ExportToCSVButton.Size = new System.Drawing.Size(213, 32);
             this.ExportToCSVButton.TabIndex = 27;
             this.ExportToCSVButton.Text = "Export to *.xls";
             this.ExportToCSVButton.UseVisualStyleBackColor = true;
             this.ExportToCSVButton.Click += new System.EventHandler(this.ExportToXLSButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(25, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "InfoByDate";
+            // 
+            // calenderweek_listBox
+            // 
+            this.calenderweek_listBox.FormattingEnabled = true;
+            this.calenderweek_listBox.Location = new System.Drawing.Point(133, 31);
+            this.calenderweek_listBox.Name = "calenderweek_listBox";
+            this.calenderweek_listBox.Size = new System.Drawing.Size(108, 277);
+            this.calenderweek_listBox.TabIndex = 29;
+            this.calenderweek_listBox.SelectedIndexChanged += new System.EventHandler(this.calenderweek_listBox_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(130, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 13);
+            this.label3.TabIndex = 30;
+            this.label3.Text = "InfoByCalenderweek";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(570, 357);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.calenderweek_listBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.ExportToCSVButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.UpdateButton);
@@ -144,6 +177,9 @@
         private System.Windows.Forms.Button UpdateButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ExportToCSVButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListBox calenderweek_listBox;
+        private System.Windows.Forms.Label label3;
     }
 }
 
