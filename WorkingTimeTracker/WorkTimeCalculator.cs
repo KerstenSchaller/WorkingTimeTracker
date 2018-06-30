@@ -57,9 +57,9 @@ namespace WorkingTimeTracker
             if ((DateTime.Now - last_active) > sample_time)
             {
                 Analyze();
-
+                this.setdays(days,true);/*save data to file*/
             }
-             
+            
         }
 
 
@@ -67,8 +67,9 @@ namespace WorkingTimeTracker
         private void Analyze()
         {
             // Variables
-            
 
+            DateTime currentTime = DateTime.Now;
+            bool file_created = false;
 
             try
             {
@@ -80,32 +81,51 @@ namespace WorkingTimeTracker
             catch
             {
                 // create new days if loading failed
-                current_day = new WorkTimeInfo();
-                days.Add(current_day);
-                
+                //current_day = new WorkTimeInfo();
+                //days.Add(current_day);
+
+                // create new File if loading failed
                 Serialization.WriteToXmlFile<List<WorkTimeInfo>>(data_days_path,days);
+                file_created = true;
             }
 
             // day of last activity is before now. 
             // That means we have new day
-            bool condition1 = (current_day.last_active.Day.CompareTo(DateTime.Now.Day) < 0); // check if day has changed, 
-            bool condition2 = (current_day.last_active.Month.CompareTo(DateTime.Now.Month) < 0);// check if month changed(at month change, daychange will be false)
-            if (condition1 || condition2)
+            bool day_changed;
+            bool month_changed;
+            if (file_created == true)
             {
-                // add new day and make it the current
+                day_changed = false;
+                month_changed = false;
+            }
+            else
+            {
+                day_changed = (current_day.last_active.Day.CompareTo(currentTime.Day) < 0); // check if day has changed, 
+                month_changed = (current_day.last_active.Month.CompareTo(currentTime.Month) < 0);// check if month changed(at month change, daychange will be false)
+            }
+
+
+            if (day_changed || month_changed || file_created)
+            {
+            
+                /*Create a new day*/
                 days.Add(new WorkTimeInfo());
                 current_day = days.Last();
-                current_day.addActivity(DateTime.Now);
+                
+                current_day.addActivity(currentTime);
+                current_day.setStartofWorkday(currentTime);
+                current_day.setEndofWorkday(currentTime);
                 last_active = current_day.last_active;
             }
             else
             {
 
                 // write another activity
-                current_day.addActivity(DateTime.Now);
+                current_day.addActivity(currentTime);
                 last_active = current_day.last_active;
+                current_day.setEndofWorkday(currentTime);
             }
-       
+            
 
         }
 

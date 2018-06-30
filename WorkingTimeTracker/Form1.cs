@@ -28,12 +28,31 @@ namespace WorkingTimeTracker
           
             
             this.WindowState = FormWindowState.Minimized;
-            
+
+
+
+
+            populateListView();
+
+            label1.Text = "Here could be the info \n of your desired workday \n ... if you choose one!";
 
             this.Hide();
         }
 
-        
+        private void populateListView()
+        {
+
+            var days = workTimeCalculator.get_days();
+            List<string> strings = new List<string>();
+            foreach (var day in days)
+            {
+                strings.Add(day.getDate_S());
+            }
+            listBox1.DataSource = strings;
+
+        }
+
+
 
 
         /*Mouse and keyboard tracking stuff below*/
@@ -148,14 +167,8 @@ namespace WorkingTimeTracker
         {
             //if (e.Button == MouseButtons.Left)
             //{
-                //show balloon tip
-                WorkTimeInfo day = workTimeCalculator.get_current_day();
-
-                //string[] text = this.generate_Info_string(day);
-                string text = "Hallo test";
-
-                notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text  + "\n" + text[3] + "\n" + text[5], ToolTipIcon.Info);
-            //}
+            showBallonTipClickedInfo();
+               //}
             //if (e.Button == MouseButtons.Right)
             //{
             //    //show balloon tip
@@ -168,20 +181,55 @@ namespace WorkingTimeTracker
             //}
         }
 
-        
+        public void showBallonTipClickedInfo()
+        {
+            //show balloon tip
+            WorkTimeInfo day = workTimeCalculator.get_current_day();
+
+            string date_s = day.getDate_S();
+            double workingTime = day.getWorkingTime();
+            string day_start = day.getStartofWorkday_S();
+            string day_end = day.getEndofWorkday_S();
+
+            string text = date_s +"_"+ workingTime + "_"+ day_start + "_"+ day_end;
+            string line1 = "Date: " + date_s +  "\n";
+            string line2 = "Start: " + day_start + "\n";
+            string line3 = "End: " + day_end + "\n";
+            string line4 = "Worked: " + workingTime + "hours" + "\n";
+
+            text = line1 + line2 + line3 + line4;
+            if (true)
+            {
+                text += "!!! - Be Careful.. your working time approaches 10hours - !!!";
+            }
+
+            notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text + "\n" , ToolTipIcon.Info);
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            int index = listBox1.SelectedIndex;
+            var days = workTimeCalculator.get_days();
+            var day = days[index];
+            string date_s = day.getDate_S();
+            double workingTime = day.getWorkingTime();
+            string day_start = day.getStartofWorkday_S();
+            string day_end = day.getEndofWorkday_S();
 
 
+            string text = "At the " + date_s + "\n"
+                        + "you have worked " + workingTime + " hours" + "\n"
+                        + "You have started at " + day_start +" o'clock"+ "\n"
+                        + "and ended at " + day_end+" o'clock" ;
 
-    
+            label1.Text = text;
+        }
 
-
-
-
-      
-
-   
-      
-
-
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            this.populateListView();
+        }
     }
 }

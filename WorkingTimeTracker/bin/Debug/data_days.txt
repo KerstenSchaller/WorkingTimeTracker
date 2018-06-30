@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorkTimeInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WorkTimeInfo>
-    <date>2018-06-24T14:48:21.8995236+02:00</date>
-    <start_of_workday>0001-01-01T00:00:00</start_of_workday>
-    <end_of_workday>0001-01-01T00:00:00</end_of_workday>
-    <last_active>0001-01-01T00:00:00</last_active>
+    <date>2018-06-30T15:10:56.321686+02:00</date>
+    <start_of_workday>2018-06-30T15:10:55.7123538+02:00</start_of_workday>
+    <end_of_workday>2018-06-30T16:17:24.8428+02:00</end_of_workday>
+    <last_active>2018-06-30T16:17:24.8428+02:00</last_active>
     <first_active>0001-01-01T00:00:00</first_active>
-    <activitys />
+    <activitys>
+      <dateTime>2018-06-30T15:10:55.7123538+02:00</dateTime>
+      <dateTime>2018-06-30T15:11:55.7707551+02:00</dateTime>
+      <dateTime>2018-06-30T15:28:21.9196984+02:00</dateTime>
+      <dateTime>2018-06-30T15:30:44.0339985+02:00</dateTime>
+      <dateTime>2018-06-30T15:33:51.5651116+02:00</dateTime>
+      <dateTime>2018-06-30T15:34:54.4844991+02:00</dateTime>
+      <dateTime>2018-06-30T15:36:09.7706592+02:00</dateTime>
+      <dateTime>2018-06-30T15:36:33.4194389+02:00</dateTime>
+      <dateTime>2018-06-30T15:38:55.6752139+02:00</dateTime>
+      <dateTime>2018-06-30T15:39:35.0916885+02:00</dateTime>
+      <dateTime>2018-06-30T15:41:40.5107385+02:00</dateTime>
+      <dateTime>2018-06-30T15:44:48.0143475+02:00</dateTime>
+      <dateTime>2018-06-30T15:45:22.9247851+02:00</dateTime>
+      <dateTime>2018-06-30T15:45:37.706262+02:00</dateTime>
+      <dateTime>2018-06-30T15:47:48.8002972+02:00</dateTime>
+      <dateTime>2018-06-30T15:51:53.5623417+02:00</dateTime>
+      <dateTime>2018-06-30T15:53:41.2278718+02:00</dateTime>
+      <dateTime>2018-06-30T15:59:22.1620801+02:00</dateTime>
+      <dateTime>2018-06-30T16:12:17.9295011+02:00</dateTime>
+      <dateTime>2018-06-30T16:12:59.3761394+02:00</dateTime>
+      <dateTime>2018-06-30T16:13:35.5440906+02:00</dateTime>
+      <dateTime>2018-06-30T16:13:53.7433318+02:00</dateTime>
+      <dateTime>2018-06-30T16:14:34.5927294+02:00</dateTime>
+      <dateTime>2018-06-30T16:16:03.7364302+02:00</dateTime>
+      <dateTime>2018-06-30T16:17:04.9483024+02:00</dateTime>
+      <dateTime>2018-06-30T16:17:24.8428+02:00</dateTime>
+    </activitys>
   </WorkTimeInfo>
 </ArrayOfWorkTimeInfo>

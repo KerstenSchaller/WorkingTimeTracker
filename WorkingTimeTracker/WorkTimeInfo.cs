@@ -25,9 +25,39 @@ namespace WorkingTimeTracker
       
 
         public void setStartofWorkday(DateTime time) { start_of_workday = time; }
-        public DateTime getStartofWorkday() { return start_of_workday; }
+
+        public string getStartofWorkday_S()
+        {
+            return start_of_workday.Hour.ToString() + ":" + start_of_workday.Minute.ToString();
+        }
+
         public void setEndofWorkday(DateTime time) { end_of_workday = time; }
-        public DateTime getEndofWorkday() { return end_of_workday; }
+
+        public string getEndofWorkday_S()
+        {
+            return end_of_workday.Hour.ToString() + ":" + end_of_workday.Minute.ToString();
+        }
+        public string getDate_S() { return this.date.Date.ToString().Substring(0, 10); }
+
+        public double getWorkingTime()
+        {
+            TimeSpan total_time = end_of_workday - start_of_workday;
+            TimeSpan time_incl_breaks = total_time;
+
+            /*Calc first brake after 6h*/
+            if (total_time.Hours >= 6)
+            {
+                time_incl_breaks -= new TimeSpan(0,30,0);
+            }
+            /*Calc first brake after 9h*/
+            if ((total_time.TotalMinutes - 30) >= (9*60))
+            {
+                time_incl_breaks -= new TimeSpan(0, 15, 0);
+            }
+
+
+            return time_incl_breaks.Hours + Math.Round((time_incl_breaks.Minutes/60.0),2);
+        }
 
 
 
