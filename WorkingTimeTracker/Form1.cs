@@ -39,6 +39,7 @@ namespace WorkingTimeTracker
             this.Hide();
         }
 
+        /*Used to fill values into the listview*/
         private void populateListView()
         {
 
@@ -163,21 +164,24 @@ namespace WorkingTimeTracker
         
         }
 
+        /*event: mouse clicked on notify icon */
         private void notifyIcon1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
+                /*show baloontip*/
                 showBallonTipClickedInfo();
             }
             if (e.Button == MouseButtons.Left)
             {
+                /*show gui*/
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
             }
         }
 
-
-public void showBallonTipClickedInfo()
+        /*defines what it shown in the ballontip info*/
+        public void showBallonTipClickedInfo()
         {
             //show balloon tip
             WorkTimeInfo day = workTimeCalculator.get_current_day();
@@ -203,6 +207,7 @@ public void showBallonTipClickedInfo()
 
         }
 
+        /*changes the content of the label according to what day was chosen in listbox*/
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
@@ -227,5 +232,41 @@ public void showBallonTipClickedInfo()
         {
             this.populateListView();
         }
+
+        private void ExportToXLSButton_Click(object sender, EventArgs e)
+        {
+            /*Get FilePath by SaveFileDIalog*/
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Tab Seperated Value Excel File|*.xls";
+            saveFileDialog1.Title = "Save all days data to xls";
+            saveFileDialog1.ShowDialog();
+            if (saveFileDialog1.FileName != "")
+            {
+                safeToTextFile(saveFileDialog1.FileName,'\t');
+            }
+                
+        }
+
+
+        private void safeToTextFile(string Path,char delim)
+        {
+            List<string> Lines = new List<string>();
+            var days = workTimeCalculator.get_days();
+
+            Lines.Add("Date" + delim + "Start of Workday" + delim + "End of Workday" + delim + "WorkingTime[h.m]" + "\n");
+            foreach (var day in days)
+            {
+                string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
+                Lines.Add(line);
+            }
+            //Lines[Lines.Count] = null;/*Delete last line since it is the actual day*/
+            System.IO.File.WriteAllLines(Path,Lines);
+
+
+        }
+
+        
+        
+        
     }
 }

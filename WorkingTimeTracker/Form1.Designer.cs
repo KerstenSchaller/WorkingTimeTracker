@@ -37,6 +37,7 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.UpdateButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.ExportToCSVButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -77,35 +78,47 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(28, 32);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(202, 264);
+            this.listBox1.Size = new System.Drawing.Size(202, 277);
             this.listBox1.TabIndex = 24;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // UpdateButton
             // 
-            this.UpdateButton.Location = new System.Drawing.Point(28, 303);
+            this.UpdateButton.Location = new System.Drawing.Point(262, 313);
             this.UpdateButton.Name = "UpdateButton";
             this.UpdateButton.Size = new System.Drawing.Size(202, 32);
             this.UpdateButton.TabIndex = 25;
             this.UpdateButton.Text = "Update Date List";
             this.UpdateButton.UseVisualStyleBackColor = true;
+            this.UpdateButton.Visible = false;
             this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(294, 59);
+            this.label1.Location = new System.Drawing.Point(247, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(64, 25);
             this.label1.TabIndex = 26;
             this.label1.Text = "label1";
             // 
+            // ExportToCSVButton
+            // 
+            this.ExportToCSVButton.Location = new System.Drawing.Point(28, 314);
+            this.ExportToCSVButton.Name = "ExportToCSVButton";
+            this.ExportToCSVButton.Size = new System.Drawing.Size(202, 32);
+            this.ExportToCSVButton.TabIndex = 27;
+            this.ExportToCSVButton.Text = "Export to *.xls";
+            this.ExportToCSVButton.UseVisualStyleBackColor = true;
+            this.ExportToCSVButton.Click += new System.EventHandler(this.ExportToXLSButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 347);
+            this.ClientSize = new System.Drawing.Size(570, 357);
+            this.Controls.Add(this.ExportToCSVButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.UpdateButton);
             this.Controls.Add(this.listBox1);
@@ -130,6 +143,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button UpdateButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ExportToCSVButton;
     }
 }
 
