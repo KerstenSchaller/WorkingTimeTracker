@@ -37,7 +37,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.calenderweek_listBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.timeInfoTable = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
@@ -106,17 +105,9 @@
             this.label3.TabIndex = 30;
             this.label3.Text = "InfoByCalenderweek";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(279, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 31;
-            this.label1.Text = "label1";
-            // 
             // timeInfoTable
             // 
+            this.timeInfoTable.AutoSize = true;
             this.timeInfoTable.BackColor = System.Drawing.SystemColors.ControlDark;
             this.timeInfoTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.timeInfoTable.ColumnCount = 5;
@@ -130,9 +121,9 @@
             this.timeInfoTable.Location = new System.Drawing.Point(282, 32);
             this.timeInfoTable.Name = "timeInfoTable";
             this.timeInfoTable.RowCount = 8;
-            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.73529F));
+            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 74.26471F));
+            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -148,7 +139,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1060, 357);
             this.Controls.Add(this.timeInfoTable);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.calenderweek_listBox);
             this.Controls.Add(this.label2);
@@ -173,7 +163,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox calenderweek_listBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel timeInfoTable;
     }
 }

@@ -36,7 +36,7 @@ namespace WorkingTimeTracker
 
             populateListView();
             
-            label1.Text = "Here could be the info \n of your desired workday \n ... if you choose one!";
+            
 
             Label day_label = new Label();
             Label date_label = new Label();
@@ -56,7 +56,28 @@ namespace WorkingTimeTracker
             timeInfoTable.Controls.Add(endtime_label, 3, 0);
             timeInfoTable.Controls.Add(workingtime_label, 4, 0);
 
-
+            //prefill days
+            Label days_label1 = new Label();
+            Label days_label2 = new Label();
+            Label days_label3 = new Label();
+            Label days_label4 = new Label();
+            Label days_label5 = new Label();
+            Label days_label6 = new Label();
+            Label days_label7 = new Label();
+            days_label1.Text = "Monday";
+            timeInfoTable.Controls.Add(days_label1, 0, 1);
+            days_label2.Text = "Tuesday";
+            timeInfoTable.Controls.Add(days_label2, 0, 2);
+            days_label3.Text = "Wednesday";
+            timeInfoTable.Controls.Add(days_label3, 0, 3);
+            days_label4.Text = "Thursday";
+            timeInfoTable.Controls.Add(days_label4, 0, 4);
+            days_label5.Text = "Friday";
+            timeInfoTable.Controls.Add(days_label5, 0, 5);
+            days_label6.Text = "Saturday";
+            timeInfoTable.Controls.Add(days_label6, 0, 6);
+            days_label7.Text = "Sunday";
+            timeInfoTable.Controls.Add(days_label7, 0, 7);
 
             this.Hide();
         }
@@ -276,8 +297,7 @@ namespace WorkingTimeTracker
                         + "You have started at " + day_start +" o'clock"+ "\n"
                         + "and ended at " + day_end+" o'clock" ;
 
-            label1.Text = text;
-        }
+                    }
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
