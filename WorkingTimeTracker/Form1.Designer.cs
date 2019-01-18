@@ -34,7 +34,7 @@
             this.textBox_StartTime = new System.Windows.Forms.TextBox();
             this.textBox_EndTime = new System.Windows.Forms.TextBox();
             this.textBox_legal_time = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox_days = new System.Windows.Forms.ListBox();
             this.UpdateButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.ExportToCSVButton = new System.Windows.Forms.Button();
@@ -76,14 +76,14 @@
             this.textBox_legal_time.Size = new System.Drawing.Size(54, 20);
             this.textBox_legal_time.TabIndex = 23;
             // 
-            // listBox1
+            // listBox_days
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(28, 32);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(99, 277);
-            this.listBox1.TabIndex = 24;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBox_days.FormattingEnabled = true;
+            this.listBox_days.Location = new System.Drawing.Point(28, 32);
+            this.listBox_days.Name = "listBox_days";
+            this.listBox_days.Size = new System.Drawing.Size(99, 277);
+            this.listBox_days.TabIndex = 24;
+            this.listBox_days.SelectedIndexChanged += new System.EventHandler(this.listBox_days_SelectedIndexChanged);
             // 
             // UpdateButton
             // 
@@ -154,7 +154,7 @@
             this.Controls.Add(this.ExportToCSVButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.UpdateButton);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.listBox_days);
             this.Controls.Add(this.textBox_legal_time);
             this.Controls.Add(this.textBox_EndTime);
             this.Controls.Add(this.textBox_StartTime);
@@ -173,7 +173,7 @@
       private System.Windows.Forms.TextBox textBox_StartTime;
       private System.Windows.Forms.TextBox textBox_EndTime;
       private System.Windows.Forms.TextBox textBox_legal_time;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox_days;
         private System.Windows.Forms.Button UpdateButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ExportToCSVButton;

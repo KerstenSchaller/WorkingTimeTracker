@@ -51,7 +51,7 @@ namespace WorkingTimeTracker
             {
                 strings.Add(day.getDate_S());
             }
-            listBox1.DataSource = strings;
+            listBox_days.DataSource = strings;
 
             /*Also Pouplate Calenderweek listview*/
             populateCWListView();
@@ -72,7 +72,7 @@ namespace WorkingTimeTracker
                 cw = calendar.GetWeekOfYear(day.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
                 if (cw != cw_ll)
                 {
-                    ... todo: Add calender week logic
+                 //   ... todo: Add calender week logic
                 }
                 cw_ll = cw;
             }
@@ -85,18 +85,19 @@ namespace WorkingTimeTracker
 
 
         /*Mouse and keyboard tracking stuff below*/
-
         void StartMouseTracking()
         {
             SubscribeGlobal();
         }
 
+        /*Subscribe to all mouse events*/
         private void SubscribeGlobal()
         {
             Unsubscribe();
             Subscribe(Hook.GlobalEvents());
         }
 
+        /*subscibe to certain mouse events*/
         private void Subscribe(IKeyboardMouseEvents events)
         {
             m_Events = events;
@@ -116,15 +117,7 @@ namespace WorkingTimeTracker
             m_Events = null;
         }
 
-        private void HookManager_Supress(object sender, MouseEventExtArgs e)
-        {
-            if (e.Button != MouseButtons.Right)
-            {
-                
-                return;
-            }
-
-        }
+        
 
         /* Keyboard handlers*/
         private void HookManager_KeyPress(object sender, KeyPressEventArgs e)
@@ -236,10 +229,10 @@ namespace WorkingTimeTracker
         }
 
         /*changes the content of the label according to what day was chosen in listbox*/
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox_days_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            int index = listBox1.SelectedIndex;
+            int index = listBox_days.SelectedIndex;
             var days = workTimeCalculator.get_days();
             var day = days[index];
             string date_s = day.getDate_S();
@@ -287,7 +280,7 @@ namespace WorkingTimeTracker
                 string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
                 Lines.Add(line);
             }
-            Lines[Lines.Count] = null;/*Delete last line since it is the actual day*/
+            Lines[Lines.Count-1] = null;/*Delete last line since it is the actual day*/
             System.IO.File.WriteAllLines(Path,Lines);
 
 
