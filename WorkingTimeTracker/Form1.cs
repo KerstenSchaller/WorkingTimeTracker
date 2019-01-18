@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace WorkingTimeTracker
 {
-    public partial class Form1 : Form
+    public partial class form1 : Form
     {
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
@@ -22,7 +22,7 @@ namespace WorkingTimeTracker
         List<int> calenderweeks_present = new List<int>();
         
 
-        public Form1()
+        public form1()
         {
             InitializeComponent();
             StartMouseTracking();
@@ -37,6 +37,26 @@ namespace WorkingTimeTracker
             populateListView();
             
             label1.Text = "Here could be the info \n of your desired workday \n ... if you choose one!";
+
+            Label day_label = new Label();
+            Label date_label = new Label();
+            Label starttime_label = new Label();
+            Label endtime_label = new Label();
+            Label workingtime_label = new Label();
+            day_label.Text = "Day";
+            date_label.Text = "Date";
+            starttime_label.Text = "Start Time";
+            endtime_label.Text = "End Time";
+            workingtime_label.Text = "Working Time";
+
+            //add headers
+            timeInfoTable.Controls.Add(day_label, 0, 0);
+            timeInfoTable.Controls.Add(date_label, 1, 0);
+            timeInfoTable.Controls.Add(starttime_label, 2, 0);
+            timeInfoTable.Controls.Add(endtime_label, 3, 0);
+            timeInfoTable.Controls.Add(workingtime_label, 4, 0);
+
+
 
             this.Hide();
         }
@@ -57,6 +77,9 @@ namespace WorkingTimeTracker
             populateCWListView();
 
         }
+
+
+
 
         public void populateCWListView()
         {
@@ -258,7 +281,13 @@ namespace WorkingTimeTracker
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            this.populateListView();
+            //this.populateListView();
+
+            Label label1 = new Label();
+            label1.Text = "Day";
+
+            timeInfoTable.Controls.Add(label1, 1,0);
+
         }
 
         private void ExportToXLSButton_Click(object sender, EventArgs e)
@@ -296,6 +325,16 @@ namespace WorkingTimeTracker
         private void calenderweek_listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
