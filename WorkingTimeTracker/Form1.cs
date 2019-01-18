@@ -41,7 +41,7 @@ namespace WorkingTimeTracker
             this.Hide();
         }
 
-        /*Used to fill values into the listview*/
+        /*Used to fill values into the days listview*/
         private void populateListView()
         {
 
@@ -66,15 +66,22 @@ namespace WorkingTimeTracker
             int cw_ll = -1;
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
             Calendar calendar = dfi.Calendar;
+            List<string> calenderweeks = new List<string>();
+            // loop through all days and create a list of Calenderweeks to display
             foreach (var day in days)
             {
 
+                //determine calenderweek
                 cw = calendar.GetWeekOfYear(day.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
                 if (cw != cw_ll)
                 {
-                 //   ... todo: Add calender week logic
+                    //compose string for listbox
+                    calenderweeks.Add(cw.ToString() +@"/"+ day.date.Year);
                 }
                 cw_ll = cw;
+
+                //finally display the calenderweeks
+                calenderweek_listBox.DataSource = calenderweeks;
             }
 
 
