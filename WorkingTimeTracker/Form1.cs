@@ -303,10 +303,7 @@ namespace WorkingTimeTracker
         {
             //this.populateListView();
 
-            Label label1 = new Label();
-            label1.Text = "Day";
-
-            timeInfoTable.Controls.Add(label1, 1,0);
+         
 
         }
 
