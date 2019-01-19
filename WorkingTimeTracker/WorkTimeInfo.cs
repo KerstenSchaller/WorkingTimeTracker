@@ -22,7 +22,11 @@ namespace WorkingTimeTracker
             
         }
 
-      
+        public WorkTimeInfo(bool valid)
+        {
+            date = NULL;
+
+        }
 
         public void setStartofWorkday(DateTime time) { start_of_workday = time; }
 

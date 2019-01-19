@@ -48,7 +48,20 @@ namespace WorkingTimeTracker
         }
 
         public List<WorkTimeInfo> get_days() { return days; }
-        public WorkTimeInfo get_day(int day) { return days[day]; }
+
+        public WorkTimeInfo get_day_by_datetime(DateTime day)
+        {
+            /*loop  through all days and compare each day with given day*/
+            foreach (WorkTimeInfo d in days)
+            {
+                if (day == d.date)
+                {
+                    return d;
+                }
+            }
+            return new WorkTimeInfo();
+        }
+
         public WorkTimeInfo get_current_day() { return current_day; }
 
         // triggers all actions related to a new activity

@@ -16,12 +16,14 @@ namespace WorkingTimeTracker
 {
     public partial class form1 : Form
     {
+        //define global vars
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
 
-        List<int> calenderweeks_present = new List<int>();
-        
 
+
+
+        //Initialize form
         public form1()
         {
             InitializeComponent();
@@ -132,7 +134,7 @@ namespace WorkingTimeTracker
 
         }
 
-
+  
 
 
         /*Mouse and keyboard tracking stuff below*/
@@ -159,6 +161,7 @@ namespace WorkingTimeTracker
 
         }
 
+        // Unsubscribe from mouse events
         private void Unsubscribe()
         {
             if (m_Events == null) return;
@@ -279,13 +282,26 @@ namespace WorkingTimeTracker
 
         }
 
+        public void testCalendar()
+        {
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            Calendar calendar = dfi.Calendar;
+
+
+
+        }
+
+
         /*changes the content of the label according to what day was chosen in listbox*/
         private void listBox_days_SelectedIndexChanged(object sender, EventArgs e)
         {
             
             int index = listBox_days.SelectedIndex;
+            /*Get a list of all days*/
             var days = workTimeCalculator.get_days();
+            /*extract day by index chosen in listbox*/
             var day = days[index];
+
             string date_s = day.getDate_S();
             double workingTime = day.getWorkingTime();
             string day_start = day.getStartofWorkday_S();
@@ -296,6 +312,8 @@ namespace WorkingTimeTracker
                         + "you have worked " + workingTime + " hours" + "\n"
                         + "You have started at " + day_start +" o'clock"+ "\n"
                         + "and ended at " + day_end+" o'clock" ;
+
+            testCalendar();
 
                     }
 
