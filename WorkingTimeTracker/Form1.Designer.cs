@@ -38,6 +38,8 @@
             this.calenderweek_listBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.timeInfoTable = new System.Windows.Forms.TableLayoutPanel();
+            this.Sickbutton = new System.Windows.Forms.Button();
+            this.vacationbutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -70,7 +72,7 @@
             // 
             // ExportToCSVButton
             // 
-            this.ExportToCSVButton.Location = new System.Drawing.Point(28, 314);
+            this.ExportToCSVButton.Location = new System.Drawing.Point(28, 374);
             this.ExportToCSVButton.Name = "ExportToCSVButton";
             this.ExportToCSVButton.Size = new System.Drawing.Size(213, 32);
             this.ExportToCSVButton.TabIndex = 27;
@@ -115,30 +117,52 @@
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.timeInfoTable.Location = new System.Drawing.Point(282, 32);
             this.timeInfoTable.Name = "timeInfoTable";
             this.timeInfoTable.RowCount = 8;
-            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.73529F));
-            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 74.26471F));
+            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.25773F));
+            this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.74227F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.timeInfoTable.Size = new System.Drawing.Size(531, 275);
+            this.timeInfoTable.Size = new System.Drawing.Size(531, 244);
             this.timeInfoTable.TabIndex = 33;
             this.timeInfoTable.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
+            // 
+            // Sickbutton
+            // 
+            this.Sickbutton.Location = new System.Drawing.Point(28, 316);
+            this.Sickbutton.Name = "Sickbutton";
+            this.Sickbutton.Size = new System.Drawing.Size(99, 23);
+            this.Sickbutton.TabIndex = 35;
+            this.Sickbutton.Text = "Toggle Sick";
+            this.Sickbutton.UseVisualStyleBackColor = true;
+            this.Sickbutton.Click += new System.EventHandler(this.Sickbutton_Click);
+            // 
+            // vacationbutton
+            // 
+            this.vacationbutton.Location = new System.Drawing.Point(28, 345);
+            this.vacationbutton.Name = "vacationbutton";
+            this.vacationbutton.Size = new System.Drawing.Size(99, 23);
+            this.vacationbutton.TabIndex = 36;
+            this.vacationbutton.Text = "Toggle Vacation";
+            this.vacationbutton.UseVisualStyleBackColor = true;
+            this.vacationbutton.Click += new System.EventHandler(this.vacationbutton_Click);
             // 
             // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1060, 357);
+            this.ClientSize = new System.Drawing.Size(1060, 425);
+            this.Controls.Add(this.vacationbutton);
+            this.Controls.Add(this.Sickbutton);
             this.Controls.Add(this.timeInfoTable);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.calenderweek_listBox);
@@ -165,6 +189,8 @@
         private System.Windows.Forms.ListBox calenderweek_listBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel timeInfoTable;
+        private System.Windows.Forms.Button Sickbutton;
+        private System.Windows.Forms.Button vacationbutton;
     }
 }
 

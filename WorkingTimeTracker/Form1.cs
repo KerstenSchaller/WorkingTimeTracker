@@ -315,27 +315,28 @@ namespace WorkingTimeTracker
         /*defines what it shown in the ballontip info*/
         public void showBallonTipClickedInfo()
         {
-            ////show balloon tip
-            //WorkTimeInfo day = workTimeCalculator.get_current_day();
+            //show balloon tip
+            var days = workTimeCalculator.getdays();
+            Workday day = days.Last();
 
-            //string date_s = day.getDate_S();
-            //double workingTime = day.getWorkingTime();
-            //string day_start = day.getStartofWorkday_S();
-            //string day_end = day.getEndofWorkday_S();
+            string date_s = day.getDate_S();
+            double workingTime = day.getWorkingTime();
+            string day_start = day.getStartofWorkday_S();
+            string day_end = day.getEndofWorkday_S();
 
-            //string text = date_s +"_"+ workingTime + "_"+ day_start + "_"+ day_end;
-            //string line1 = "Date: " + date_s +  "\n";
-            //string line2 = "Start: " + day_start + "\n";
-            //string line3 = "End: " + day_end + "\n";
-            //string line4 = "Worked: " + workingTime + "hours" + "\n";
+            string text = date_s + "_" + workingTime + "_" + day_start + "_" + day_end;
+            string line1 = "Date: " + date_s + "\n";
+            string line2 = "Start: " + day_start + "\n";
+            string line3 = "End: " + day_end + "\n";
+            string line4 = "Worked: " + workingTime + "hours" + "\n";
 
-            //text = line1 + line2 + line3 + line4;
-            //if (true)
-            //{
-            //    text += "!!! - Be Careful.. your working time approaches 10hours - !!!";
-            //}
+            text = line1 + line2 + line3 + line4;
+            if (true)
+            {
+                text += "!!! - Be Careful.. your working time approaches 10hours - !!!";
+            }
 
-            //notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text + "\n" , ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text + "\n", ToolTipIcon.Info);
 
         }
 
@@ -589,17 +590,17 @@ namespace WorkingTimeTracker
 
         private void safeToTextFile(string Path,char delim)
         {
-        //    List<string> Lines = new List<string>();
-        //    var days = workTimeCalculator.get_days();
+            List<string> Lines = new List<string>();
+            var days = workTimeCalculator.getdays();
 
-        //    Lines.Add("Date" + delim + "Start of Workday" + delim + "End of Workday" + delim + "WorkingTime[h.m]" + "\n");
-        //    foreach (var day in days)
-        //    {
-        //        string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
-        //        Lines.Add(line);
-        //    }
-        //    Lines[Lines.Count-1] = null;/*Delete last line since it is the actual day*/
-        //    System.IO.File.WriteAllLines(Path,Lines);
+            Lines.Add("Date" + delim + "Start of Workday" + delim + "End of Workday" + delim + "WorkingTime[h.m]" + "\n");
+            foreach (var day in days)
+            {
+                string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
+                Lines.Add(line);
+            }
+            Lines[Lines.Count - 1] = null;/*Delete last line since it is the actual day*/
+            System.IO.File.WriteAllLines(Path, Lines);
 
 
         }
@@ -613,6 +614,47 @@ namespace WorkingTimeTracker
 
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+
+        
+        private void vacationbutton_Click(object sender, EventArgs e)
+        {
+            int index = listBox_days.SelectedIndex;
+            /*Get a list of all days*/
+            var days = workTimeCalculator.getdays();
+            /*extract day by index chosen in listbox*/
+
+            if (days[index].getVacation() == false)
+            {
+                days[index].setVacation(true);
+            }
+            else
+            {
+                days[index].setVacation(false);
+            }
+            workTimeCalculator.setdays(days, true);
+
+        }
+
+        private void Sickbutton_Click(object sender, EventArgs e)
+        {
+
+            int index = listBox_days.SelectedIndex;
+            /*Get a list of all days*/
+            var days = workTimeCalculator.getdays();
+            /*extract day by index chosen in listbox*/
+
+            if (days[index].getSick() == false)
+            {
+                days[index].setSick(true);
+            }
+            else
+            {
+                days[index].setSick(false);
+            }
+            workTimeCalculator.setdays(days, true);
 
         }
     }

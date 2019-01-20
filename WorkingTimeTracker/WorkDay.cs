@@ -18,6 +18,21 @@ namespace WorkingTimeTracker
         public bool absent_through_sickness = false;
         public bool absent_through_vacation = false;
 
+        public bool getSick() { return absent_through_sickness; }
+        public void setSick(bool value)
+        {
+            absent_through_sickness = value;
+            absent_through_vacation = false;
+
+        }
+
+        public bool getVacation() { return absent_through_vacation; }
+        public void setVacation(bool value)
+        {
+            absent_through_sickness = false;
+            absent_through_vacation = value;
+
+        }
 
         public Workday(DateTime Date)
         {
@@ -43,7 +58,8 @@ namespace WorkingTimeTracker
 
         public string getStartofWorkday_S()
         {
-            if (start_of_workday.Hour == 0 && start_of_workday.Minute == 0) return "---";
+            if (absent_through_sickness == true) return "sick";
+            if (absent_through_vacation == true) return "vacation";
             return start_of_workday.Hour.ToString() + ":" + start_of_workday.Minute.ToString();
         }
 
@@ -51,7 +67,8 @@ namespace WorkingTimeTracker
 
         public string getEndofWorkday_S()
         {
-            if (end_of_workday.Hour == 0 && end_of_workday.Minute == 0) return "---";
+            if (absent_through_sickness == true) return "sick";
+            if (absent_through_vacation == true) return "vacation";
             return end_of_workday.Hour.ToString() + ":" + end_of_workday.Minute.ToString();
         }
 
