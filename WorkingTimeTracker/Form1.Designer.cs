@@ -32,10 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form1));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox_days = new System.Windows.Forms.ListBox();
-<<<<<<< HEAD
-=======
-            this.UpdateButton = new System.Windows.Forms.Button();
->>>>>>> CompleteReworkOfCode
             this.ExportToCSVButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.calenderweek_listBox = new System.Windows.Forms.ListBox();
