@@ -431,20 +431,6 @@ namespace WorkingTimeTracker
             fillTimesToTable(workdays, "endtime");
             fillTimesToTable(workdays, "workingtime");
 
-
-
-
-            //string date_s = day.getDate_S();
-            //double workingTime = day.getWorkingTime();
-            //string day_start = day.getStartofWorkday_S();
-            //string day_end = day.getEndofWorkday_S();
-
-
-            //string text = "At the " + date_s + "\n"
-            //            + "you have worked " + workingTime + " hours" + "\n"
-            //            + "You have started at " + day_start +" o'clock"+ "\n"
-            //            + "and ended at " + day_end+" o'clock" ;
-
         }
 
         
@@ -485,28 +471,23 @@ namespace WorkingTimeTracker
             // iterate through all days and fill control text either with "---" if theres no info for that day or with the desired value
             for (int i = start; i < end+1; i++)
             {
-                if (workdays[i_workdays] == null)
+
+                switch (valuetype)
                 {
-                    controls[i].Text = "---";
+                    case "starttime":
+                        controls[i].Text = workdays[i_workdays].getStartofWorkday_S();
+                        break;
+                    case "endtime":
+                        controls[i].Text = workdays[i_workdays].getEndofWorkday_S();
+                        break;
+                    case "workingtime":
+                        controls[i].Text = workdays[i_workdays].getWorkingTime().ToString();
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    switch (valuetype)
-                    {
-                        case "starttime":
-                            controls[i].Text = workdays[i_workdays].getStartofWorkday_S();
-                            break;
-                        case "endtime":
-                            controls[i].Text = workdays[i_workdays].getEndofWorkday_S();
-                            break;
-                        case "workingtime":
-                            controls[i].Text = workdays[i_workdays].getWorkingTime().ToString();
-                            break;
-                        default:
-                            break;
-                    }
                     
-                }
+                
                 i_workdays++;
             }
             

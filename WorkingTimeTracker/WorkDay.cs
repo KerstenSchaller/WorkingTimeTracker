@@ -15,7 +15,10 @@ namespace WorkingTimeTracker
         public DateTime start_of_workday = new DateTime();
         public DateTime end_of_workday = new DateTime();
 
-        
+        public bool absent_through_sickness = false;
+        public bool absent_through_vacation = false;
+
+
         public Workday(DateTime Date)
         {
             date = Date;
@@ -40,6 +43,7 @@ namespace WorkingTimeTracker
 
         public string getStartofWorkday_S()
         {
+            if (start_of_workday.Hour == 0 && start_of_workday.Minute == 0) return "---";
             return start_of_workday.Hour.ToString() + ":" + start_of_workday.Minute.ToString();
         }
 
@@ -47,6 +51,7 @@ namespace WorkingTimeTracker
 
         public string getEndofWorkday_S()
         {
+            if (end_of_workday.Hour == 0 && end_of_workday.Minute == 0) return "---";
             return end_of_workday.Hour.ToString() + ":" + end_of_workday.Minute.ToString();
         }
 
@@ -54,6 +59,9 @@ namespace WorkingTimeTracker
 
         public double getWorkingTime()
         {
+            //return hours for full workday if day was sick or vacation
+            if (absent_through_sickness == true || absent_through_vacation == true) return (8.4);
+
             TimeSpan total_time = end_of_workday - start_of_workday;
             TimeSpan time_incl_breaks = total_time;
 

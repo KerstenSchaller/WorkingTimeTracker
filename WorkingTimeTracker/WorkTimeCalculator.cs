@@ -22,6 +22,47 @@ namespace WorkingTimeTracker
 
         public WorkTimeCalculator()
         {
+
+        }
+
+
+        //private addMissingDays()
+        //{
+        //    List<Workday> temp_days = new List<Workday>();
+        //    foreach (Workday wd in days)
+        //    {
+        //        int day = wd.date.Day;
+        //        int month = 
+        //    }
+        //}
+
+        private List<Workday> findMissingDays(List<Workday> days)
+        {
+            Workday Day_before = days[0];
+            List<Workday> l = new List<Workday>();
+            l.Add(days[0]);
+            for (int i = 1; i < days.Count; i++)
+            {
+                //l.Add(days[i]);
+                //bool cond1 = days[i].date.Day != (Day_before.date.Day + 1);
+                //bool cond2 = !(Day_before.date.Day == 31 || Day_before.date.Day == 28 || Day_before.date.Day == 30) && (days[i].date.Day == 1);
+                DateTime d = Day_before.date + new TimeSpan(24, 0, 0);
+                bool cond3 = !(days[i].date.Date.CompareTo((Day_before.date.Date + new TimeSpan(24, 0, 0))) == 0);
+                if (cond3)
+                {
+                    Workday wti = new Workday();
+                    wti.date = Day_before.date + new TimeSpan(24, 0, 0);
+                    l.Add(wti);
+                    Day_before = wti;
+                    i--;
+                }
+                else
+                {
+                    l.Add(days[i]);
+                    Day_before = days[i];
+                }
+            }
+            return l;
         }
 
         public List<Workday> getdays()
@@ -95,6 +136,10 @@ namespace WorkingTimeTracker
             {
                 // try to load data from passed days
                 days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path);
+                // parse days for missing ones(weekend, vacation, sickness...)
+                days = findMissingDays(days);
+                // safe back parsed days to file in order to keep the ones which where missing
+                Serialization.WriteToXmlFile<List<Workday>>(data_days_path, days);
                 current_day = days.Last();
 
             }
