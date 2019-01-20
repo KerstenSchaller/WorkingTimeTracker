@@ -102,7 +102,10 @@ namespace WorkingTimeTracker
             {
                 strings.Add(day.getDate_S());
             }
-            listBox_days.DataSource = strings;
+
+            /*Second line instead of first because that does not cause the selected index changed event to fire*/
+            //listBox_days.DataSource = strings;
+            listBox_days.Items.AddRange(strings.ToArray());
 
             /*Also Pouplate Calenderweek listview*/
             populateCWListView();
@@ -117,8 +120,9 @@ namespace WorkingTimeTracker
             
             List<string> calenderweeks = workTimeCalculator.getCalendarweeks();
             //finally display the calenderweeks
-            calenderweek_listBox.DataSource = calenderweeks;
-
+            /*Second line instead of first because that does not cause the selected index changed event to fire*/
+            //calenderweek_listBox.DataSource = calenderweeks;
+            calenderweek_listBox.Items.AddRange(calenderweeks.ToArray());
         }
 
 
@@ -283,17 +287,26 @@ namespace WorkingTimeTracker
         private void listBox_days_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            
             int index = listBox_days.SelectedIndex;
-            /*Get a list of all days*/
-            var days = workTimeCalculator.getdays();
-            /*extract day by index chosen in listbox*/
-            var day = days[index];
 
-            string calendarweek = day.getWeekOfYear();
-            /*Fill table with day information*/
-            fillTable(calendarweek);
+            /*Only do action if selected index change event was not triggered by unselecting the listbox*/
+            if (index != -1)
+            {
+            
+                //unselect calenderweek listbox
+                calenderweek_listBox.ClearSelected();
 
+                /*Get a list of all days*/
+                var days = workTimeCalculator.getdays();
+                /*extract day by index chosen in listbox*/
+                var day = days[index];
 
+                string calendarweek = day.getWeekOfYear();
+                /*Fill table with day information*/
+                fillTable(calendarweek);
+
+            }
 
 
 
@@ -302,7 +315,16 @@ namespace WorkingTimeTracker
 
         private void calenderweek_listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fillTable((string)calenderweek_listBox.SelectedItem);            
+
+            int index = calenderweek_listBox.SelectedIndex;
+            
+            /*Only do action if selected index change event was not triggered by unselecting the listbox*/
+            if (index != -1)
+            {
+                //unselect days listbox
+                listBox_days.ClearSelected();
+                fillTable((string)calenderweek_listBox.SelectedItem);
+            }
         }
 
         public void fillTable(string calendarweek)
