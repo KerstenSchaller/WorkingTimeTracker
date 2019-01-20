@@ -10,16 +10,12 @@ Notice: Be aware that this programm creates a human readable activity protocoll 
 
 Features:
   - tracks mouse or keyboard activity once every minute and writes information about it to an XML File(human readable)
-  - analyses the activity information in order to create worktime information  
+  - analyses the activity information in order to create workday information  
   - runs as a notify icon in the system tray which shows, information summary about current day in a baloon tip when right-clicked
-  - left clicked notify icon opens a GUI which shows a colorcoded list of days including all related working time information
-  - GUI enables user to edit the calculated working time information while original activity information is kept(usecases: vacatation, sickness, individual work which cant be tracked, etc )
-  
-Stability: Not guaranteed. All features are just hand tested and might be buggy.
+  - left clicked notify icon opens a GUI which shows  lists of all available days and calenderweeks
+  - GUI contains a table which shows all relevant information of one workweek(according to chosen day or calendarweek)
+  - GUI enables user to set vacation and sick flags in order to have them marked in the table and assumed full working time
+  - Export of Working Time information to excel(csv format)
 
 
-Planned steps:
-  - Refactor code 
-  - output to excel files
-  - output to matlab, *.mat files as well as complete scripts to display worktime information
-  
+
