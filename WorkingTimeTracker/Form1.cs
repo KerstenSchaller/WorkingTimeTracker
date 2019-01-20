@@ -622,40 +622,57 @@ namespace WorkingTimeTracker
         private void vacationbutton_Click(object sender, EventArgs e)
         {
             int index = listBox_days.SelectedIndex;
-            /*Get a list of all days*/
-            var days = workTimeCalculator.getdays();
-            /*extract day by index chosen in listbox*/
-
-            if (days[index].getVacation() == false)
+            if (index != -1)
             {
-                days[index].setVacation(true);
-            }
-            else
-            {
-                days[index].setVacation(false);
-            }
-            workTimeCalculator.setdays(days, true);
+                /*Get a list of all days*/
+                var days = workTimeCalculator.getdays();
+                /*extract day by index chosen in listbox*/
 
+                if (days[index].getVacation() == false)
+                {
+                    days[index].setVacation(true);
+                }
+                else
+                {
+                    days[index].setVacation(false);
+                }
+                workTimeCalculator.setdays(days, true);
+                listBox_days_SelectedIndexChanged(listBox_days, new EventArgs());
+            }
         }
 
         private void Sickbutton_Click(object sender, EventArgs e)
         {
-
+            
             int index = listBox_days.SelectedIndex;
-            /*Get a list of all days*/
-            var days = workTimeCalculator.getdays();
-            /*extract day by index chosen in listbox*/
-
-            if (days[index].getSick() == false)
+            if (index != -1)
             {
-                days[index].setSick(true);
-            }
-            else
-            {
-                days[index].setSick(false);
-            }
-            workTimeCalculator.setdays(days, true);
+            
+                /*Get a list of all days*/
+                var days = workTimeCalculator.getdays();
+                /*extract day by index chosen in listbox*/
 
+                if (days[index].getSick() == false)
+                {
+                    days[index].setSick(true);
+                }
+                else
+                {
+                    days[index].setSick(false);
+                }
+                workTimeCalculator.setdays(days, true);
+                listBox_days_SelectedIndexChanged(listBox_days, new EventArgs());
+            }
+        }
+
+        private void form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            notifyIcon1.Icon = null;
+        }
+
+        private void form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            notifyIcon1.Icon = null;
         }
     }
 }
