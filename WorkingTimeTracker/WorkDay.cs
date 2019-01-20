@@ -14,7 +14,8 @@ namespace WorkingTimeTracker
         public DateTime date = new DateTime();
         public DateTime start_of_workday = new DateTime();
         public DateTime end_of_workday = new DateTime();
-       
+
+        
         public Workday(DateTime Date)
         {
             date = Date;
