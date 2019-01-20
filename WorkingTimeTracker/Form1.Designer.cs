@@ -58,30 +58,13 @@
             this.listBox_days.Size = new System.Drawing.Size(99, 277);
             this.listBox_days.TabIndex = 24;
             this.listBox_days.SelectedIndexChanged += new System.EventHandler(this.listBox_days_SelectedIndexChanged);
-            // 
-<<<<<<< HEAD
-            // ExportToCSVButton
-            // 
-            this.ExportToCSVButton.Location = new System.Drawing.Point(133, 316);
-            this.ExportToCSVButton.Name = "ExportToCSVButton";
-            this.ExportToCSVButton.Size = new System.Drawing.Size(108, 23);
-=======
-            // UpdateButton
-            // 
-            this.UpdateButton.Location = new System.Drawing.Point(262, 313);
-            this.UpdateButton.Name = "UpdateButton";
-            this.UpdateButton.Size = new System.Drawing.Size(202, 32);
-            this.UpdateButton.TabIndex = 25;
-            this.UpdateButton.Text = "testbutton";
-            this.UpdateButton.UseVisualStyleBackColor = true;
-            this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
+            
             // 
             // ExportToCSVButton
             // 
             this.ExportToCSVButton.Location = new System.Drawing.Point(28, 374);
             this.ExportToCSVButton.Name = "ExportToCSVButton";
             this.ExportToCSVButton.Size = new System.Drawing.Size(213, 32);
->>>>>>> CompleteReworkOfCode
             this.ExportToCSVButton.TabIndex = 27;
             this.ExportToCSVButton.Text = "Export to *.xls";
             this.ExportToCSVButton.UseVisualStyleBackColor = true;
@@ -124,11 +107,9 @@
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-<<<<<<< HEAD
-            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
-=======
+
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
->>>>>>> CompleteReworkOfCode
+
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
@@ -171,11 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(829, 377);
-=======
-            this.ClientSize = new System.Drawing.Size(1060, 425);
->>>>>>> CompleteReworkOfCode
             this.Controls.Add(this.vacationbutton);
             this.Controls.Add(this.Sickbutton);
             this.Controls.Add(this.timeInfoTable);
@@ -183,10 +160,7 @@
             this.Controls.Add(this.calenderweek_listBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ExportToCSVButton);
-<<<<<<< HEAD
-=======
-            this.Controls.Add(this.UpdateButton);
->>>>>>> CompleteReworkOfCode
+
             this.Controls.Add(this.listBox_days);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "form1";
