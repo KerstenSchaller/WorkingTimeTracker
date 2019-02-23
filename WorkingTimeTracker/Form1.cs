@@ -37,9 +37,17 @@ namespace WorkingTimeTracker
 
 
             populateListViews();
-            
-            
 
+           
+
+
+
+            this.Hide();
+        }
+
+        /*Fills in the permanent text values into the table*/
+        private void InitializeTable()
+        {
             Label day_label = new Label();
             Label date_label = new Label();
             Label starttime_label = new Label();
@@ -81,8 +89,8 @@ namespace WorkingTimeTracker
             days_label7.Text = "Sunday";
             timeInfoTable.Controls.Add(days_label7, 0, 7);
 
-            this.Hide();
         }
+
 
         /*Used to fill values into the days listview*/
         private void populateListViews()
@@ -281,9 +289,9 @@ namespace WorkingTimeTracker
             /*extract day by index chosen in listbox*/
             var day = days[index];
 
-            string calenderweek = day.getWeekOfYear();
+            string calendarweek = day.getWeekOfYear();
             /*Fill table with day information*/
-            fillTable(calenderweek);
+            fillTable(calendarweek);
 
 
 
@@ -297,12 +305,148 @@ namespace WorkingTimeTracker
             fillTable((string)calenderweek_listBox.SelectedItem);            
         }
 
-        public void fillTable(string calenderweek)
+        public void fillTable(string calendarweek)
         {
+
+            
+            //remove all controls from table
+            timeInfoTable.Controls.Clear();
+            //set again all permanent text values
+            InitializeTable();
+
+
             // split calenderweek into week and year
-            var v = calenderweek.Split('/');
+            var v = calendarweek.Split('/');
+            int year = Int32.Parse(v[1]);
+            int week = Int32.Parse(v[0]);
+
+
             // determine first day of week with given year and week(parsed from string to int)
-            DateTime Monday = FirstDateOfWeekISO8601(Int32.Parse((v[1])), Int32.Parse(v[0]));
+            DateTime FirstDayOfWeek = FirstDateOfWeekISO8601(year, week);
+
+
+            fillDatesToTable(FirstDayOfWeek);
+            fillStartTimesToTable(FirstDayOfWeek);
+            
+
+
+
+            //string date_s = day.getDate_S();
+            //double workingTime = day.getWorkingTime();
+            //string day_start = day.getStartofWorkday_S();
+            //string day_end = day.getEndofWorkday_S();
+
+
+            //string text = "At the " + date_s + "\n"
+            //            + "you have worked " + workingTime + " hours" + "\n"
+            //            + "You have started at " + day_start +" o'clock"+ "\n"
+            //            + "and ended at " + day_end+" o'clock" ;
+
+        }
+
+        private void fillStartTimesToTable(DateTime FirstDayOfWeek)
+        {
+            DateTime Monday = FirstDayOfWeek;
+            DateTime Tuesday = Monday + new TimeSpan(1, 0, 0, 0);
+            DateTime Wednesday = Monday + new TimeSpan(2, 0, 0, 0);
+            DateTime Thursday = Monday + new TimeSpan(3, 0, 0, 0);
+            DateTime Friday = Monday + new TimeSpan(4, 0, 0, 0);
+            DateTime Saturday = Monday + new TimeSpan(5, 0, 0, 0);
+            DateTime Sunday = Monday + new TimeSpan(6, 0, 0, 0);
+
+            Workday workday = new Workday();
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Monday);
+            Label l1 = new Label();
+            if (workday == null)
+            {
+                l1.Text = "---";
+            }
+            else
+            {
+                l1.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l1, 2, 1);
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Tuesday);
+            Label l2 = new Label();
+            if (workday == null)
+            {
+                l2.Text = "---";
+            }
+            else
+            {
+                l2.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l2, 2, 2);
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Wednesday);
+            Label l3 = new Label();
+            if (workday == null)
+            {
+                l3.Text = "---";
+            }
+            else
+            {
+                l3.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l3, 2, 3);
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Thursday);
+            Label l4 = new Label();
+            if (workday == null)
+            {
+                l4.Text = "---";
+            }
+            else
+            {
+                l4.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l4, 2, 4);
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Friday);
+            Label l5 = new Label();
+            if (workday == null)
+            {
+                l5.Text = "---";
+            }
+            else
+            {
+                l5.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l5, 2, 5);
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Saturday);
+            Label l6 = new Label();
+            if (workday == null)
+            {
+                l6.Text = "---";
+            }
+            else
+            {
+                l6.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l6, 2, 6);
+            //--------------------------------------------------
+            workday = workTimeCalculator.getWorkdayByDateTime(Sunday);
+            Label l7 = new Label();
+            if (workday == null)
+            {
+                l7.Text = "---";
+            }
+            else
+            {
+                l7.Text = workday.getStartofWorkday_S();
+            }
+            timeInfoTable.Controls.Add(l7, 2, 7);
+        }
+
+        private void fillDatesToTable(DateTime FirstDayOfWeek)
+        {
+
+
+
+            DateTime Monday = FirstDayOfWeek;
             DateTime Tuesday = Monday + new TimeSpan(1, 0, 0, 0);
             DateTime Wednesday = Monday + new TimeSpan(2, 0, 0, 0);
             DateTime Thursday = Monday + new TimeSpan(3, 0, 0, 0);
@@ -326,14 +470,7 @@ namespace WorkingTimeTracker
             saturday.Text = Saturday.Day + "." + Saturday.Month + "." + Saturday.Year;
             sunday.Text = Sunday.Day + "." + Sunday.Month + "." + Sunday.Year;
 
-            /*Remove old controls first*/
-            timeInfoTable.Controls.Remove(monday);
-            timeInfoTable.Controls.Remove(tuesday);
-            timeInfoTable.Controls.Remove(wednesday);
-            timeInfoTable.Controls.Remove(thursday);
-            timeInfoTable.Controls.Remove(friday);
-            timeInfoTable.Controls.Remove(saturday);
-            timeInfoTable.Controls.Remove(sunday);
+            
 
 
 
@@ -345,28 +482,7 @@ namespace WorkingTimeTracker
             timeInfoTable.Controls.Add(saturday, 1, 6);
             timeInfoTable.Controls.Add(sunday, 1, 7);
 
-            // var Workday = workTimeCalculator.getWorkdayByDateTime(DayofWeek);
-
-
-
-
-
-
-
-
-            //string date_s = day.getDate_S();
-            //double workingTime = day.getWorkingTime();
-            //string day_start = day.getStartofWorkday_S();
-            //string day_end = day.getEndofWorkday_S();
-
-
-            //string text = "At the " + date_s + "\n"
-            //            + "you have worked " + workingTime + " hours" + "\n"
-            //            + "You have started at " + day_start +" o'clock"+ "\n"
-            //            + "and ended at " + day_end+" o'clock" ;
-
         }
-
 
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
         {
@@ -404,16 +520,18 @@ namespace WorkingTimeTracker
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             /*Remove old controls first*/
-            timeInfoTable.Controls.Remove(monday);
-            timeInfoTable.Controls.Remove(tuesday);
-            timeInfoTable.Controls.Remove(wednesday);
-            timeInfoTable.Controls.Remove(thursday);
-            timeInfoTable.Controls.Remove(friday);
-            timeInfoTable.Controls.Remove(saturday);
-            timeInfoTable.Controls.Remove(sunday);
+            //timeInfoTable.Controls.Remove(monday);
+            //timeInfoTable.Controls.Remove(tuesday);
+            //timeInfoTable.Controls.Remove(wednesday);
+            //timeInfoTable.Controls.Remove(thursday);
+            //timeInfoTable.Controls.Remove(friday);
+            //timeInfoTable.Controls.Remove(saturday);
+            //timeInfoTable.Controls.Remove(sunday);
 
-
-
+            //remove all controls from table
+            timeInfoTable.Controls.Clear();
+            //set again all permanent text values
+            InitializeTable();
 
 
         }
