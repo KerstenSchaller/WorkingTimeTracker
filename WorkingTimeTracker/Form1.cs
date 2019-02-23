@@ -36,7 +36,7 @@ namespace WorkingTimeTracker
 
 
 
-            populateListView();
+            populateListViews();
             
             
 
@@ -85,10 +85,10 @@ namespace WorkingTimeTracker
         }
 
         /*Used to fill values into the days listview*/
-        private void populateListView()
+        private void populateListViews()
         {
 
-            var days = workTimeCalculator.get_days();
+            var days = workTimeCalculator.getdays();
             List<string> strings = new List<string>();
             foreach (var day in days)
             {
@@ -106,35 +106,28 @@ namespace WorkingTimeTracker
 
         public void populateCWListView()
         {
-            var days = workTimeCalculator.get_days();
 
-            int cw = -1;
-            int cw_ll = -1;
-            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
-            Calendar calendar = dfi.Calendar;
-            List<string> calenderweeks = new List<string>();
-            // loop through all days and create a list of Calenderweeks to display
-            foreach (var day in days)
+   
+            List<int> calenderweeks = workTimeCalculator.getCalendarweeks();
+            List<string> calenderweeks_s = new List<string>();
+            foreach (var cw in calenderweeks)
             {
 
-                //determine calenderweek
-                cw = calendar.GetWeekOfYear(day.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
-                if (cw != cw_ll)
-                {
                     //compose string for listbox
-                    calenderweeks.Add(cw.ToString() +@"/"+ day.date.Year);
-                }
-                cw_ll = cw;
-
-                //finally display the calenderweeks
-                calenderweek_listBox.DataSource = calenderweeks;
+                    calenderweeks_s.Add(cw.ToString() /*+ @"/" + day.date.Year*/);
             }
+
+
+            //finally display the calenderweeks
+            calenderweek_listBox.DataSource = calenderweeks;
+
+
 
 
 
         }
 
-  
+
 
 
         /*Mouse and keyboard tracking stuff below*/
@@ -258,27 +251,27 @@ namespace WorkingTimeTracker
         /*defines what it shown in the ballontip info*/
         public void showBallonTipClickedInfo()
         {
-            //show balloon tip
-            WorkTimeInfo day = workTimeCalculator.get_current_day();
+            ////show balloon tip
+            //WorkTimeInfo day = workTimeCalculator.get_current_day();
 
-            string date_s = day.getDate_S();
-            double workingTime = day.getWorkingTime();
-            string day_start = day.getStartofWorkday_S();
-            string day_end = day.getEndofWorkday_S();
+            //string date_s = day.getDate_S();
+            //double workingTime = day.getWorkingTime();
+            //string day_start = day.getStartofWorkday_S();
+            //string day_end = day.getEndofWorkday_S();
 
-            string text = date_s +"_"+ workingTime + "_"+ day_start + "_"+ day_end;
-            string line1 = "Date: " + date_s +  "\n";
-            string line2 = "Start: " + day_start + "\n";
-            string line3 = "End: " + day_end + "\n";
-            string line4 = "Worked: " + workingTime + "hours" + "\n";
+            //string text = date_s +"_"+ workingTime + "_"+ day_start + "_"+ day_end;
+            //string line1 = "Date: " + date_s +  "\n";
+            //string line2 = "Start: " + day_start + "\n";
+            //string line3 = "End: " + day_end + "\n";
+            //string line4 = "Worked: " + workingTime + "hours" + "\n";
 
-            text = line1 + line2 + line3 + line4;
-            if (true)
-            {
-                text += "!!! - Be Careful.. your working time approaches 10hours - !!!";
-            }
+            //text = line1 + line2 + line3 + line4;
+            //if (true)
+            //{
+            //    text += "!!! - Be Careful.. your working time approaches 10hours - !!!";
+            //}
 
-            notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text + "\n" , ToolTipIcon.Info);
+            //notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text + "\n" , ToolTipIcon.Info);
 
         }
 
@@ -296,24 +289,24 @@ namespace WorkingTimeTracker
         private void listBox_days_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            int index = listBox_days.SelectedIndex;
-            /*Get a list of all days*/
-            var days = workTimeCalculator.get_days();
-            /*extract day by index chosen in listbox*/
-            var day = days[index];
+            //int index = listBox_days.SelectedIndex;
+            ///*Get a list of all days*/
+            //var days = workTimeCalculator.get_days();
+            ///*extract day by index chosen in listbox*/
+            //var day = days[index];
 
-            string date_s = day.getDate_S();
-            double workingTime = day.getWorkingTime();
-            string day_start = day.getStartofWorkday_S();
-            string day_end = day.getEndofWorkday_S();
+            //string date_s = day.getDate_S();
+            //double workingTime = day.getWorkingTime();
+            //string day_start = day.getStartofWorkday_S();
+            //string day_end = day.getEndofWorkday_S();
 
 
-            string text = "At the " + date_s + "\n"
-                        + "you have worked " + workingTime + " hours" + "\n"
-                        + "You have started at " + day_start +" o'clock"+ "\n"
-                        + "and ended at " + day_end+" o'clock" ;
+            //string text = "At the " + date_s + "\n"
+            //            + "you have worked " + workingTime + " hours" + "\n"
+            //            + "You have started at " + day_start +" o'clock"+ "\n"
+            //            + "and ended at " + day_end+" o'clock" ;
 
-            testCalendar();
+
 
                     }
 
@@ -342,17 +335,17 @@ namespace WorkingTimeTracker
 
         private void safeToTextFile(string Path,char delim)
         {
-            List<string> Lines = new List<string>();
-            var days = workTimeCalculator.get_days();
+        //    List<string> Lines = new List<string>();
+        //    var days = workTimeCalculator.get_days();
 
-            Lines.Add("Date" + delim + "Start of Workday" + delim + "End of Workday" + delim + "WorkingTime[h.m]" + "\n");
-            foreach (var day in days)
-            {
-                string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
-                Lines.Add(line);
-            }
-            Lines[Lines.Count-1] = null;/*Delete last line since it is the actual day*/
-            System.IO.File.WriteAllLines(Path,Lines);
+        //    Lines.Add("Date" + delim + "Start of Workday" + delim + "End of Workday" + delim + "WorkingTime[h.m]" + "\n");
+        //    foreach (var day in days)
+        //    {
+        //        string line = day.getDate_S() + delim + day.getStartofWorkday_S() + delim + day.getEndofWorkday_S() + delim + day.getWorkingTime().ToString() + "\n";
+        //        Lines.Add(line);
+        //    }
+        //    Lines[Lines.Count-1] = null;/*Delete last line since it is the actual day*/
+        //    System.IO.File.WriteAllLines(Path,Lines);
 
 
         }

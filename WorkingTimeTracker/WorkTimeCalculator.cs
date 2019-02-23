@@ -10,8 +10,8 @@ namespace WorkingTimeTracker
     class WorkTimeCalculator
     {
         private DateTime last_active = new DateTime();
-        private WorkTimeInfo current_day; // the worktimeinfo of the current day
-        private List<WorkTimeInfo> days = new List<WorkTimeInfo>(); // worktimeinfo over all days
+        private Workday current_day; // the worktimeinfo of the current day
+        private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
         private string data_days_path = Directory.GetCurrentDirectory() + @"\data_days.txt"; // path to file where worktimeinfo over all days will be stored
 
 
@@ -24,52 +24,39 @@ namespace WorkingTimeTracker
         {
         }
 
-        public void setdays(List<WorkTimeInfo> d, bool save = false)
+        public List<Workday> getdays()
+        {
+            return days;
+        }
+
+        public List<int> getCalendarweeks()
+        {
+            List<int> weeks = new List<int>();
+            foreach (Workday day in days) weeks.Add(day.getWeekOfYear());
+            weeks = weeks.Distinct().ToList();
+            return weeks;
+        }
+
+
+        public void setdays(List<Workday> d, bool save = false)
         {
             this.days = d;
             if (save)
             {
-                Serialization.WriteToXmlFile<List<WorkTimeInfo>>(data_days_path, days);
+                Serialization.WriteToXmlFile<List<Workday>>(data_days_path, days);
             }
         }
-        
-        // returns a list of days supposed to be displayed in a listbox
-        public List<string> get_days_list()
-        {
-            List<string> l = new List<string>();
-            foreach (WorkTimeInfo w in days)
-            {
-                string s = w.date.Date.ToString();
-                s = s.Substring(0,11);
-                l.Add(s);
-                
-            }
-            return l;
-        }
 
-        public List<WorkTimeInfo> get_days() { return days; }
 
-        public WorkTimeInfo get_day_by_datetime(DateTime day)
-        {
-            /*loop  through all days and compare each day with given day*/
-            foreach (WorkTimeInfo d in days)
-            {
-                if (day == d.date)
-                {
-                    return d;
-                }
-            }
-            return new WorkTimeInfo();
-        }
 
-        public WorkTimeInfo get_current_day() { return current_day; }
 
         // triggers all actions related to a new activity
         public void trigger_Activity()
         {
+            
             if ((DateTime.Now - last_active) > sample_time)
             {
-                Analyze();
+                triggerEvent();
                 this.setdays(days,true);/*save data to file*/
             }
             
@@ -77,28 +64,25 @@ namespace WorkingTimeTracker
 
 
 
-        private void Analyze()
+        private void triggerEvent()
         {
             // Variables
-
             DateTime currentTime = DateTime.Now;
             bool file_created = false;
 
             try
             {
                 // try to load data from passed days
-                days = Serialization.ReadFromXmlFile<List<WorkTimeInfo>>(data_days_path);
+                days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path);
                 current_day = days.Last();
 
             }
             catch
             {
-                // create new days if loading failed
-                //current_day = new WorkTimeInfo();
-                //days.Add(current_day);
+                
 
                 // create new File if loading failed
-                Serialization.WriteToXmlFile<List<WorkTimeInfo>>(data_days_path,days);
+                Serialization.WriteToXmlFile<List<Workday>>(data_days_path,days);
                 file_created = true;
             }
 
@@ -106,36 +90,38 @@ namespace WorkingTimeTracker
             // That means we have new day
             bool day_changed;
             bool month_changed;
+            bool year_changed;
             if (file_created == true)
             {
                 day_changed = false;
                 month_changed = false;
+                year_changed = false;
             }
             else
             {
-                day_changed = (current_day.last_active.Day.CompareTo(currentTime.Day) < 0); // check if day has changed, 
-                month_changed = (current_day.last_active.Month.CompareTo(currentTime.Month) < 0);// check if month changed(at month change, daychange will be false)
+                day_changed = (current_day.end_of_workday.Day.CompareTo(currentTime.Day) < 0); // check if day has changed, 
+                month_changed = (current_day.end_of_workday.Month.CompareTo(currentTime.Month) < 0);// check if month changed(at month change, daychange will be false)
+                year_changed = (current_day.end_of_workday.Year.CompareTo(currentTime.Year) < 0);// check if year changed
             }
 
 
-            if (day_changed || month_changed || file_created)
+            if (day_changed || month_changed || year_changed || file_created)
             {
             
                 /*Create a new day*/
-                days.Add(new WorkTimeInfo());
+                days.Add(new Workday(currentTime));
                 current_day = days.Last();
                 
-                current_day.addActivity(currentTime);
+
                 current_day.setStartofWorkday(currentTime);
                 current_day.setEndofWorkday(currentTime);
-                last_active = current_day.last_active;
+                last_active = currentTime;
             }
             else
             {
 
                 // write another activity
-                current_day.addActivity(currentTime);
-                last_active = current_day.last_active;
+                last_active = currentTime;
                 current_day.setEndofWorkday(currentTime);
             }
             
