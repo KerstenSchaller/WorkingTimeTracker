@@ -106,24 +106,10 @@ namespace WorkingTimeTracker
 
         public void populateCWListView()
         {
-
-   
-            List<int> calenderweeks = workTimeCalculator.getCalendarweeks();
-            List<string> calenderweeks_s = new List<string>();
-            foreach (var cw in calenderweeks)
-            {
-
-                    //compose string for listbox
-                    calenderweeks_s.Add(cw.ToString() /*+ @"/" + day.date.Year*/);
-            }
-
-
+            
+            List<string> calenderweeks = workTimeCalculator.getCalendarweeks();
             //finally display the calenderweeks
             calenderweek_listBox.DataSource = calenderweeks;
-
-
-
-
 
         }
 
@@ -288,12 +274,85 @@ namespace WorkingTimeTracker
         /*changes the content of the label according to what day was chosen in listbox*/
         private void listBox_days_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            //int index = listBox_days.SelectedIndex;
-            ///*Get a list of all days*/
-            //var days = workTimeCalculator.get_days();
-            ///*extract day by index chosen in listbox*/
-            //var day = days[index];
+
+            int index = listBox_days.SelectedIndex;
+            /*Get a list of all days*/
+            var days = workTimeCalculator.getdays();
+            /*extract day by index chosen in listbox*/
+            var day = days[index];
+
+            string calenderweek = day.getWeekOfYear();
+            /*Fill table with day information*/
+            fillTable(calenderweek);
+
+
+
+
+
+        }
+
+
+        private void calenderweek_listBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillTable((string)calenderweek_listBox.SelectedItem);            
+        }
+
+        public void fillTable(string calenderweek)
+        {
+            // split calenderweek into week and year
+            var v = calenderweek.Split('/');
+            // determine first day of week with given year and week(parsed from string to int)
+            DateTime Monday = FirstDateOfWeekISO8601(Int32.Parse((v[1])), Int32.Parse(v[0]));
+            DateTime Tuesday = Monday + new TimeSpan(1, 0, 0, 0);
+            DateTime Wednesday = Monday + new TimeSpan(2, 0, 0, 0);
+            DateTime Thursday = Monday + new TimeSpan(3, 0, 0, 0);
+            DateTime Friday = Monday + new TimeSpan(4, 0, 0, 0);
+            DateTime Saturday = Monday + new TimeSpan(5, 0, 0, 0);
+            DateTime Sunday = Monday + new TimeSpan(6, 0, 0, 0);
+
+            /*Fill Dates*/
+            Label monday = new Label();
+            Label tuesday = new Label();
+            Label wednesday = new Label();
+            Label thursday = new Label();
+            Label friday = new Label();
+            Label saturday = new Label();
+            Label sunday = new Label();
+            monday.Text = Monday.Day + "." + Monday.Month + "." + Monday.Year;
+            tuesday.Text = Tuesday.Day + "." + Tuesday.Month + "." + Tuesday.Year;
+            wednesday.Text = Wednesday.Day + "." + Wednesday.Month + "." + Wednesday.Year;
+            thursday.Text = Thursday.Day + "." + Thursday.Month + "." + Thursday.Year;
+            friday.Text = Friday.Day + "." + Friday.Month + "." + Friday.Year;
+            saturday.Text = Saturday.Day + "." + Saturday.Month + "." + Saturday.Year;
+            sunday.Text = Sunday.Day + "." + Sunday.Month + "." + Sunday.Year;
+
+            /*Remove old controls first*/
+            timeInfoTable.Controls.Remove(monday);
+            timeInfoTable.Controls.Remove(tuesday);
+            timeInfoTable.Controls.Remove(wednesday);
+            timeInfoTable.Controls.Remove(thursday);
+            timeInfoTable.Controls.Remove(friday);
+            timeInfoTable.Controls.Remove(saturday);
+            timeInfoTable.Controls.Remove(sunday);
+
+
+
+            timeInfoTable.Controls.Add(monday, 1, 1);
+            timeInfoTable.Controls.Add(tuesday, 1, 2);
+            timeInfoTable.Controls.Add(wednesday, 1, 3);
+            timeInfoTable.Controls.Add(thursday, 1, 4);
+            timeInfoTable.Controls.Add(friday, 1, 5);
+            timeInfoTable.Controls.Add(saturday, 1, 6);
+            timeInfoTable.Controls.Add(sunday, 1, 7);
+
+            // var Workday = workTimeCalculator.getWorkdayByDateTime(DayofWeek);
+
+
+
+
+
+
+
 
             //string date_s = day.getDate_S();
             //double workingTime = day.getWorkingTime();
@@ -306,15 +365,56 @@ namespace WorkingTimeTracker
             //            + "You have started at " + day_start +" o'clock"+ "\n"
             //            + "and ended at " + day_end+" o'clock" ;
 
+        }
 
 
-                    }
+        public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
+        {
+            /*Code taken from*/
+            /*https://stackoverflow.com/questions/662379/calculate-date-from-week-number*/
+            /*19.01.2019*/
+
+
+            DateTime jan1 = new DateTime(year, 1, 1);
+            int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
+
+            // Use first Thursday in January to get first week of the year as
+            // it will never be in Week 52/53
+            DateTime firstThursday = jan1.AddDays(daysOffset);
+            var cal = CultureInfo.CurrentCulture.Calendar;
+            int firstWeek = cal.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+            var weekNum = weekOfYear;
+            // As we're adding days to a date in Week 1,
+            // we need to subtract 1 in order to get the right date for week #1
+            if (firstWeek == 1)
+            {
+                weekNum -= 1;
+            }
+
+            // Using the first Thursday as starting week ensures that we are starting in the right year
+            // then we add number of weeks multiplied with days
+            var result = firstThursday.AddDays(weekNum * 7);
+
+            // Subtract 3 days from Thursday to get Monday, which is the first weekday in ISO8601
+            return result.AddDays(-3);
+        }
+
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            //this.populateListView();
+            /*Remove old controls first*/
+            timeInfoTable.Controls.Remove(monday);
+            timeInfoTable.Controls.Remove(tuesday);
+            timeInfoTable.Controls.Remove(wednesday);
+            timeInfoTable.Controls.Remove(thursday);
+            timeInfoTable.Controls.Remove(friday);
+            timeInfoTable.Controls.Remove(saturday);
+            timeInfoTable.Controls.Remove(sunday);
 
-         
+
+
+
 
         }
 
@@ -350,10 +450,7 @@ namespace WorkingTimeTracker
 
         }
 
-        private void calenderweek_listBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
+
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {

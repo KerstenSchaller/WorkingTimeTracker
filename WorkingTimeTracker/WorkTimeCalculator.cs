@@ -29,9 +29,9 @@ namespace WorkingTimeTracker
             return days;
         }
 
-        public List<int> getCalendarweeks()
+        public List<string> getCalendarweeks()
         {
-            List<int> weeks = new List<int>();
+            List<string> weeks = new List<string>();
             foreach (Workday day in days) weeks.Add(day.getWeekOfYear());
             weeks = weeks.Distinct().ToList();
             return weeks;
@@ -60,6 +60,27 @@ namespace WorkingTimeTracker
                 this.setdays(days,true);/*save data to file*/
             }
             
+        }
+
+        public Workday getWorkdayByDateTime(DateTime date)
+        {
+            int day = date.Day;
+            int month = date.Month;
+            int year = date.Year;
+
+            foreach (var d in days)
+            {
+                int _day = d.date.Day;
+                int _month = d.date.Month;
+                int _year = d.date.Year;
+
+                if ((_day == day) && (month == _month) && (year == _year))
+                {
+                    return d;
+                }
+
+            }
+            return null;            
         }
 
 

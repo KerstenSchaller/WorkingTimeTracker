@@ -14,10 +14,7 @@ namespace WorkingTimeTracker
         public DateTime date = new DateTime();
         public DateTime start_of_workday = new DateTime();
         public DateTime end_of_workday = new DateTime();
-        
-
-        
-
+       
         public Workday(DateTime Date)
         {
             date = Date;
@@ -29,11 +26,13 @@ namespace WorkingTimeTracker
         }
 
 
-        public int getWeekOfYear()
+        public string getWeekOfYear()
         {
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
             Calendar calendar = dfi.Calendar;
-            return calendar.GetWeekOfYear(date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+            int week =  calendar.GetWeekOfYear(date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+            int year = date.Year;
+            return (week.ToString() + @"/" + year.ToString());
         }
 
         public void setStartofWorkday(DateTime time) { start_of_workday = time; }
@@ -100,10 +99,7 @@ namespace WorkingTimeTracker
 
 
 
-        void addActivity(DateTime currentTime)
-        {
-            
-        }
+        
 
 
     }
