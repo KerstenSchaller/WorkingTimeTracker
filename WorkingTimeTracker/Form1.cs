@@ -316,8 +316,8 @@ namespace WorkingTimeTracker
         public void showBallonTipClickedInfo()
         {
             //show balloon tip
-            var days = workTimeCalculator.getdays();
-            Workday day = days.Last();
+            //var days = workTimeCalculator.getdays();
+            Workday day = workTimeCalculator.getWorkdayByDateTime(DateTime.Now);
 
             string date_s = day.getDate_S();
             double workingTime = day.getWorkingTime();
@@ -472,7 +472,12 @@ namespace WorkingTimeTracker
             // iterate through all days and fill control text either with "---" if theres no info for that day or with the desired value
             for (int i = start; i < end+1; i++)
             {
-
+               if (workdays[i_workdays] == null)
+               {
+                  controls[i].Text = "---";
+                  continue;
+               }
+                
                 switch (valuetype)
                 {
                     case "starttime":

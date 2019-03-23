@@ -38,30 +38,44 @@ namespace WorkingTimeTracker
 
         private List<Workday> findMissingDays(List<Workday> days)
         {
+         
             Workday Day_before = days[0];
             List<Workday> l = new List<Workday>();
+         try {
             l.Add(days[0]);
             for (int i = 1; i < days.Count; i++)
             {
-                //l.Add(days[i]);
-                //bool cond1 = days[i].date.Day != (Day_before.date.Day + 1);
-                //bool cond2 = !(Day_before.date.Day == 31 || Day_before.date.Day == 28 || Day_before.date.Day == 30) && (days[i].date.Day == 1);
-                DateTime d = Day_before.date + new TimeSpan(24, 0, 0);
-                bool cond3 = !(days[i].date.Date.CompareTo((Day_before.date.Date + new TimeSpan(24, 0, 0))) == 0);
-                if (cond3)
-                {
-                    Workday wti = new Workday();
-                    wti.date = Day_before.date + new TimeSpan(24, 0, 0);
-                    l.Add(wti);
-                    Day_before = wti;
-                    i--;
-                }
-                else
-                {
-                    l.Add(days[i]);
-                    Day_before = days[i];
-                }
+               //l.Add(days[i]);
+               //bool cond1 = days[i].date.Day != (Day_before.date.Day + 1);
+               //bool cond2 = !(Day_before.date.Day == 31 || Day_before.date.Day == 28 || Day_before.date.Day == 30) && (days[i].date.Day == 1);
+               DateTime d = Day_before.date + new TimeSpan(24, 0, 0);
+               bool cond3 = !(days[i].date.Date.CompareTo((Day_before.date.Date + new TimeSpan(24, 0, 0))) == 0);
+               if (cond3)
+               {
+                  Workday wti = new Workday();
+                  try
+                  {
+                     wti.date = Day_before.date + new TimeSpan(24, 0, 0);
+                  }
+                  catch (Exception e)
+                  {
+                     e = e;
+                  }
+                  l.Add(wti);
+                  Day_before = wti;
+                  //i--;
+               }
+               else
+               {
+                  l.Add(days[i]);
+                  Day_before = days[i];
+               }
             }
+         }
+         catch (Exception ex)
+         {
+            ex = ex;
+         }
             return l;
         }
 
@@ -131,8 +145,11 @@ namespace WorkingTimeTracker
             // Variables
             DateTime currentTime = DateTime.Now;
             bool file_created = false;
+            bool day_changed = false;
+            bool month_changed = false;
+            bool year_changed = false;
 
-            try
+         try
             {
                 // try to load data from passed days
                 days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path);
@@ -140,7 +157,8 @@ namespace WorkingTimeTracker
                 days = findMissingDays(days);
                 // safe back parsed days to file in order to keep the ones which where missing
                 Serialization.WriteToXmlFile<List<Workday>>(data_days_path, days);
-                current_day = days.Last();
+                current_day = getWorkdayByDateTime(DateTime.Now);
+            
 
             }
             catch
@@ -150,13 +168,12 @@ namespace WorkingTimeTracker
                 // create new File if loading failed
                 Serialization.WriteToXmlFile<List<Workday>>(data_days_path,days);
                 file_created = true;
+ 
             }
 
             // day of last activity is before now. 
             // That means we have new day
-            bool day_changed;
-            bool month_changed;
-            bool year_changed;
+
             if (file_created == true)
             {
                 day_changed = false;
@@ -165,13 +182,18 @@ namespace WorkingTimeTracker
             }
             else
             {
-                day_changed = (current_day.end_of_workday.Day.CompareTo(currentTime.Day) < 0); // check if day has changed, 
-                month_changed = (current_day.end_of_workday.Month.CompareTo(currentTime.Month) < 0);// check if month changed(at month change, daychange will be false)
-                year_changed = (current_day.end_of_workday.Year.CompareTo(currentTime.Year) < 0);// check if year changed
-            }
+               if (current_day != null)
+               {
+               
+                   day_changed = (current_day.date.Day.CompareTo(currentTime.Day) < 0); // check if day has changed, 
+                   month_changed = (current_day.date.Month.CompareTo(currentTime.Month) < 0);// check if month changed(at month change, daychange will be false)
+                   year_changed = (current_day.date.Year.CompareTo(currentTime.Year) < 0);// check if year changed
+               }
+               
+         }
 
 
-            if (day_changed || month_changed || year_changed || file_created)
+            if (day_changed || month_changed || year_changed || file_created || (current_day == null))
             {
             
                 /*Create a new day*/
@@ -186,9 +208,11 @@ namespace WorkingTimeTracker
             else
             {
 
-                // write another activity
-                last_active = currentTime;
-                current_day.setEndofWorkday(currentTime);
+               // write another activity
+               last_active = currentTime;
+            //set start of workday of this is a new workday created by the findMissingDays(..) function
+            if (current_day.getStartofWorkday() == new DateTime()) { current_day.setStartofWorkday(currentTime); }
+               current_day.setEndofWorkday(currentTime);
             }
             
 

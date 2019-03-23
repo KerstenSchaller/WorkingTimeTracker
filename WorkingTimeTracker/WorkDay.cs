@@ -55,7 +55,7 @@ namespace WorkingTimeTracker
         }
 
         public void setStartofWorkday(DateTime time) { start_of_workday = time; }
-
+      public DateTime getStartofWorkday() { return start_of_workday; }
         public string getStartofWorkday_S()
         {
             if (absent_through_sickness == true) return "sick";
