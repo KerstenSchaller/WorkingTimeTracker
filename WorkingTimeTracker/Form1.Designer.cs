@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form1));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox_days = new System.Windows.Forms.ListBox();
             this.ExportToCSVButton = new System.Windows.Forms.Button();
@@ -39,6 +41,8 @@
             this.timeInfoTable = new System.Windows.Forms.TableLayoutPanel();
             this.Sickbutton = new System.Windows.Forms.Button();
             this.vacationbutton = new System.Windows.Forms.Button();
+            this.WorkingtimeChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).BeginInit();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -58,7 +62,6 @@
             this.listBox_days.Size = new System.Drawing.Size(99, 277);
             this.listBox_days.TabIndex = 24;
             this.listBox_days.SelectedIndexChanged += new System.EventHandler(this.listBox_days_SelectedIndexChanged);
-            
             // 
             // ExportToCSVButton
             // 
@@ -107,9 +110,7 @@
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-
-            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
-
+            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
@@ -148,11 +149,25 @@
             this.vacationbutton.UseVisualStyleBackColor = true;
             this.vacationbutton.Click += new System.EventHandler(this.vacationbutton_Click);
             // 
+            // WorkingtimeChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.WorkingtimeChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.WorkingtimeChart.Legends.Add(legend1);
+            this.WorkingtimeChart.Location = new System.Drawing.Point(282, 282);
+            this.WorkingtimeChart.Name = "WorkingtimeChart";
+            this.WorkingtimeChart.Size = new System.Drawing.Size(531, 167);
+            this.WorkingtimeChart.TabIndex = 37;
+            this.WorkingtimeChart.Text = "chart1";
+            this.WorkingtimeChart.Click += new System.EventHandler(this.chart1_Click);
+            // 
             // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 377);
+            this.ClientSize = new System.Drawing.Size(828, 456);
+            this.Controls.Add(this.WorkingtimeChart);
             this.Controls.Add(this.vacationbutton);
             this.Controls.Add(this.Sickbutton);
             this.Controls.Add(this.timeInfoTable);
@@ -160,7 +175,6 @@
             this.Controls.Add(this.calenderweek_listBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ExportToCSVButton);
-
             this.Controls.Add(this.listBox_days);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "form1";
@@ -169,6 +183,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,6 +199,7 @@
         private System.Windows.Forms.TableLayoutPanel timeInfoTable;
         private System.Windows.Forms.Button Sickbutton;
         private System.Windows.Forms.Button vacationbutton;
+        private System.Windows.Forms.DataVisualization.Charting.Chart WorkingtimeChart;
     }
 }
 

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
 using Gma.System.MouseKeyHook.Implementation;
 using System.Globalization;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace WorkingTimeTracker
 {
@@ -374,9 +375,7 @@ namespace WorkingTimeTracker
                 fillTable(calendarweek);
 
             }
-
-
-
+            
         }
 
 
@@ -426,6 +425,7 @@ namespace WorkingTimeTracker
             workdays.Add(workTimeCalculator.getWorkdayByDateTime(Saturday));
             workdays.Add(workTimeCalculator.getWorkdayByDateTime(Sunday));
 
+            UpdateWorkingTimeChart(workdays);
 
             fillDatesToTable(FirstDayOfWeek);
             fillTimesToTable(workdays,"starttime");
@@ -679,5 +679,85 @@ namespace WorkingTimeTracker
         {
             notifyIcon1.Icon = null;
         }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        //private void UpdateWorkingTimeChart(double[] working_times, double[] working_time_averages)
+        private void UpdateWorkingTimeChart(List<Workday> daysWeek)
+        {
+  
+
+            /*parse working times into array*/
+            double[] working_times = new double[7];
+            for (int i = 0; i < 7; i++)
+            {
+                if (daysWeek[i] != null)
+                {
+                    working_times[i] = daysWeek[i].getWorkingTime();
+                }
+                else
+                {
+                    working_times[i] = 0;
+                }
+                
+            }
+
+            double[] working_time_averages = workTimeCalculator.getAverageWorkingTimes();
+
+
+            /*Create namings used internally to identify series and used for legend*/
+            string workingTimeSeries_s = "Working Times";
+            string workingTimeAverageSeries_s = "Working times average";
+            string standartWorkingTimeseries_s = "Standart Working Time";
+
+
+
+            /*Remove old series first*/
+            try
+            {
+                WorkingtimeChart.Series.Remove(WorkingtimeChart.Series[workingTimeSeries_s]);
+                WorkingtimeChart.Series.Remove(WorkingtimeChart.Series[workingTimeAverageSeries_s]);
+                WorkingtimeChart.Series.Remove(WorkingtimeChart.Series[standartWorkingTimeseries_s]);
+            }
+            catch { }
+
+            /*Create series for chart*/
+            var time_series_week = new Series(workingTimeSeries_s);
+            var time_series_week_average = new Series(workingTimeAverageSeries_s);
+            var time_series_standartWorktime = new Series(standartWorkingTimeseries_s);
+
+            /*Create X asix labels and add working times*/
+            time_series_week.Points.DataBindXY(new[] { "Monday", "Tuesay", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, working_times);
+            /*Add values to second series "average working times"*/
+            time_series_week_average.Points.DataBindY(working_time_averages);
+            double standartWorkingTime = workTimeCalculator.getStandartWorkingTime();
+            time_series_standartWorktime.Points.DataBindY(new[] { standartWorkingTime, standartWorkingTime, standartWorkingTime, standartWorkingTime, standartWorkingTime, standartWorkingTime, standartWorkingTime });
+
+
+            /*Add series to chart*/
+            WorkingtimeChart.Series.Add(time_series_week);
+            WorkingtimeChart.Series.Add(time_series_week_average);
+            WorkingtimeChart.Series.Add(time_series_standartWorktime);
+
+            /*Set size of working time columns*/
+            WorkingtimeChart.Series[workingTimeSeries_s]["PixelPointWidth"] = "30";
+
+
+            /*Format average working time series*/
+            time_series_week_average.ChartType = SeriesChartType.StackedColumn;
+            time_series_week_average.MarkerBorderWidth = 1;
+            time_series_week_average.Color = Color.Red;
+            WorkingtimeChart.Series[workingTimeAverageSeries_s]["PixelPointWidth"] = "5";
+
+            /*Format standart workingtime time series*/
+            time_series_standartWorktime.ChartType = SeriesChartType.Line;
+            time_series_standartWorktime.Color = Color.Black;
+
+        }
+
     }
 }

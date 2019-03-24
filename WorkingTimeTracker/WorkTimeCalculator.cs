@@ -14,6 +14,7 @@ namespace WorkingTimeTracker
         private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
         private string data_days_path = Directory.GetCurrentDirectory() + @"\data_days.txt"; // path to file where worktimeinfo over all days will be stored
 
+        public double getStandartWorkingTime() { return 8.4; }
 
 
         int max_period_break_time = 15; /*[minutes]*/
@@ -25,17 +26,51 @@ namespace WorkingTimeTracker
 
         }
 
+        public double[] getAverageWorkingTimes()
+        {
+            double[] workingTimeAverages = new double[7];
 
-        //private addMissingDays()
-        //{
-        //    List<Workday> temp_days = new List<Workday>();
-        //    foreach (Workday wd in days)
-        //    {
-        //        int day = wd.date.Day;
-        //        int month = 
-        //    }
-        //}
+            double Monday_times = 0;
+            double Monday_denominator = 0;
+            double Tuesday_times = 0;
+            double Tuesday_denominator = 0;
+            double Wednesday_times = 0;
+            double Wednesday_denominator = 0;
+            double Thursday_times = 0;
+            double Thursday_denominator = 0;
+            double Friday_times = 0;
+            double Friday_denominator = 0;
+            double Saturday_times = 0;
+            double Saturday_denominator = 0;
+            double Sunday_times = 0;
+            double Sunday_denominator = 0;
 
+            foreach (Workday day in days)
+            {
+                var weekday = day.start_of_workday.DayOfWeek;
+                if (weekday == DayOfWeek.Monday)    { Monday_times += day.getWorkingTime(); Monday_denominator++; }
+                if (weekday == DayOfWeek.Tuesday)   { Tuesday_times += day.getWorkingTime(); Tuesday_denominator++; }
+                if (weekday == DayOfWeek.Wednesday) { Wednesday_times += day.getWorkingTime(); Wednesday_denominator++; }
+                if (weekday == DayOfWeek.Thursday)  { Thursday_times += day.getWorkingTime(); Thursday_denominator++; }
+                if (weekday == DayOfWeek.Friday)    { Friday_times += day.getWorkingTime(); Friday_denominator++; }
+                if (weekday == DayOfWeek.Saturday)  { Saturday_times += day.getWorkingTime(); Saturday_denominator++; }
+                if (weekday == DayOfWeek.Sunday)    { Sunday_times += day.getWorkingTime(); Sunday_denominator++; }
+            }
+
+            workingTimeAverages[0] = Monday_times / Monday_denominator;
+            workingTimeAverages[1] = Tuesday_times / Tuesday_denominator;
+            workingTimeAverages[2] = Wednesday_times / Wednesday_denominator;
+            workingTimeAverages[3] = Thursday_times / Thursday_denominator;
+            workingTimeAverages[4] = Friday_times / Friday_denominator;
+            workingTimeAverages[5] = Saturday_times / Saturday_denominator;
+            workingTimeAverages[6] = Sunday_times / Sunday_denominator;
+
+            return workingTimeAverages;
+
+
+        }
+
+        
         private List<Workday> findMissingDays(List<Workday> days)
         {
          
