@@ -47,8 +47,9 @@ namespace WorkingTimeTracker
 
             foreach (Workday day in days)
             {
-                var weekday = day.start_of_workday.DayOfWeek;
-                if (weekday == DayOfWeek.Monday)    { Monday_times += day.getWorkingTime(); Monday_denominator++; }
+                if (day == days.Last()){break; }// break for actual day because at the beginning of the day it would screw the average
+                var weekday = day.date.DayOfWeek;
+                if (weekday == DayOfWeek.Monday)    {Monday_times += day.getWorkingTime(); Monday_denominator++; }
                 if (weekday == DayOfWeek.Tuesday)   { Tuesday_times += day.getWorkingTime(); Tuesday_denominator++; }
                 if (weekday == DayOfWeek.Wednesday) { Wednesday_times += day.getWorkingTime(); Wednesday_denominator++; }
                 if (weekday == DayOfWeek.Thursday)  { Thursday_times += day.getWorkingTime(); Thursday_denominator++; }

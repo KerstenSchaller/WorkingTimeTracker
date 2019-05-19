@@ -75,8 +75,11 @@ namespace WorkingTimeTracker
 
         public double getWorkingTime()
         {
-            //return hours for full workday if day was sick or vacation
-            if (absent_through_sickness == true || absent_through_vacation == true) return (8.4);
+         //return hours for full workday if day was sick or vacation
+         if (absent_through_sickness == true || absent_through_vacation == true)
+         {
+            return (8.4);
+         } 
 
             TimeSpan total_time = end_of_workday - start_of_workday;
             TimeSpan time_incl_breaks = total_time;
