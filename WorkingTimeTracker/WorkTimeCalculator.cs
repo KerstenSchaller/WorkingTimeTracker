@@ -172,8 +172,7 @@ namespace WorkingTimeTracker
             {
                 // try to load data from passed days
                 days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path);
-                // parse days for missing ones(weekend, vacation, sickness...)
-                days = findMissingDays(days);
+
                 // safe back parsed days to file in order to keep the ones which where missing
                 Serialization.WriteToXmlFile<List<Workday>>(data_days_path, days);
                 current_day = getWorkdayByDateTime(DateTime.Now);
@@ -233,7 +232,10 @@ namespace WorkingTimeTracker
             if (current_day.getStartofWorkday() == new DateTime()) { current_day.setStartofWorkday(currentTime); }
                current_day.setEndofWorkday(currentTime);
             }
-            
+
+
+            // parse days for missing ones(weekend, vacation, sickness...)
+            days = findMissingDays(days);
 
         }
 
