@@ -325,17 +325,14 @@ namespace WorkingTimeTracker
             string day_start = day.getStartofWorkday_S();
             string day_end = day.getEndofWorkday_S();
 
-            string text = date_s + "_" + workingTime + "_" + day_start + "_" + day_end;
+
             string line1 = "Date: " + date_s + "\n";
             string line2 = "Start: " + day_start + "\n";
             string line3 = "End: " + day_end + "\n";
             string line4 = "Worked: " + workingTime + "hours" + "\n";
 
-            text = line1 + line2 + line3 + line4;
-            if (true)
-            {
-                text += "!!! - Be Careful.. your working time approaches 10hours - !!!";
-            }
+            string text = line1 + line2 + line3 + line4;
+
 
             notifyIcon1.ShowBalloonTip(5000, "WorkingTimeTracker", text + "\n", ToolTipIcon.Info);
 
@@ -395,8 +392,6 @@ namespace WorkingTimeTracker
 
         public void fillTable(string calendarweek)
         {
-
-
             // split calenderweek into week and year
             var v = calendarweek.Split('/');
             int year = Int32.Parse(v[1]);
@@ -472,10 +467,11 @@ namespace WorkingTimeTracker
             // iterate through all days and fill control text either with "---" if theres no info for that day or with the desired value
             for (int i = start; i < end+1; i++)
             {
-               if (workdays[i_workdays] == null)
+               if ((workdays[i_workdays] == null) || ( workdays[i_workdays].getStartofWorkday_S() == "0:0" ))
                {
                   controls[i].Text = "---";
-                  continue;
+                    i_workdays++;
+                    continue;
                }
                 
                 switch (valuetype)
