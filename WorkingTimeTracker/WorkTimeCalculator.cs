@@ -74,45 +74,28 @@ namespace WorkingTimeTracker
         
         private List<Workday> findMissingDays(List<Workday> days)
         {
-         
             Workday Day_before = days[0];
             List<Workday> l = new List<Workday>();
-         try {
             l.Add(days[0]);
-            for (int i = 1; i < days.Count; i++)
+            Workday lastday = days[days.Count - 1];
+            int i = 1;
+
+            while (days[i-1] != lastday)
             {
-               //l.Add(days[i]);
-               //bool cond1 = days[i].date.Day != (Day_before.date.Day + 1);
-               //bool cond2 = !(Day_before.date.Day == 31 || Day_before.date.Day == 28 || Day_before.date.Day == 30) && (days[i].date.Day == 1);
-               DateTime d = Day_before.date + new TimeSpan(24, 0, 0);
-               bool cond3 = !(days[i].date.Date.CompareTo((Day_before.date.Date + new TimeSpan(24, 0, 0))) == 0);
-               if (cond3)
-               {
-                  Workday wti = new Workday();
-                  try
-                  {
-                     wti.date = Day_before.date + new TimeSpan(24, 0, 0);
-                  }
-                  catch (Exception e)
-                  {
-                     e = e;
-                  }
-                  l.Add(wti);
-                  Day_before = wti;
-                  //i--;
-               }
-               else
-               {
-                  l.Add(days[i]);
-                  Day_before = days[i];
-               }
+                bool condition_for_adding_days = (days[i-1].date.Date + new TimeSpan(24, 0, 0)).CompareTo(days[i].date.Date) != 0;
+                if (condition_for_adding_days)
+                {
+                    days.Insert(i,new Workday(days[i - 1].date.Date + new TimeSpan(24, 0, 0)));
+                }
+                i++;
             }
-         }
-         catch (Exception ex)
-         {
-            ex = ex;
-         }
-            return l;
+
+                
+            
+
+
+
+            return days;
         }
 
         public List<Workday> getdays()
