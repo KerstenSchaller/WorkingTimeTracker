@@ -228,8 +228,8 @@ namespace WorkingTimeTracker
 
                // write another activity
                last_active = currentTime;
-            //set start of workday of this is a new workday created by the findMissingDays(..) function
-            if (current_day.getStartofWorkday() == new DateTime()) { current_day.setStartofWorkday(currentTime); }
+               //set start of workday of this is a new workday created by the findMissingDays(..) function
+               if (current_day.getStartofWorkday() == new DateTime()) { current_day.setStartofWorkday(currentTime); }
                current_day.setEndofWorkday(currentTime);
             }
 
