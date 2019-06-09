@@ -20,8 +20,8 @@ namespace WorkingTimeTracker
         //define global vars
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
-        
-
+        string calenderweek_chosen = "";
+   
 
 
         //Initialize form
@@ -31,8 +31,7 @@ namespace WorkingTimeTracker
             InitializeComponent();
             StartMouseTracking();
             workTimeCalculator.trigger_Activity();
-
-
+            
             this.WindowState = FormWindowState.Minimized;
 
 
@@ -40,8 +39,6 @@ namespace WorkingTimeTracker
 
             populateListViews();
 
-            //set all permanent text values
-            InitializeTable();
 
 
 
@@ -49,116 +46,7 @@ namespace WorkingTimeTracker
             this.Hide();
         }
 
-        /*Fills in the permanent text values into the table*/
-        private void InitializeTable()
-        {
-            Label day_label = new Label();
-            Label date_label = new Label();
-            Label starttime_label = new Label();
-            Label endtime_label = new Label();
-            Label workingtime_label = new Label();
-            day_label.Text = "Day";
-            date_label.Text = "Date";
-            starttime_label.Text = "Start Time";
-            endtime_label.Text = "End Time";
-            workingtime_label.Text = "Working Time";
-
-            //add headers
-            timeInfoTable.Controls.Add(day_label, 0, 0);
-            timeInfoTable.Controls.Add(date_label, 1, 0);
-            timeInfoTable.Controls.Add(starttime_label, 2, 0);
-            timeInfoTable.Controls.Add(endtime_label, 3, 0);
-            timeInfoTable.Controls.Add(workingtime_label, 4, 0);
-
-            //prefill days
-            Label days_label1 = new Label();
-            Label days_label2 = new Label();
-            Label days_label3 = new Label();
-            Label days_label4 = new Label();
-            Label days_label5 = new Label();
-            Label days_label6 = new Label();
-            Label days_label7 = new Label();
-            days_label1.Text = "Monday";
-            timeInfoTable.Controls.Add(days_label1, 0, 1);
-            days_label2.Text = "Tuesday";
-            timeInfoTable.Controls.Add(days_label2, 0, 2);
-            days_label3.Text = "Wednesday";
-            timeInfoTable.Controls.Add(days_label3, 0, 3);
-            days_label4.Text = "Thursday";
-            timeInfoTable.Controls.Add(days_label4, 0, 4);
-            days_label5.Text = "Friday";
-            timeInfoTable.Controls.Add(days_label5, 0, 5);
-            days_label6.Text = "Saturday";
-            timeInfoTable.Controls.Add(days_label6, 0, 6);
-            days_label7.Text = "Sunday";
-            timeInfoTable.Controls.Add(days_label7, 0, 7);
-
-            Label l11 = new Label();
-            Label l12 = new Label();
-            Label l13 = new Label();
-            Label l14 = new Label();
-            Label l15 = new Label();
-            Label l16 = new Label();
-            Label l17 = new Label();
-
-            Label l21 = new Label();
-            Label l22 = new Label();
-            Label l23 = new Label();
-            Label l24 = new Label();
-            Label l25 = new Label();
-            Label l26 = new Label();
-            Label l27 = new Label();
-
-            Label l31 = new Label();
-            Label l32 = new Label();
-            Label l33 = new Label();
-            Label l34 = new Label();
-            Label l35 = new Label();
-            Label l36 = new Label();
-            Label l37 = new Label();
-
-            Label l41 = new Label();
-            Label l42 = new Label();
-            Label l43 = new Label();
-            Label l44 = new Label();
-            Label l45 = new Label();
-            Label l46 = new Label();
-            Label l47 = new Label();
-
-
-            timeInfoTable.Controls.Add(l11, 1, 1);
-            timeInfoTable.Controls.Add(l12, 1, 2);
-            timeInfoTable.Controls.Add(l13, 1, 3);
-            timeInfoTable.Controls.Add(l14, 1, 4);
-            timeInfoTable.Controls.Add(l15, 1, 5);
-            timeInfoTable.Controls.Add(l16, 1, 6);
-            timeInfoTable.Controls.Add(l17, 1, 7);
-
-            timeInfoTable.Controls.Add(l21, 2, 1);
-            timeInfoTable.Controls.Add(l22, 2, 2);
-            timeInfoTable.Controls.Add(l23, 2, 3);
-            timeInfoTable.Controls.Add(l24, 2, 4);
-            timeInfoTable.Controls.Add(l25, 2, 5);
-            timeInfoTable.Controls.Add(l26, 2, 6);
-            timeInfoTable.Controls.Add(l27, 2, 7);
-
-            timeInfoTable.Controls.Add(l31, 3, 1);
-            timeInfoTable.Controls.Add(l32, 3, 2);
-            timeInfoTable.Controls.Add(l33, 3, 3);
-            timeInfoTable.Controls.Add(l34, 3, 4);
-            timeInfoTable.Controls.Add(l35, 3, 5);
-            timeInfoTable.Controls.Add(l36, 3, 6);
-            timeInfoTable.Controls.Add(l37, 3, 7);
-
-            timeInfoTable.Controls.Add(l41, 4, 1);
-            timeInfoTable.Controls.Add(l42, 4, 2);
-            timeInfoTable.Controls.Add(l43, 4, 3);
-            timeInfoTable.Controls.Add(l44, 4, 4);
-            timeInfoTable.Controls.Add(l45, 4, 5);
-            timeInfoTable.Controls.Add(l46, 4, 6);
-            timeInfoTable.Controls.Add(l47, 4, 7);
-        }
-
+        
 
         /*Used to fill values into the days listview*/
         private void populateListViews()
@@ -368,6 +256,7 @@ namespace WorkingTimeTracker
                 var day = days[index];
 
                 string calendarweek = day.getWeekOfYear();
+                calenderweek_chosen = calendarweek;
                 /*Fill table with day information*/
                 fillTable(calendarweek);
 
@@ -386,7 +275,8 @@ namespace WorkingTimeTracker
             {
                 //unselect days listbox
                 listBox_days.ClearSelected();
-                fillTable((string)calenderweek_listBox.SelectedItem);
+                calenderweek_chosen = (string)calenderweek_listBox.SelectedItem;
+                fillTable(calenderweek_chosen);
             }
         }
 
@@ -420,114 +310,43 @@ namespace WorkingTimeTracker
             workdays.Add(workTimeCalculator.getWorkdayByDateTime(Saturday));
             workdays.Add(workTimeCalculator.getWorkdayByDateTime(Sunday));
 
-            UpdateWorkingTimeChart(workdays);
+            
+            
+            string[] weekdays = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" };
+            listView_table.Items.Clear();
 
-            fillDatesToTable(FirstDayOfWeek);
-            fillTimesToTable(workdays,"starttime");
-            fillTimesToTable(workdays, "endtime");
-            fillTimesToTable(workdays, "workingtime");
+            for (int i = 0; i < workdays.Count; i++)
+            {
+                Workday w = workdays[i];
+                
+                ListViewItem it = new ListViewItem(weekdays[i]);
+                if (w != null)
+                {
+                    it.SubItems.Add(w.getDate_S());
+                    it.SubItems.Add(w.getStartofWorkday_S());
+                    it.SubItems.Add(w.getEndofWorkday_S());
+                    it.SubItems.Add(w.getWorkingTime().ToString());
+                }
+                else
+                {
+                    it.SubItems.Add("---");
+                    it.SubItems.Add("---");
+                    it.SubItems.Add("---");
+                    it.SubItems.Add("---");
+                }
+                listView_table.Items.Add(it);
+            }
+            listView_table.Update();
+            
+
+            
+            UpdateWorkingTimeChart(workdays);
+            UpdateWorkingTimeChartSingle();
+
 
         }
 
         
-        private void fillTimesToTable(List<Workday> workdays,string valuetype)
-        {
-
-            var controls = timeInfoTable.Controls;
-            int column = 2;
-
-            int start;
-            int end;
-
-            switch (valuetype)
-            {
-                case "starttime":
-                    start = 19;
-                    end = 25;
-                    column = 2;
-                    break;
-                case "endtime":
-                    start = 26;
-                    end = 32;
-                    column = 3;
-                    break;
-                case "workingtime":
-                    start = 33;
-                    end = 39;
-                    column = 4;
-                    break;
-                default:
-                    start = 0;
-                    end = 0;
-                    break;
-            }
-
-            int i_workdays = 0;
-
-            // iterate through all days and fill control text either with "---" if theres no info for that day or with the desired value
-            for (int i = start; i < end+1; i++)
-            {
-               if ((workdays[i_workdays] == null) || ( workdays[i_workdays].getStartofWorkday_S() == "0:0" ))
-               {
-                  controls[i].Text = "---";
-                    i_workdays++;
-                    continue;
-               }
-                
-                switch (valuetype)
-                {
-                    case "starttime":
-                        controls[i].Text = workdays[i_workdays].getStartofWorkday_S();
-                        break;
-                    case "endtime":
-                        controls[i].Text = workdays[i_workdays].getEndofWorkday_S();
-                        break;
-                    case "workingtime":
-                        controls[i].Text = workdays[i_workdays].getWorkingTime().ToString();
-                        break;
-                    default:
-                        break;
-                }
-                    
-                
-                i_workdays++;
-            }
-            
-
-            
-            
-        }
-
-        private void fillDatesToTable(DateTime FirstDayOfWeek)
-        {
-
-            DateTime Monday = FirstDayOfWeek;
-            DateTime Tuesday = Monday + new TimeSpan(1, 0, 0, 0);
-            DateTime Wednesday = Monday + new TimeSpan(2, 0, 0, 0);
-            DateTime Thursday = Monday + new TimeSpan(3, 0, 0, 0);
-            DateTime Friday = Monday + new TimeSpan(4, 0, 0, 0);
-            DateTime Saturday = Monday + new TimeSpan(5, 0, 0, 0);
-            DateTime Sunday = Monday + new TimeSpan(6, 0, 0, 0);
-
-            string monday = Monday.Day + "." + Monday.Month + "." + Monday.Year;
-            string tuesday = Tuesday.Day + "." + Tuesday.Month + "." + Tuesday.Year;
-            string wednesday = Wednesday.Day + "." + Wednesday.Month + "." + Wednesday.Year;
-            string thursday = Thursday.Day + "." + Thursday.Month + "." + Thursday.Year;
-            string friday = Friday.Day + "." + Friday.Month + "." + Friday.Year;
-            string saturday = Saturday.Day + "." + Saturday.Month + "." + Saturday.Year;
-            string sunday = Sunday.Day + "." + Sunday.Month + "." + Sunday.Year;
-
-            var controls = timeInfoTable.Controls;
-            controls[12].Text = monday;
-            controls[13].Text = tuesday;
-            controls[14].Text = wednesday;
-            controls[15].Text = thursday;
-            controls[16].Text = friday;
-            controls[17].Text = saturday;
-            controls[18].Text = sunday;
-
-
-        }
 
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
         {
@@ -564,12 +383,6 @@ namespace WorkingTimeTracker
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-
-            for (int i = 0; i < 40; i++)
-            {
-                var controls = timeInfoTable.Controls;
-                controls[i].Text = i.ToString();
-            }
 
 
         }
@@ -755,17 +568,63 @@ namespace WorkingTimeTracker
 
         }
 
+
+        //private void UpdateWorkingTimeChart(double[] working_times, double[] working_time_averages)
+        private void UpdateWorkingTimeChartSingle()
+        {
+            var days = workTimeCalculator.getdays();
+            Workday workday = days.Last();
+            
+            double[] working_time_averages = workTimeCalculator.getAverageWorkingTimes();
+
+
+            /*Create namings used internally to identify series and used for legend*/
+            string workingTimeSeries_s = "Working Times";
+            
+            /*Remove old series first*/
+            try
+            {
+                chart_workingtimesingle.Series.Remove(WorkingtimeChart.Series[workingTimeSeries_s]);
+            }
+            catch { }
+
+            /*Create series for chart*/
+            var time_series_week = new Series(workingTimeSeries_s);
+            double[] d = { workday.getWorkingTime() };
+            time_series_week.Points.DataBindXY(new[] { "Today" },d);
+
+            
+
+            /*Add series to chart*/
+            chart_workingtimesingle.Series.Add(time_series_week);
+            
+            /*Set size of working time columns*/
+            chart_workingtimesingle.Series[workingTimeSeries_s]["PixelPointWidth"] = "30";
+
+            
+        }
+
+
         private void EditButton_Click(object sender, EventArgs e)
         {
+             
             int index = listBox_days.SelectedIndex;
-            var days = workTimeCalculator.getdays();
+            if(index != -1)
+            {
 
-            var day = days[index];
+                var days = workTimeCalculator.getdays();
+                var day = days[index];
 
-            editDayPopup formpopup = new editDayPopup(day);
-            formpopup.Show(this);
-            days[index] = formpopup.Day;
-            workTimeCalculator.setdays(days,true);
+                editDayPopup formpopup = new editDayPopup(day);
+                formpopup.ShowDialog(this);
+                
+                days[index] = formpopup.Day;
+                workTimeCalculator.setdays(days, true);
+                fillTable(calenderweek_chosen);
+
+            }
         }
+
+
     }
 }
