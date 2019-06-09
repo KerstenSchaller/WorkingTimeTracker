@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox_days = new System.Windows.Forms.ListBox();
             this.ExportToCSVButton = new System.Windows.Forms.Button();
@@ -132,10 +132,10 @@
             // 
             // WorkingtimeChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.WorkingtimeChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.WorkingtimeChart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.WorkingtimeChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.WorkingtimeChart.Legends.Add(legend3);
             this.WorkingtimeChart.Location = new System.Drawing.Point(282, 201);
             this.WorkingtimeChart.Name = "WorkingtimeChart";
             this.WorkingtimeChart.Size = new System.Drawing.Size(619, 293);
@@ -197,10 +197,10 @@
             // 
             // chart_workingtimesingle
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart_workingtimesingle.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart_workingtimesingle.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chart_workingtimesingle.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart_workingtimesingle.Legends.Add(legend4);
             this.chart_workingtimesingle.Location = new System.Drawing.Point(907, 32);
             this.chart_workingtimesingle.Name = "chart_workingtimesingle";
             this.chart_workingtimesingle.Size = new System.Drawing.Size(231, 462);
@@ -211,7 +211,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1350, 506);
+            this.ClientSize = new System.Drawing.Size(1160, 506);
             this.Controls.Add(this.chart_workingtimesingle);
             this.Controls.Add(this.listView_table);
             this.Controls.Add(this.EditButton);
