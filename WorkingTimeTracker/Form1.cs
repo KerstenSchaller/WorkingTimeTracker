@@ -20,13 +20,14 @@ namespace WorkingTimeTracker
         //define global vars
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
-
+        
 
 
 
         //Initialize form
         public form1()
         {
+            
             InitializeComponent();
             StartMouseTracking();
             workTimeCalculator.trigger_Activity();
@@ -354,7 +355,6 @@ namespace WorkingTimeTracker
 
 
             int index = listBox_days.SelectedIndex;
-
             /*Only do action if selected index change event was not triggered by unselecting the listbox*/
             if (index != -1)
             {
@@ -755,5 +755,17 @@ namespace WorkingTimeTracker
 
         }
 
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            int index = listBox_days.SelectedIndex;
+            var days = workTimeCalculator.getdays();
+
+            var day = days[index];
+
+            editDayPopup formpopup = new editDayPopup(day);
+            formpopup.Show(this);
+            days[index] = formpopup.Day;
+            workTimeCalculator.setdays(days,true);
+        }
     }
 }

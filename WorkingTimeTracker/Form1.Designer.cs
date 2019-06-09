@@ -42,6 +42,7 @@
             this.Sickbutton = new System.Windows.Forms.Button();
             this.vacationbutton = new System.Windows.Forms.Button();
             this.WorkingtimeChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.EditButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,7 +111,7 @@
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
+            this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.timeInfoTable.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
@@ -162,11 +163,22 @@
             this.WorkingtimeChart.Text = "chart1";
             this.WorkingtimeChart.Click += new System.EventHandler(this.chart1_Click);
             // 
+            // EditButton
+            // 
+            this.EditButton.Location = new System.Drawing.Point(133, 316);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(108, 23);
+            this.EditButton.TabIndex = 38;
+            this.EditButton.Text = "EditDay";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
+            // 
             // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(828, 456);
+            this.Controls.Add(this.EditButton);
             this.Controls.Add(this.WorkingtimeChart);
             this.Controls.Add(this.vacationbutton);
             this.Controls.Add(this.Sickbutton);
@@ -200,6 +212,7 @@
         private System.Windows.Forms.Button Sickbutton;
         private System.Windows.Forms.Button vacationbutton;
         private System.Windows.Forms.DataVisualization.Charting.Chart WorkingtimeChart;
+        private System.Windows.Forms.Button EditButton;
     }
 }
 
