@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="editDayPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="editDayPopup.Designer.cs">
+      <DependentUpon>editDayPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +73,9 @@
     <Compile Include="Serialisazion.cs" />
     <Compile Include="WorkTimeCalculator.cs" />
     <Compile Include="Workday.cs" />
+    <EmbeddedResource Include="editDayPopup.resx">
+      <DependentUpon>editDayPopup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
