@@ -54,7 +54,9 @@ namespace WorkingTimeTracker
          this.Hide();
         }
 
-        
+  
+
+
 
         /*Used to fill values into the days listview*/
         private void populateListViews()
@@ -159,7 +161,22 @@ namespace WorkingTimeTracker
 
 
 
-
+        void populateTextbox_countdown()
+        {
+            var day = workTimeCalculator.getdays().Last();
+            var t = day.getPMTime();
+            if (t < 0)
+            {
+                textBox_countdown.Text ="Feierabend!!!";
+            }
+            else
+            {
+                int h = (int)t;
+                int min = (int)((t - (double)h)*60);
+                textBox_countdown.Text = "      " + h +" hours and "+ min + " minutes till Feierabend!";
+            }
+            
+        }
 
 
         //disable close button
@@ -292,7 +309,7 @@ namespace WorkingTimeTracker
 
         public void fillTable(string calendarweek)
         {
-            
+            populateTextbox_countdown();
 
 
             // split calenderweek into week and year
@@ -338,8 +355,7 @@ namespace WorkingTimeTracker
                     it.SubItems.Add(w.getDate_S());
                     it.SubItems.Add(w.getStartofWorkday_S());
                     it.SubItems.Add(w.getEndofWorkday_S());
-                    var s = w.getWorkingTime().ToString();
-                    it.SubItems.Add(s);
+                    it.SubItems.Add(w.getWorkingTime().ToString());
                     it.SubItems.Add(w.getPMTime().ToString());
                     pmtime += w.getPMTime();
             }
