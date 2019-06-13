@@ -14,7 +14,7 @@ namespace WorkingTimeTracker
         private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
         private string data_days_path = Directory.GetCurrentDirectory() + @"\data_days.txt"; // path to file where worktimeinfo over all days will be stored
 
-        public double getStandartWorkingTime() { return 8.4; }
+        public double getStandartWorkingTime() { return IniReader.getStandartWorkingTime(); }
 
 
         int max_period_break_time = 15; /*[minutes]*/
@@ -25,6 +25,16 @@ namespace WorkingTimeTracker
         {
 
         }
+
+      public double getOverallPlusMinusTime()
+      {
+         double d = 0;
+         foreach (Workday day in days)
+         {
+            d += day.getPMTime(); 
+         }
+         return d;
+      }
 
         public double[] getAverageWorkingTimes()
         {

@@ -34,16 +34,24 @@ namespace WorkingTimeTracker
             
             this.WindowState = FormWindowState.Minimized;
 
+         /*Set times on axis*/
+         WorkingtimeChart.ChartAreas[0].AxisY.Minimum = 0;
+         WorkingtimeChart.ChartAreas[0].AxisY.Maximum = 10;
+         chart_workingtimesingle.ChartAreas[0].AxisY.Minimum = 0;
+         chart_workingtimesingle.ChartAreas[0].AxisY.Maximum = 10;
+
+         
+
+
+         populateListViews();
+         textBox_OverallPlus.Text = "Overall Working Time +/- : " + workTimeCalculator.getOverallPlusMinusTime();
+         /*Set element in days listbox*/
+         listBox_days.SetSelected(listBox_days.Items.Count -1,true);
 
 
 
-            populateListViews();
 
-
-
-
-
-            this.Hide();
+         this.Hide();
         }
 
         
@@ -63,8 +71,10 @@ namespace WorkingTimeTracker
             //listBox_days.DataSource = strings;
             listBox_days.Items.AddRange(strings.ToArray());
 
-            /*Also Pouplate Calenderweek listview*/
-            populateCWListView();
+         
+
+         /*Also Pouplate Calenderweek listview*/
+         populateCWListView();
 
         }
 
@@ -282,6 +292,9 @@ namespace WorkingTimeTracker
 
         public void fillTable(string calendarweek)
         {
+            
+
+
             // split calenderweek into week and year
             var v = calendarweek.Split('/');
             int year = Int32.Parse(v[1]);
@@ -315,10 +328,10 @@ namespace WorkingTimeTracker
             string[] weekdays = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" };
             listView_table.Items.Clear();
 
+            double pmtime = 0;
             for (int i = 0; i < workdays.Count; i++)
             {
                 Workday w = workdays[i];
-                
                 ListViewItem it = new ListViewItem(weekdays[i]);
                 if (w != null)
                 {
@@ -326,7 +339,9 @@ namespace WorkingTimeTracker
                     it.SubItems.Add(w.getStartofWorkday_S());
                     it.SubItems.Add(w.getEndofWorkday_S());
                     it.SubItems.Add(w.getWorkingTime().ToString());
-                }
+                    it.SubItems.Add(w.getPMTime().ToString());
+                    pmtime += w.getPMTime();
+            }
                 else
                 {
                     it.SubItems.Add("---");
@@ -337,7 +352,8 @@ namespace WorkingTimeTracker
                 listView_table.Items.Add(it);
             }
             listView_table.Update();
-            
+
+            textBox_weeklyPlus.Text = "Calenderweek " + calendarweek + " Working Time +/- : " + pmtime;
 
             
             UpdateWorkingTimeChart(workdays);
@@ -564,14 +580,16 @@ namespace WorkingTimeTracker
 
             /*Format standart workingtime time series*/
             time_series_standartWorktime.ChartType = SeriesChartType.Line;
-            time_series_standartWorktime.Color = Color.Black;
+            time_series_standartWorktime.Color = Color.DarkGreen;
+            time_series_standartWorktime.BorderWidth = 3;
 
         }
 
 
         //private void UpdateWorkingTimeChart(double[] working_times, double[] working_time_averages)
         private void UpdateWorkingTimeChartSingle()
-        {
+        {   
+            chart_workingtimesingle.Series.Clear();
             var days = workTimeCalculator.getdays();
             Workday workday = days.Last();
             

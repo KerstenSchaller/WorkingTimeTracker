@@ -17,7 +17,16 @@ namespace WorkingTimeTracker
         public bool absent_through_sickness = false;
         public bool absent_through_vacation = false;
 
-        public bool getSick() { return absent_through_sickness; }
+
+      public double getPMTime()
+      {
+         if ((this.date.Date.DayOfWeek == DayOfWeek.Saturday) || (this.date.Date.DayOfWeek == DayOfWeek.Sunday)) return 0;
+         double t = this.getWorkingTime() - IniReader.getStandartWorkingTime();
+          t = Math.Round(t,2);
+          return t;
+      }
+
+      public bool getSick() { return absent_through_sickness; }
         public void setSick(bool value)
         {
             absent_through_sickness = value;
@@ -78,7 +87,7 @@ namespace WorkingTimeTracker
          //return hours for full workday if day was sick or vacation
          if (absent_through_sickness == true || absent_through_vacation == true)
          {
-            return (8.4);
+            return (IniReader.getStandartWorkingTime());
          } 
 
             TimeSpan total_time = end_of_workday - start_of_workday;
