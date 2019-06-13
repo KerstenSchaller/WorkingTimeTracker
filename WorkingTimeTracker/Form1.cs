@@ -165,7 +165,7 @@ namespace WorkingTimeTracker
         {
             var day = workTimeCalculator.getdays().Last();
             var t = day.getPMTime();
-            if (t < 0)
+            if (t > 0)
             {
                 textBox_countdown.Text ="Feierabend!!!";
             }
@@ -636,7 +636,14 @@ namespace WorkingTimeTracker
             /*Set size of working time columns*/
             chart_workingtimesingle.Series[workingTimeSeries_s]["PixelPointWidth"] = "30";
 
+            /*paint bar green if working time reaches end*/
+            if (d[0] >= IniReader.getStandartWorkingTime())
+            {
+                chart_workingtimesingle.Series[workingTimeSeries_s].Color = Color.Green;
+            }
             
+
+
         }
 
 
@@ -660,6 +667,11 @@ namespace WorkingTimeTracker
             }
         }
 
+        private void timer_actualisation_Tick(object sender, EventArgs e)
+        {
+            fillTable(calenderweek_chosen);
+            populateListViews();
 
+        }
     }
 }

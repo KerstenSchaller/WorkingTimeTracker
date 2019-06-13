@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox_days = new System.Windows.Forms.ListBox();
             this.ExportToCSVButton = new System.Windows.Forms.Button();
@@ -54,6 +54,7 @@
             this.textBox_OverallPlus = new System.Windows.Forms.TextBox();
             this.textBox_weeklyPlus = new System.Windows.Forms.TextBox();
             this.textBox_countdown = new System.Windows.Forms.TextBox();
+            this.timer_actualisation = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_workingtimesingle)).BeginInit();
             this.SuspendLayout();
@@ -135,10 +136,10 @@
             // 
             // WorkingtimeChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.WorkingtimeChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.WorkingtimeChart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.WorkingtimeChart.ChartAreas.Add(chartArea3);
+            legend2.Name = "Legend1";
+            this.WorkingtimeChart.Legends.Add(legend2);
             this.WorkingtimeChart.Location = new System.Drawing.Point(282, 237);
             this.WorkingtimeChart.Name = "WorkingtimeChart";
             this.WorkingtimeChart.Size = new System.Drawing.Size(672, 293);
@@ -205,8 +206,8 @@
             // 
             // chart_workingtimesingle
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart_workingtimesingle.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chart_workingtimesingle.ChartAreas.Add(chartArea4);
             this.chart_workingtimesingle.Location = new System.Drawing.Point(970, 32);
             this.chart_workingtimesingle.Name = "chart_workingtimesingle";
             this.chart_workingtimesingle.Size = new System.Drawing.Size(146, 492);
@@ -217,6 +218,7 @@
             // 
             this.textBox_OverallPlus.Location = new System.Drawing.Point(282, 198);
             this.textBox_OverallPlus.Name = "textBox_OverallPlus";
+            this.textBox_OverallPlus.ReadOnly = true;
             this.textBox_OverallPlus.Size = new System.Drawing.Size(182, 20);
             this.textBox_OverallPlus.TabIndex = 42;
             // 
@@ -224,6 +226,7 @@
             // 
             this.textBox_weeklyPlus.Location = new System.Drawing.Point(470, 198);
             this.textBox_weeklyPlus.Name = "textBox_weeklyPlus";
+            this.textBox_weeklyPlus.ReadOnly = true;
             this.textBox_weeklyPlus.Size = new System.Drawing.Size(251, 20);
             this.textBox_weeklyPlus.TabIndex = 43;
             // 
@@ -231,8 +234,14 @@
             // 
             this.textBox_countdown.Location = new System.Drawing.Point(727, 198);
             this.textBox_countdown.Name = "textBox_countdown";
+            this.textBox_countdown.ReadOnly = true;
             this.textBox_countdown.Size = new System.Drawing.Size(227, 20);
             this.textBox_countdown.TabIndex = 44;
+            // 
+            // timer_actualisation
+            // 
+            this.timer_actualisation.Interval = 60000;
+            this.timer_actualisation.Tick += new System.EventHandler(this.timer_actualisation_Tick);
             // 
             // form1
             // 
@@ -289,6 +298,7 @@
       private System.Windows.Forms.TextBox textBox_OverallPlus;
       private System.Windows.Forms.TextBox textBox_weeklyPlus;
         private System.Windows.Forms.TextBox textBox_countdown;
+        private System.Windows.Forms.Timer timer_actualisation;
     }
 }
 
