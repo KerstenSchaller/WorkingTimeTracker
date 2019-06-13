@@ -338,7 +338,8 @@ namespace WorkingTimeTracker
                     it.SubItems.Add(w.getDate_S());
                     it.SubItems.Add(w.getStartofWorkday_S());
                     it.SubItems.Add(w.getEndofWorkday_S());
-                    it.SubItems.Add(w.getWorkingTime().ToString());
+                    var s = w.getWorkingTime().ToString();
+                    it.SubItems.Add(s);
                     it.SubItems.Add(w.getPMTime().ToString());
                     pmtime += w.getPMTime();
             }

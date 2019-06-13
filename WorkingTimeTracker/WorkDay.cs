@@ -87,7 +87,8 @@ namespace WorkingTimeTracker
          //return hours for full workday if day was sick or vacation
          if (absent_through_sickness == true || absent_through_vacation == true)
          {
-            return (IniReader.getStandartWorkingTime());
+            var stdwt = IniReader.getStandartWorkingTime();
+            return (stdwt);
          } 
 
             TimeSpan total_time = end_of_workday - start_of_workday;
@@ -104,8 +105,8 @@ namespace WorkingTimeTracker
                 time_incl_breaks -= new TimeSpan(0, 15, 0);
             }
 
-
-            return time_incl_breaks.Hours + Math.Round((time_incl_breaks.Minutes/60.0),2);
+            var ret = time_incl_breaks.Hours + Math.Round((time_incl_breaks.Minutes / 60.0), 2);
+            return ret;
         }
 
 
