@@ -54,7 +54,6 @@
             this.textBox_weeklyPlus = new System.Windows.Forms.TextBox();
             this.textBox_countdown = new System.Windows.Forms.TextBox();
             this.timer_actualisation = new System.Windows.Forms.Timer(this.components);
-            this.ExportToCSVButton = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_workingtimesingle)).BeginInit();
@@ -234,13 +233,6 @@
             this.timer_actualisation.Interval = 60000;
             this.timer_actualisation.Tick += new System.EventHandler(this.timer_actualisation_Tick);
             // 
-            // ExportToCSVButton
-            // 
-            this.ExportToCSVButton.Location = new System.Drawing.Point(855, 168);
-            this.ExportToCSVButton.Name = "ExportToCSVButton";
-            this.ExportToCSVButton.Size = new System.Drawing.Size(75, 23);
-            this.ExportToCSVButton.TabIndex = 45;
-            // 
             // menuStrip
             // 
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -266,7 +258,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.calenderweek_listBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.ExportToCSVButton);
             this.Controls.Add(this.listBox_days);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -306,7 +297,6 @@
       private System.Windows.Forms.TextBox textBox_weeklyPlus;
         private System.Windows.Forms.TextBox textBox_countdown;
         private System.Windows.Forms.Timer timer_actualisation;
-        private System.Windows.Forms.Button ExportToCSVButton;
         private System.Windows.Forms.MenuStrip menuStrip;
     }
 }

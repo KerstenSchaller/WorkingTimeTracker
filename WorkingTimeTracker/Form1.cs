@@ -107,7 +107,7 @@ namespace WorkingTimeTracker
             var submenu1 = new ToolStripMenuItem();
             menu1.DropDownItems.Add(submenu1);
             submenu1.Name = "AutoexportOptions";
-            submenu1.Text = "AutoexportOptions";
+            submenu1.Text = "Autoexport Options";
             submenu1.Click += OnMenuAutoExportOptionsClick;
 
             var submenu2 = new ToolStripMenuItem();
