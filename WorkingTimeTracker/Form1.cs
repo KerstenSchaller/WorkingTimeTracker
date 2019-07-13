@@ -12,6 +12,7 @@ using Gma.System.MouseKeyHook;
 using Gma.System.MouseKeyHook.Implementation;
 using System.Globalization;
 using System.Windows.Forms.DataVisualization.Charting;
+using Microsoft.Win32;
 
 namespace WorkingTimeTracker
 {
@@ -21,48 +22,158 @@ namespace WorkingTimeTracker
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
         string calenderweek_chosen = "";
+
+        SafetyStorage safetystorage = new SafetyStorage();
+        
    
 
 
         //Initialize form
         public form1()
         {
-            
+            SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+
+            safetystorage = Serialization.ReadFromXmlFile<SafetyStorage>("SafetyStoragePath.xml");
+
             InitializeComponent();
             StartMouseTracking();
             workTimeCalculator.trigger_Activity();
             
             this.WindowState = FormWindowState.Minimized;
 
-         /*Set times on axis*/
-         WorkingtimeChart.ChartAreas[0].AxisY.Minimum = 0;
-         WorkingtimeChart.ChartAreas[0].AxisY.Maximum = 10;
-         chart_workingtimesingle.ChartAreas[0].AxisY.Minimum = 0;
-         chart_workingtimesingle.ChartAreas[0].AxisY.Maximum = 10;
 
-         
-
-
-         populateListViews();
-         textBox_OverallPlus.Text = "Overall Working Time +/- : " + workTimeCalculator.getOverallPlusMinusTime();
-         /*Set element in days listbox*/
-         listBox_days.SetSelected(listBox_days.Items.Count -1,true);
-
-
-
-
-         this.Hide();
+            addMenuStrip();
+            /*Set times on axis*/
+            WorkingtimeChart.ChartAreas[0].AxisY.Minimum = 0;
+            WorkingtimeChart.ChartAreas[0].AxisY.Maximum = 10;
+            chart_workingtimesingle.ChartAreas[0].AxisY.Minimum = 0;
+            chart_workingtimesingle.ChartAreas[0].AxisY.Maximum = 10;
+          
+            
+          
+          
+            populateListViews(workTimeCalculator.getdays());
+            textBox_OverallPlus.Text = "Overall Working Time +/- : " + workTimeCalculator.getOverallPlusMinusTime();
+            /*Set element in days listbox*/
+            listBox_days.SetSelected(listBox_days.Items.Count -1,true);
+          
+          
+          
+          
+            this.Hide();
         }
 
-  
+        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            switch (e.Reason)
+            {
+                case SessionSwitchReason.ConsoleConnect:
+                    break;
+                case SessionSwitchReason.ConsoleDisconnect:
+                    break;
+                case SessionSwitchReason.RemoteConnect:
+                    break;
+                case SessionSwitchReason.RemoteDisconnect:
+                    break;
+                case SessionSwitchReason.SessionLock:
+                    workTimeCalculator.makeSafetyCopy(safetystorage.path);
+                    break;
+                case SessionSwitchReason.SessionLogoff:
+                    workTimeCalculator.makeSafetyCopy(safetystorage.path);
+                    break;
+                case SessionSwitchReason.SessionLogon:
+                    break;
+                case SessionSwitchReason.SessionRemoteControl:
+                    break;
+                case SessionSwitchReason.SessionUnlock:
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        public void addMenuStrip()
+        {
+            
+
+            
+            menuStrip.Location = new Point(0, 0);
+            menuStrip.Name = "MenuStrip";
+            var menu1 = new ToolStripMenuItem();
+            menuStrip.Items.Add(menu1);
+            menu1.Name = "Menu";
+            menu1.Text = "Menu";
+            
+            var submenu1 = new ToolStripMenuItem();
+            menu1.DropDownItems.Add(submenu1);
+            submenu1.Name = "AutoexportOptions";
+            submenu1.Text = "AutoexportOptions";
+            submenu1.Click += OnMenuAutoExportOptionsClick;
+
+            var submenu2 = new ToolStripMenuItem();
+            menu1.DropDownItems.Add(submenu2);
+            submenu2.Name = "Import";
+            submenu2.Text = "Import";
+            submenu2.Click += OnMenuImportClick;
+
+            var submenu3 = new ToolStripMenuItem();
+            menu1.DropDownItems.Add(submenu3);
+            submenu3.Name = "ExcelExport";
+            submenu3.Text = "Export to excel";
+            submenu3.Click += OnMenuExcelExportClick;
+            
+
+            menuStrip.Update();
+        }
+
+
+        private void OnMenuExcelExportClick(object sender, EventArgs e)
+        {
+            ExportToXLS();
+        }
+
+
+        private void OnMenuAutoExportOptionsClick(object sender, EventArgs e)
+        {
+
+            /*Get FilePath by SaveFileDIalog*/
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "XML File|*.xml";
+            saveFileDialog1.Title = "Select a path where safety copy is stored.";
+            saveFileDialog1.ShowDialog();
+            if (saveFileDialog1.FileName != "")
+            {
+                safetystorage.path = saveFileDialog1.FileName;
+                Serialization.WriteToXmlFile<SafetyStorage>("SafetyStoragePath.xml", safetystorage);
+                workTimeCalculator.makeSafetyCopy(safetystorage.path);
+            }
+        }
+
+        private void OnMenuImportClick(object sender, EventArgs e)
+        {
+            /*Get FilePath by SaveFileDIalog*/
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "XML File|*.xml";
+            openFileDialog1.Title = "Select a file from where the workday data is restored.";
+            openFileDialog1.ShowDialog();
+
+            if (openFileDialog1.FileName != "")
+            {
+                WorkTimeCalculator worktimecalctemp = new WorkTimeCalculator(openFileDialog1.FileName);
+
+                workTimeCalculator.setdays(worktimecalctemp.getdays(),true);
+                populateListViews(workTimeCalculator.getdays());
+            }
+
+
+            
+        }
 
 
         /*Used to fill values into the days listview*/
-        private void populateListViews()
+        private void populateListViews(List<Workday> days)
         {
-
-            var days = workTimeCalculator.getdays();
+            
             List<string> strings = new List<string>();
             foreach (var day in days)
             {
@@ -156,7 +267,6 @@ namespace WorkingTimeTracker
                 this.Hide();
             }
         }
-
 
 
 
@@ -420,7 +530,7 @@ namespace WorkingTimeTracker
 
         }
         
-        private void ExportToXLSButton_Click(object sender, EventArgs e)
+        private void ExportToXLS()
         {
             /*Get FilePath by SaveFileDIalog*/
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -429,9 +539,9 @@ namespace WorkingTimeTracker
             saveFileDialog1.ShowDialog();
             if (saveFileDialog1.FileName != "")
             {
-                safeToTextFile(saveFileDialog1.FileName,'\t');
+                safeToTextFile(saveFileDialog1.FileName, '\t');
             }
-                
+
         }
 
 
@@ -670,8 +780,15 @@ namespace WorkingTimeTracker
         private void timer_actualisation_Tick(object sender, EventArgs e)
         {
             fillTable(calenderweek_chosen);
-            populateListViews();
+            populateListViews(workTimeCalculator.getdays());
 
         }
+
+
+    }
+
+    public class SafetyStorage
+    {
+        public string path;
     }
 }

@@ -12,7 +12,7 @@ namespace WorkingTimeTracker
         private DateTime last_active = new DateTime();
         private Workday current_day; // the worktimeinfo of the current day
         private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
-        private string data_days_path = Directory.GetCurrentDirectory() + @"\data_days.txt"; // path to file where worktimeinfo over all days will be stored
+        private List<string> data_days_path = new List<string>(); 
 
         public double getStandartWorkingTime() { return IniReader.getStandartWorkingTime(); }
 
@@ -23,10 +23,19 @@ namespace WorkingTimeTracker
 
         public WorkTimeCalculator()
         {
-
+            data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days_2019.txt");
+            data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days.txt"); // path to file where worktimeinfo over all days will be stored
+            
         }
 
-      public double getOverallPlusMinusTime()
+        public WorkTimeCalculator(string path)
+        {
+            data_days_path.Add(path);
+            days = ReadData(path);
+        }
+
+
+        public double getOverallPlusMinusTime()
       {
          double d = 0;
          foreach (Workday day in days)
@@ -127,9 +136,17 @@ namespace WorkingTimeTracker
             this.days = d;
             if (save)
             {
-                Serialization.WriteToXmlFile<List<Workday>>(data_days_path, days);
+                saveData( days);
             }
         }
+
+        public void makeSafetyCopy(string path)
+        {
+
+            saveData(path, this.days);
+        }
+
+
 
 
 
@@ -167,7 +184,37 @@ namespace WorkingTimeTracker
             return null;            
         }
 
+        private void saveData(List<Workday> days)
+        {
+            Serialization.WriteToXmlFile<List<Workday>>(data_days_path[0], days);
+        }
 
+        private void saveData(string path, List<Workday>days)
+        {
+            Serialization.WriteToXmlFile<List<Workday>>(path, days);
+        }
+
+        private List<Workday> ReadData(string path = null)
+        {
+            List<Workday> days;
+            if (path != null)
+            {
+                days = Serialization.ReadFromXmlFile<List<Workday>>(path);
+            }
+            else
+            if (File.Exists(data_days_path[0]))
+            {
+                days =Serialization.ReadFromXmlFile<List<Workday>>(data_days_path[0]);
+            }
+            else
+            {
+                days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path[1]);
+                saveData(days);
+                
+            }
+            return days;
+
+        }
 
         private void triggerEvent()
         {
@@ -181,20 +228,20 @@ namespace WorkingTimeTracker
          try
             {
                 // try to load data from passed days
-                days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path);
+                days = ReadData();
 
                 // safe back parsed days to file in order to keep the ones which where missing
-                Serialization.WriteToXmlFile<List<Workday>>(data_days_path, days);
+                saveData( days);
                 current_day = getWorkdayByDateTime(DateTime.Now);
             
 
             }
             catch
             {
-                
+
 
                 // create new File if loading failed
-                Serialization.WriteToXmlFile<List<Workday>>(data_days_path,days);
+                saveData(days);
                 file_created = true;
  
             }

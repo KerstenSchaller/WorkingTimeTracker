@@ -8,8 +8,22 @@ using System.Xml.Serialization;
 
 namespace WorkingTimeTracker
 {
-    public class Workday
+    public class Workday : Workday_legacy1
     {
+        public bool no_breakfast = false;
+        public bool No_lunch = false;
+
+        public Workday(DateTime date):base(date)
+        {
+            
+        }
+
+        public Workday() { }
+    }
+
+    public class Workday_legacy1
+    {
+        
         public DateTime date = new DateTime();
         public DateTime start_of_workday = new DateTime();
         public DateTime end_of_workday = new DateTime();
@@ -18,15 +32,25 @@ namespace WorkingTimeTracker
         public bool absent_through_vacation = false;
 
 
-      public double getPMTime()
-      {
+        public Workday_legacy1(DateTime Date)
+        {
+            date = Date;
+        }
+
+        public Workday_legacy1()
+        {
+
+        }
+
+        public double getPMTime()
+        {
          if ((this.date.Date.DayOfWeek == DayOfWeek.Saturday) || (this.date.Date.DayOfWeek == DayOfWeek.Sunday)) return 0;
          double t = this.getWorkingTime() - IniReader.getStandartWorkingTime();
           t = Math.Round(t,2);
           return t;
-      }
+        }
 
-      public bool getSick() { return absent_through_sickness; }
+        public bool getSick() { return absent_through_sickness; }
         public void setSick(bool value)
         {
             absent_through_sickness = value;
@@ -42,15 +66,7 @@ namespace WorkingTimeTracker
 
         }
 
-        public Workday(DateTime Date)
-        {
-            date = Date;
-        }
 
-        public Workday()
-        {
-
-        }
 
 
         public string getWeekOfYear()
@@ -136,9 +152,8 @@ namespace WorkingTimeTracker
         }
 
 
-
-        
-
-
     }
+
+
+
 }
