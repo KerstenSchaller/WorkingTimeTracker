@@ -833,7 +833,7 @@ namespace WorkingTimeTracker
             double pmtime;
             pmtime = TimeToCalc;
             int hours = (int)pmtime;
-            int minutes = (int)((pmtime - hours) * 100);
+            int minutes = (int)((pmtime - hours) * 60);
             minutes = Math.Abs(minutes);
             return (hours.ToString() + ":" + minutes.ToString());
         }

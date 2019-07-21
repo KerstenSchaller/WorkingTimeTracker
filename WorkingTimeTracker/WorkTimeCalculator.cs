@@ -14,24 +14,34 @@ namespace WorkingTimeTracker
         private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
         private List<string> data_days_path = new List<string>();
 
+        TimeSpan sample_time = new TimeSpan(0, 1, 0);// min time after which a new sample is written
+
+
+        /*Configuration object obtained by singleton instance*/
         Configuration config = Configuration.Instance;
-        
-       
-        public double getStandartWorkingTime() { return config.getStandartWorkingTime(); }
 
 
-        int max_period_break_time = 15; /*[minutes]*/
-        TimeSpan sample_time = new TimeSpan(0, 1,0 );
+        /*Return standart working time as read from config*/
+        public double getStandartWorkingTime()
+        {
+            return config.getStandartWorkingTime();
+        }
 
 
+
+
+        /*Parameterless Constructor, used to get standart datasets from file*/
         public WorkTimeCalculator()
         {
-            data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days_2019.txt");
-            data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days.txt"); // path to file where worktimeinfo over all days will be stored
+
+            data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days_2019.txt");// new file format
+            data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days.txt"); //  old file format
+            // Read data from file to days
             days = ReadData();
 
         }
 
+        /*Parametrized constructor, used to load data from a certain file(backup)*/
         public WorkTimeCalculator(string path)
         {
             data_days_path.Add(path);
@@ -42,17 +52,18 @@ namespace WorkingTimeTracker
             
         }
 
-
+        /*Plus minus time over all days*/
         public double getOverallPlusMinusTime()
-      {
-         double d = 0;
-         foreach (Workday day in days)
-         {
-            d += day.getPMTime(); 
-         }
-         return d;
-      }
+        {
+          double d = 0;
+          foreach (Workday day in days)
+          {
+             d += day.getPMTime(); 
+          }
+          return d;
+        }
 
+        /*Average working times as array from monday till sunday*/
         public double[] getAverageWorkingTimes()
         {
             double[] workingTimeAverages = new double[7];
@@ -98,7 +109,7 @@ namespace WorkingTimeTracker
 
         }
 
-        
+        /*Determine if days are missing and add them to list of dayss*/
         private List<Workday> findMissingDays(List<Workday> days)
         {
             Workday Day_before = days[0];
@@ -120,11 +131,13 @@ namespace WorkingTimeTracker
             return days;
         }
 
+        /*Return all days as list*/
         public List<Workday> getdays()
         {
             return days;
         }
 
+        /*Return all contained calenderweeks*/
         public List<string> getCalendarweeks()
         {
             List<string> weeks = new List<string>();
@@ -134,6 +147,7 @@ namespace WorkingTimeTracker
         }
 
 
+        /*Overwrite days with other days source, option to safe it to file*/
         public void setdays(List<Workday> d, bool save = false)
         {
             this.days = d;
@@ -170,6 +184,7 @@ namespace WorkingTimeTracker
             
         }
 
+        /*Returns a workday from the list of all days, specified by a DateTime*/
         public Workday getWorkdayByDateTime(DateTime date)
         {
             int day = date.Day;
@@ -191,16 +206,19 @@ namespace WorkingTimeTracker
             return null;            
         }
 
+        /*Save data to default filename*/
         private void saveData(List<Workday> days)
         {
             Serialization.WriteToXmlFile<List<Workday>>(data_days_path[0], days);
         }
 
+        /*Save data to specified filename(used for backup)*/
         private void saveData(string path, List<Workday>days)
         {
             Serialization.WriteToXmlFile<List<Workday>>(path, days);
         }
 
+        /**/
         private List<Workday> ReadData(string path = null)
         {
             List<Workday> days = new List<Workday>();
@@ -226,6 +244,7 @@ namespace WorkingTimeTracker
 
         }
 
+        /*Triggers a new event (updates data)*/
         private void triggerEvent()
         {
             // Variables
