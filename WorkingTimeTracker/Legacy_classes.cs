@@ -4,34 +4,28 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace WorkingTimeTracker
 {
-
-    public class Workday
+    public class Workday_legacy1
     {
-        
+
         public DateTime date = new DateTime();
         public DateTime start_of_workday = new DateTime();
         public DateTime end_of_workday = new DateTime();
-        
+
         public bool absent_through_sickness = false;
         public bool absent_through_vacation = false;
 
-        public bool no_30_minutes_break = false;
-        public bool no_15_minutes_break = false;
-
-
         private double StandartWorkingTime;
 
-        public Workday(DateTime Date, double standartWorkingTime)
+        public Workday_legacy1(DateTime Date, double standartWorkingTime)
         {
             date = Date;
             StandartWorkingTime = standartWorkingTime;
         }
 
-        public Workday()
+        public Workday_legacy1()
         {
             Configuration config = Configuration.Instance;
             StandartWorkingTime = config.getStandartWorkingTime();
@@ -39,13 +33,11 @@ namespace WorkingTimeTracker
 
         public double getPMTime()
         {
-          if ((this.date.Date.DayOfWeek == DayOfWeek.Saturday) || (this.date.Date.DayOfWeek == DayOfWeek.Sunday)) return 0;
-          double t = this.getWorkingTime() - StandartWorkingTime;
-          t = Math.Round(t,2);
-          return t;
+            if ((this.date.Date.DayOfWeek == DayOfWeek.Saturday) || (this.date.Date.DayOfWeek == DayOfWeek.Sunday)) return 0;
+            double t = this.getWorkingTime() - StandartWorkingTime;
+            t = Math.Round(t, 2);
+            return t;
         }
-
-
 
         public bool getSick() { return absent_through_sickness; }
         public void setSick(bool value)
@@ -62,12 +54,12 @@ namespace WorkingTimeTracker
             absent_through_vacation = value;
 
         }
-        
+
         public string getWeekOfYear()
         {
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
             Calendar calendar = dfi.Calendar;
-            int week =  calendar.GetWeekOfYear(date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+            int week = calendar.GetWeekOfYear(date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
             int year = date.Year;
             return (week.ToString() + @"/" + year.ToString());
         }
@@ -94,12 +86,12 @@ namespace WorkingTimeTracker
 
         public double getWorkingTime()
         {
-         //return hours for full workday if day was sick or vacation
-         if (absent_through_sickness == true || absent_through_vacation == true)
-         {
-            var stdwt = StandartWorkingTime;
-            return (stdwt);
-         } 
+            //return hours for full workday if day was sick or vacation
+            if (absent_through_sickness == true || absent_through_vacation == true)
+            {
+                var stdwt = StandartWorkingTime;
+                return (stdwt);
+            }
 
             TimeSpan total_time = end_of_workday - start_of_workday;
             TimeSpan time_incl_breaks = total_time;
@@ -107,25 +99,18 @@ namespace WorkingTimeTracker
             /*Calc first brake after 6h*/
             if (total_time.Hours >= 6)
             {
-                if (no_30_minutes_break == false)
-                {
-                    time_incl_breaks -= new TimeSpan(0, 30, 0);
-                }
-                
+                time_incl_breaks -= new TimeSpan(0, 30, 0);
             }
-            /*Calc second brake after 9h*/
-            if ((total_time.TotalMinutes - 30) >= (9*60))
+            /*Calc first brake after 9h*/
+            if ((total_time.TotalMinutes - 30) >= (9 * 60))
             {
-                if (no_15_minutes_break == false)
-                {
-                    time_incl_breaks -= new TimeSpan(0, 15, 0);
-                }
+                time_incl_breaks -= new TimeSpan(0, 15, 0);
             }
 
             var ret = time_incl_breaks.Hours + Math.Round((time_incl_breaks.Minutes / 60.0), 2);
             return ret;
         }
-        
+
         public String convertTimeSpantoString(TimeSpan t)
         {
             return t.ToString();
@@ -140,12 +125,10 @@ namespace WorkingTimeTracker
                 String[] t = times[2].Split('.');
                 times[2] = t[0];
             }
-            return new TimeSpan(Int32.Parse(times[0]), Int32.Parse(times[1]), Int32.Parse (times[2]));
+            return new TimeSpan(Int32.Parse(times[0]), Int32.Parse(times[1]), Int32.Parse(times[2]));
         }
 
 
     }
-
-
 
 }

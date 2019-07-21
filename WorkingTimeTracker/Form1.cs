@@ -487,8 +487,10 @@ namespace WorkingTimeTracker
                     it.SubItems.Add(w.getDate_S());
                     it.SubItems.Add(w.getStartofWorkday_S());
                     it.SubItems.Add(w.getEndofWorkday_S());
-                    it.SubItems.Add(w.getWorkingTime().ToString());
-                    it.SubItems.Add(w.getPMTime().ToString());
+                    it.SubItems.Add(this.doubleToTimeString(w.getWorkingTime()));
+
+
+                    it.SubItems.Add(this.doubleToTimeString(w.getPMTime()));
                     pmtime += w.getPMTime();
             }
                 else
@@ -502,7 +504,7 @@ namespace WorkingTimeTracker
             }
             listView_table.Update();
 
-            textBox_weeklyPlus.Text = "Calenderweek " + calendarweek + " Working Time +/- : " + pmtime;
+            textBox_weeklyPlus.Text = "Calenderweek " + calendarweek + " Working Time +/- : " + this.doubleToTimeString(pmtime);
 
             
             UpdateWorkingTimeChart(workdays);
@@ -806,6 +808,17 @@ namespace WorkingTimeTracker
 
         }
 
+
+        public string doubleToTimeString(double TimeToCalc = 0)
+        {
+
+            double pmtime;
+            pmtime = TimeToCalc;
+            int hours = (int)pmtime;
+            int minutes = (int)((pmtime - hours) * 100);
+            minutes = Math.Abs(minutes);
+            return (hours.ToString() + ":" + minutes.ToString());
+        }
 
     }
 

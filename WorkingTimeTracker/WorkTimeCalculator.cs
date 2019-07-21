@@ -158,8 +158,6 @@ namespace WorkingTimeTracker
 
 
 
-
-
         // triggers all actions related to a new activity
         public void trigger_Activity()
         {
