@@ -32,18 +32,25 @@ namespace WorkingTimeTracker
         //Initialize form
         public form1()
         {
+            /*Create workingtimecalculator object*/
             workTimeCalculator = new WorkTimeCalculator();
+            /*add sessionswitch callback to detect a lock, or logoff, or shutdown of the system*/
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 
             
             InitializeComponent();
+
+            /*Start tracking mouse movements*/
             StartMouseTracking();
-            workTimeCalculator.trigger_Activity();
+
+            workTimeCalculator.trigger_Activity();// Trigger first activity after starting program
             
+            /*Minimize window*/
             this.WindowState = FormWindowState.Minimized;
 
-
+            /*Add menu to form*/
             addMenuStrip();
+
             /*Set times on axis*/
             WorkingtimeChart.ChartAreas[0].AxisY.Minimum = 0;
             WorkingtimeChart.ChartAreas[0].AxisY.Maximum = 10;
@@ -52,27 +59,31 @@ namespace WorkingTimeTracker
           
             
           
-          
+            /*Listview and textbox handling*/
             populateListViews(workTimeCalculator.getdays());
+
             textBox_OverallPlus.Text = "Overall Working Time +/- : " + workTimeCalculator.getOverallPlusMinusTime();
             /*Set element in days listbox*/
             listBox_days.SetSelected(listBox_days.Items.Count -1,true);
 
+            /*Show warning if SafetyCopy is not configured*/
             if (config.getSafetyCopyPath() == "null")
             {
                 pictureBox_Warning.Image = (Image)Properties.Resources.WarningSign;
             }
             else
             {
+                /*Hide warning*/
                 Size s = this.Size;
                 s.Height = 600;
                 this.Size = s;
             }
 
-
+            /*Hide window*/
             this.Hide();
         }
 
+        /*Used to detect system lock, logoff, shutdown*/
         void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             switch (e.Reason)
@@ -102,11 +113,10 @@ namespace WorkingTimeTracker
             }
         }
 
-        public void addMenuStrip()
-        {
-            
 
-            
+        /*Adds menu strip items and callbacks*/
+        public void addMenuStrip()
+        {            
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "MenuStrip";
             var menu1 = new ToolStripMenuItem();
@@ -142,15 +152,15 @@ namespace WorkingTimeTracker
             menuStrip.Update();
         }
 
-
+        /*Menu callback*/
         private void OnMenuExcelExportClick(object sender, EventArgs e)
         {
             ExportToXLS();
         }
 
-        
 
 
+        /*Menu callback*/
         private void OnMenuSetStdTimeClick(object sender, EventArgs e)
         {
 
@@ -167,6 +177,7 @@ namespace WorkingTimeTracker
             UpdateDisplays(calenderweek_chosen);
         }
 
+        /*Menu callback*/
         private void OnMenuAutoExportOptionsClick(object sender, EventArgs e)
         {
 
@@ -189,6 +200,7 @@ namespace WorkingTimeTracker
             }
         }
 
+        /*Menu callback*/
         private void OnMenuImportClick(object sender, EventArgs e)
         {
             /*Get FilePath by SaveFileDIalog*/
@@ -233,8 +245,8 @@ namespace WorkingTimeTracker
 
 
 
-
-        public void populateCWListView()
+        /*Write Calenderweeks into listviews*/
+        private void populateCWListView()
         {
 
             List<string> calenderweeks = workTimeCalculator.getCalendarweeks();
@@ -310,7 +322,7 @@ namespace WorkingTimeTracker
 
 
 
-
+        /*Create text for countdown textbox*/
         void populateTextbox_countdown()
         {
             var day = workTimeCalculator.getdays().Last();
@@ -404,15 +416,6 @@ namespace WorkingTimeTracker
 
         }
 
-        public void testCalendar()
-        {
-            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
-            Calendar calendar = dfi.Calendar;
-
-
-
-        }
-
 
         /*changes the content of the label according to what day was chosen in listbox*/
         private void listBox_days_SelectedIndexChanged(object sender, EventArgs e)
@@ -457,6 +460,7 @@ namespace WorkingTimeTracker
             }
         }
 
+        /*Update charts and textboxes*/
         public void UpdateDisplays(string calendarweek)
         {
             populateTextbox_countdown();
@@ -532,7 +536,7 @@ namespace WorkingTimeTracker
         }
 
         
-
+        /*returns the date of a given calenderweek + year*/
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
         {
             /*Code taken from*/
@@ -572,6 +576,7 @@ namespace WorkingTimeTracker
 
         }
         
+        /*Exports data to a csv file */
         private void ExportToXLS()
         {
             /*Get FilePath by SaveFileDIalog*/
@@ -587,6 +592,7 @@ namespace WorkingTimeTracker
         }
 
 
+        /*Defines content of the csv export*/
         private void safeToTextFile(string Path,char delim)
         {
             List<string> Lines = new List<string>();
@@ -603,67 +609,7 @@ namespace WorkingTimeTracker
 
 
         }
-
-
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-
         
-        private void vacationbutton_Click(object sender, EventArgs e)
-        {
-            int index = listBox_days.SelectedIndex;
-            if (index != -1)
-            {
-                /*Get a list of all days*/
-                var days = workTimeCalculator.getdays();
-                /*extract day by index chosen in listbox*/
-
-                if (days[index].getVacation() == false)
-                {
-                    days[index].setVacation(true);
-                }
-                else
-                {
-                    days[index].setVacation(false);
-                }
-                workTimeCalculator.setdays(days, true);
-                listBox_days_SelectedIndexChanged(listBox_days, new EventArgs());
-            }
-        }
-
-        private void Sickbutton_Click(object sender, EventArgs e)
-        {
-            
-            int index = listBox_days.SelectedIndex;
-            if (index != -1)
-            {
-            
-                /*Get a list of all days*/
-                var days = workTimeCalculator.getdays();
-                /*extract day by index chosen in listbox*/
-
-                if (days[index].getSick() == false)
-                {
-                    days[index].setSick(true);
-                }
-                else
-                {
-                    days[index].setSick(false);
-                }
-                workTimeCalculator.setdays(days, true);
-                listBox_days_SelectedIndexChanged(listBox_days, new EventArgs());
-            }
-        }
-
         private void form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             notifyIcon1.Icon = null;
@@ -679,8 +625,7 @@ namespace WorkingTimeTracker
 
         }
 
-
-        //private void UpdateWorkingTimeChart(double[] working_times, double[] working_time_averages)
+        
         private void UpdateWorkingTimeChart(List<Workday> daysWeek)
         {
   
@@ -754,8 +699,7 @@ namespace WorkingTimeTracker
 
         }
 
-
-        //private void UpdateWorkingTimeChart(double[] working_times, double[] working_time_averages)
+        
         private void UpdateWorkingTimeChartSingle()
         {   
             chart_workingtimesingle.Series.Clear();
@@ -798,7 +742,8 @@ namespace WorkingTimeTracker
 
         }
 
-
+        /*Opens a popup where the actual chosen day is edited and returned.*/
+        /* Actual day is exchanged with the returned one*/
         private void EditButton_Click(object sender, EventArgs e)
         {
              
@@ -819,6 +764,7 @@ namespace WorkingTimeTracker
             }
         }
 
+      
         private void timer_actualisation_Tick(object sender, EventArgs e)
         {
             UpdateDisplays(calenderweek_chosen);
@@ -826,7 +772,7 @@ namespace WorkingTimeTracker
 
         }
 
-
+        /*Helper function: double -> "hh:mm" */
         public string doubleToTimeString(double TimeToCalc = 0)
         {
 
