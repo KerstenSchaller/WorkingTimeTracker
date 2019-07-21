@@ -34,8 +34,8 @@ namespace WorkingTimeTracker
         {
             workTimeCalculator = new WorkTimeCalculator();
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
-            
 
+            
             InitializeComponent();
             StartMouseTracking();
             workTimeCalculator.trigger_Activity();
@@ -57,7 +57,19 @@ namespace WorkingTimeTracker
             textBox_OverallPlus.Text = "Overall Working Time +/- : " + workTimeCalculator.getOverallPlusMinusTime();
             /*Set element in days listbox*/
             listBox_days.SetSelected(listBox_days.Items.Count -1,true);
-          
+
+            if (config.getSafetyCopyPath() == "null")
+            {
+                pictureBox_Warning.Image = (Image)Properties.Resources.WarningSign;
+            }
+            else
+            {
+                Size s = this.Size;
+                s.Height = 600;
+                this.Size = s;
+            }
+
+
             this.Hide();
         }
 
@@ -168,6 +180,12 @@ namespace WorkingTimeTracker
                 config.setSafetyCopyPath(saveFileDialog1.FileName);
                 //Serialization.WriteToXmlFile<Configuration>("SafetyStoragePath.xml", config);
                 workTimeCalculator.makeSafetyCopy(config.getSafetyCopyPath());
+
+
+                Size s = this.Size;
+                s.Height = 600;
+                this.Size = s;
+                
             }
         }
 

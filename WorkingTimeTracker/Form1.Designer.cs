@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox_days = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,8 +53,11 @@
             this.textBox_countdown = new System.Windows.Forms.TextBox();
             this.timer_actualisation = new System.Windows.Forms.Timer(this.components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.label_Warning = new System.Windows.Forms.Label();
+            this.pictureBox_Warning = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_workingtimesingle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Warning)).BeginInit();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -106,10 +109,10 @@
             // 
             this.WorkingtimeChart.BorderlineColor = System.Drawing.Color.Black;
             this.WorkingtimeChart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea1.Name = "ChartArea1";
-            this.WorkingtimeChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.WorkingtimeChart.Legends.Add(legend1);
+            chartArea5.Name = "ChartArea1";
+            this.WorkingtimeChart.ChartAreas.Add(chartArea5);
+            legend3.Name = "Legend1";
+            this.WorkingtimeChart.Legends.Add(legend3);
             this.WorkingtimeChart.Location = new System.Drawing.Point(282, 257);
             this.WorkingtimeChart.Name = "WorkingtimeChart";
             this.WorkingtimeChart.Size = new System.Drawing.Size(672, 293);
@@ -178,8 +181,8 @@
             // 
             this.chart_workingtimesingle.BorderlineColor = System.Drawing.Color.Black;
             this.chart_workingtimesingle.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea2.Name = "ChartArea1";
-            this.chart_workingtimesingle.ChartAreas.Add(chartArea2);
+            chartArea6.Name = "ChartArea1";
+            this.chart_workingtimesingle.ChartAreas.Add(chartArea6);
             this.chart_workingtimesingle.Location = new System.Drawing.Point(970, 52);
             this.chart_workingtimesingle.Name = "chart_workingtimesingle";
             this.chart_workingtimesingle.Size = new System.Drawing.Size(146, 498);
@@ -223,11 +226,32 @@
             this.menuStrip.TabIndex = 46;
             this.menuStrip.Text = "menuStrip1";
             // 
+            // label_Warning
+            // 
+            this.label_Warning.AutoSize = true;
+            this.label_Warning.Location = new System.Drawing.Point(134, 581);
+            this.label_Warning.Name = "label_Warning";
+            this.label_Warning.Size = new System.Drawing.Size(761, 13);
+            this.label_Warning.TabIndex = 48;
+            this.label_Warning.Text = "Warning: You did not set a safety copy path. Please set one. The program wil then" +
+    " update the safetycopy frequently. In case of data loss it can be loaded again.";
+            // 
+            // pictureBox_Warning
+            // 
+            this.pictureBox_Warning.Location = new System.Drawing.Point(12, 562);
+            this.pictureBox_Warning.Name = "pictureBox_Warning";
+            this.pictureBox_Warning.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox_Warning.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox_Warning.TabIndex = 47;
+            this.pictureBox_Warning.TabStop = false;
+            // 
             // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1130, 558);
+            this.ClientSize = new System.Drawing.Size(1130, 617);
+            this.Controls.Add(this.label_Warning);
+            this.Controls.Add(this.pictureBox_Warning);
             this.Controls.Add(this.textBox_countdown);
             this.Controls.Add(this.textBox_weeklyPlus);
             this.Controls.Add(this.textBox_OverallPlus);
@@ -250,6 +274,7 @@
             this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.WorkingtimeChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_workingtimesingle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Warning)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,6 +301,8 @@
         private System.Windows.Forms.TextBox textBox_countdown;
         private System.Windows.Forms.Timer timer_actualisation;
         private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.PictureBox pictureBox_Warning;
+        private System.Windows.Forms.Label label_Warning;
     }
 }
 
