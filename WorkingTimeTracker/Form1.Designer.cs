@@ -104,6 +104,8 @@
             // 
             // WorkingtimeChart
             // 
+            this.WorkingtimeChart.BorderlineColor = System.Drawing.Color.Black;
+            this.WorkingtimeChart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             chartArea1.Name = "ChartArea1";
             this.WorkingtimeChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
@@ -174,11 +176,13 @@
             // 
             // chart_workingtimesingle
             // 
+            this.chart_workingtimesingle.BorderlineColor = System.Drawing.Color.Black;
+            this.chart_workingtimesingle.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             chartArea2.Name = "ChartArea1";
             this.chart_workingtimesingle.ChartAreas.Add(chartArea2);
             this.chart_workingtimesingle.Location = new System.Drawing.Point(970, 52);
             this.chart_workingtimesingle.Name = "chart_workingtimesingle";
-            this.chart_workingtimesingle.Size = new System.Drawing.Size(146, 492);
+            this.chart_workingtimesingle.Size = new System.Drawing.Size(146, 498);
             this.chart_workingtimesingle.TabIndex = 41;
             this.chart_workingtimesingle.Text = "chart1";
             // 
