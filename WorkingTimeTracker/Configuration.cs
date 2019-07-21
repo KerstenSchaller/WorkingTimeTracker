@@ -10,6 +10,22 @@ namespace WorkingTimeTracker
 {
     public class Configuration
     {
+        /*Variables*/
+        public string configFileName = "config.xml";
+        Values values = new Values();
+
+
+        /*--------------------------------------------------------------------------------------------------------------*/
+        /*Value container class*/
+        public class Values
+        {
+            public string SafetyCopyPath = "null";
+            public double standartWorkingTime = 8;
+        }
+
+        
+
+        /*--------------------------------------------------------------------------------------------------------------*/
         /*Singleton stuff*/
         private static readonly Configuration instance = new Configuration();
 
@@ -23,9 +39,11 @@ namespace WorkingTimeTracker
 
         private Configuration()
         {
+            /*Load values from file*/
             this.load();
         }
 
+        /*Singleton instance*/
         public static Configuration Instance
         {
             get
@@ -34,27 +52,8 @@ namespace WorkingTimeTracker
             }
         
         }
-
-        public class Values
-        {
-            public string SafetyCopyPath = "null";
-            public double standartWorkingTime = 8;
-        }
-
-        Values values = new Values();
-
-
-        public string configFileName = "config.xml";
-        
-        public void load()
-        {
-            if (File.Exists(configFileName))
-            {
-                values = Serialization.ReadFromXmlFile<Values>(configFileName);
-            }
-        }
-
-
+        /*--------------------------------------------------------------------------------------------------------------*/
+        /*getters and setters*/
         public void setSafetyCopyPath(string path)
         {
             values.SafetyCopyPath = path;
@@ -67,20 +66,34 @@ namespace WorkingTimeTracker
             safe();
         }
 
+        public string getSafetyCopyPath()
+        {
+            return values.SafetyCopyPath;
+        }
+
+        public double getStandartWorkingTime()
+        {
+            return values.standartWorkingTime;
+        }
+
+        /*--------------------------------------------------------------------------------------------------------------*/
+        /*File operations*/
+
+        /*Save values to File*/
         private void safe()
         {
             Serialization.WriteToXmlFile<Values>(this.configFileName,values);
         }
 
-        internal string getSafetyCopyPath()
+        /*Load values from file if it exists*/
+        public void load()
         {
-            return values.SafetyCopyPath;
+            if (File.Exists(configFileName))
+            {
+                values = Serialization.ReadFromXmlFile<Values>(configFileName);
+            }
         }
 
-        internal double getStandartWorkingTime()
-        {
-            return values.standartWorkingTime;
-        }
     }
 
     
