@@ -133,7 +133,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
     <Content Include="Future-50.ico" />
     <None Include="WarningSign.png" />
     <Content Include="worktime_icon.ico" />
