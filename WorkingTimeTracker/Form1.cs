@@ -13,6 +13,7 @@ using Gma.System.MouseKeyHook.Implementation;
 using System.Globalization;
 using System.Windows.Forms.DataVisualization.Charting;
 using Microsoft.Win32;
+using System.IO;
 
 namespace WorkingTimeTracker
 {
@@ -20,20 +21,23 @@ namespace WorkingTimeTracker
     {
         //define global vars
         private IKeyboardMouseEvents m_Events;
-        WorkTimeCalculator workTimeCalculator = new WorkTimeCalculator();
+        WorkTimeCalculator workTimeCalculator ;
         string calenderweek_chosen = "";
+        Configuration config = new Configuration();
 
-        SafetyStorage safetystorage = new SafetyStorage();
-        
-   
+
+
 
 
         //Initialize form
         public form1()
         {
+            config.load();
+            workTimeCalculator = new WorkTimeCalculator();
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
-
-            safetystorage = Serialization.ReadFromXmlFile<SafetyStorage>("SafetyStoragePath.xml");
+            
+            if (File.Exists(config.configFileName))
+            config = Serialization.ReadFromXmlFile<Configuration>(config.configFileName);
 
             InitializeComponent();
             StartMouseTracking();
@@ -57,9 +61,6 @@ namespace WorkingTimeTracker
             /*Set element in days listbox*/
             listBox_days.SetSelected(listBox_days.Items.Count -1,true);
           
-          
-          
-          
             this.Hide();
         }
 
@@ -76,10 +77,10 @@ namespace WorkingTimeTracker
                 case SessionSwitchReason.RemoteDisconnect:
                     break;
                 case SessionSwitchReason.SessionLock:
-                    workTimeCalculator.makeSafetyCopy(safetystorage.path);
+                    workTimeCalculator.makeSafetyCopy(config.SafetyCopyPath);
                     break;
                 case SessionSwitchReason.SessionLogoff:
-                    workTimeCalculator.makeSafetyCopy(safetystorage.path);
+                    workTimeCalculator.makeSafetyCopy(config.SafetyCopyPath);
                     break;
                 case SessionSwitchReason.SessionLogon:
                     break;
@@ -121,7 +122,13 @@ namespace WorkingTimeTracker
             submenu3.Name = "ExcelExport";
             submenu3.Text = "Export to excel";
             submenu3.Click += OnMenuExcelExportClick;
-            
+
+            var submenu4 = new ToolStripMenuItem();
+            menu1.DropDownItems.Add(submenu4);
+            submenu4.Name = "SetSdtWorkTime";
+            submenu4.Text = "Set standart working time";
+            submenu4.Click += OnMenuSetStdTimeClick;
+
 
             menuStrip.Update();
         }
@@ -132,6 +139,24 @@ namespace WorkingTimeTracker
             ExportToXLS();
         }
 
+        
+
+
+        private void OnMenuSetStdTimeClick(object sender, EventArgs e)
+        {
+
+            SetStandartWorkingTimePopup popup = new SetStandartWorkingTimePopup();
+            popup.ShowDialog(this);
+            double stdwt = popup.standardWorkingTime;
+            if (stdwt != -1)
+            { 
+                config.setStandartWorkingTime(stdwt);
+            }
+
+            workTimeCalculator = new WorkTimeCalculator();
+
+            UpdateDisplays(calenderweek_chosen);
+        }
 
         private void OnMenuAutoExportOptionsClick(object sender, EventArgs e)
         {
@@ -143,9 +168,9 @@ namespace WorkingTimeTracker
             saveFileDialog1.ShowDialog();
             if (saveFileDialog1.FileName != "")
             {
-                safetystorage.path = saveFileDialog1.FileName;
-                Serialization.WriteToXmlFile<SafetyStorage>("SafetyStoragePath.xml", safetystorage);
-                workTimeCalculator.makeSafetyCopy(safetystorage.path);
+                config.SafetyCopyPath = saveFileDialog1.FileName;
+                Serialization.WriteToXmlFile<Configuration>("SafetyStoragePath.xml", config);
+                workTimeCalculator.makeSafetyCopy(config.SafetyCopyPath);
             }
         }
 
@@ -394,8 +419,8 @@ namespace WorkingTimeTracker
 
                 string calendarweek = day.getWeekOfYear();
                 calenderweek_chosen = calendarweek;
-                /*Fill table with day information*/
-                fillTable(calendarweek);
+                /*update gui with day information*/
+                UpdateDisplays(calendarweek);
 
             }
             
@@ -413,11 +438,11 @@ namespace WorkingTimeTracker
                 //unselect days listbox
                 listBox_days.ClearSelected();
                 calenderweek_chosen = (string)calenderweek_listBox.SelectedItem;
-                fillTable(calenderweek_chosen);
+                UpdateDisplays(calenderweek_chosen);
             }
         }
 
-        public void fillTable(string calendarweek)
+        public void UpdateDisplays(string calendarweek)
         {
             populateTextbox_countdown();
 
@@ -747,7 +772,7 @@ namespace WorkingTimeTracker
             chart_workingtimesingle.Series[workingTimeSeries_s]["PixelPointWidth"] = "30";
 
             /*paint bar green if working time reaches end*/
-            if (d[0] >= IniReader.getStandartWorkingTime())
+            if (d[0] >= config.standartWorkingTime)
             {
                 chart_workingtimesingle.Series[workingTimeSeries_s].Color = Color.Green;
             }
@@ -772,14 +797,14 @@ namespace WorkingTimeTracker
                 
                 days[index] = formpopup.Day;
                 workTimeCalculator.setdays(days, true);
-                fillTable(calenderweek_chosen);
+                UpdateDisplays(calenderweek_chosen);
 
             }
         }
 
         private void timer_actualisation_Tick(object sender, EventArgs e)
         {
-            fillTable(calenderweek_chosen);
+            UpdateDisplays(calenderweek_chosen);
             populateListViews(workTimeCalculator.getdays());
 
         }
@@ -787,8 +812,5 @@ namespace WorkingTimeTracker
 
     }
 
-    public class SafetyStorage
-    {
-        public string path;
-    }
+
 }

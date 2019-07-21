@@ -12,8 +12,9 @@ namespace WorkingTimeTracker
     {
         public bool no_breakfast = false;
         public bool No_lunch = false;
+        
 
-        public Workday(DateTime date):base(date)
+        public Workday(DateTime date,double standartWorkingTime):base(date, standartWorkingTime)
         {
             
         }
@@ -27,25 +28,29 @@ namespace WorkingTimeTracker
         public DateTime date = new DateTime();
         public DateTime start_of_workday = new DateTime();
         public DateTime end_of_workday = new DateTime();
-
+        
         public bool absent_through_sickness = false;
         public bool absent_through_vacation = false;
 
+        private double StandartWorkingTime;
 
-        public Workday_legacy1(DateTime Date)
+        public Workday_legacy1(DateTime Date, double standartWorkingTime)
         {
             date = Date;
+            StandartWorkingTime = standartWorkingTime;
         }
 
         public Workday_legacy1()
         {
-
+            Configuration config = new Configuration();
+            config.load();
+            StandartWorkingTime = config.standartWorkingTime;
         }
 
         public double getPMTime()
         {
          if ((this.date.Date.DayOfWeek == DayOfWeek.Saturday) || (this.date.Date.DayOfWeek == DayOfWeek.Sunday)) return 0;
-         double t = this.getWorkingTime() - IniReader.getStandartWorkingTime();
+         double t = this.getWorkingTime() - StandartWorkingTime;
           t = Math.Round(t,2);
           return t;
         }
@@ -103,7 +108,7 @@ namespace WorkingTimeTracker
          //return hours for full workday if day was sick or vacation
          if (absent_through_sickness == true || absent_through_vacation == true)
          {
-            var stdwt = IniReader.getStandartWorkingTime();
+            var stdwt = StandartWorkingTime;
             return (stdwt);
          } 
 

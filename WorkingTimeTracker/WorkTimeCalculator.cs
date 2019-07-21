@@ -12,9 +12,12 @@ namespace WorkingTimeTracker
         private DateTime last_active = new DateTime();
         private Workday current_day; // the worktimeinfo of the current day
         private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
-        private List<string> data_days_path = new List<string>(); 
+        private List<string> data_days_path = new List<string>();
 
-        public double getStandartWorkingTime() { return IniReader.getStandartWorkingTime(); }
+        Configuration config = new Configuration();
+        
+       
+        public double getStandartWorkingTime() { return config.standartWorkingTime; }
 
 
         int max_period_break_time = 15; /*[minutes]*/
@@ -23,15 +26,21 @@ namespace WorkingTimeTracker
 
         public WorkTimeCalculator()
         {
+            config.load();
             data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days_2019.txt");
             data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days.txt"); // path to file where worktimeinfo over all days will be stored
-            
+            days = ReadData();
+
         }
 
         public WorkTimeCalculator(string path)
         {
             data_days_path.Add(path);
-            days = ReadData(path);
+            if (File.Exists(path))
+            {
+                days = ReadData(path);
+            }
+            
         }
 
 
@@ -104,16 +113,11 @@ namespace WorkingTimeTracker
                 bool condition_for_adding_days = (days[i-1].date.Date + new TimeSpan(24, 0, 0)).CompareTo(days[i].date.Date) != 0;
                 if (condition_for_adding_days)
                 {
-                    days.Insert(i,new Workday(days[i - 1].date.Date + new TimeSpan(24, 0, 0)));
+                    days.Insert(i,new Workday(days[i - 1].date.Date + new TimeSpan(24, 0, 0), config.standartWorkingTime));
                 }
                 i++;
             }
-
-                
             
-
-
-
             return days;
         }
 
@@ -142,8 +146,14 @@ namespace WorkingTimeTracker
 
         public void makeSafetyCopy(string path)
         {
+            WorkTimeCalculator worktimecalctemp = new WorkTimeCalculator(path);
+            if (worktimecalctemp.days.Count <= days.Count)
+            {
+                saveData(path, this.days);
+            }
 
-            saveData(path, this.days);
+
+                
         }
 
 
@@ -196,7 +206,7 @@ namespace WorkingTimeTracker
 
         private List<Workday> ReadData(string path = null)
         {
-            List<Workday> days;
+            List<Workday> days = null;
             if (path != null)
             {
                 days = Serialization.ReadFromXmlFile<List<Workday>>(path);
@@ -208,9 +218,12 @@ namespace WorkingTimeTracker
             }
             else
             {
-                days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path[1]);
-                saveData(days);
-                
+                if (File.Exists(data_days_path[1]))
+                {
+                    days = Serialization.ReadFromXmlFile<List<Workday>>(data_days_path[1]);
+                    //saveData(days);
+                }
+
             }
             return days;
 
@@ -228,6 +241,7 @@ namespace WorkingTimeTracker
          try
             {
                 // try to load data from passed days
+                
                 days = ReadData();
 
                 // safe back parsed days to file in order to keep the ones which where missing
@@ -272,7 +286,7 @@ namespace WorkingTimeTracker
             {
             
                 /*Create a new day*/
-                days.Add(new Workday(currentTime));
+                days.Add(new Workday(currentTime, config.standartWorkingTime));
                 current_day = days.Last();
                 
 
