@@ -10,43 +10,76 @@ namespace WorkingTimeTracker
 {
     public class Configuration
     {
-        public string SafetyCopyPath = "null";
-        public double standartWorkingTime = 8;
+        /*Singleton stuff*/
+        private static readonly Configuration instance = new Configuration();
 
-
-        [XmlIgnore]
-        public string configFileName = "config.xml";
-
-        public Configuration()
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        static Configuration()
         {
 
         }
 
+
+        private Configuration()
+        {
+            this.load();
+        }
+
+        public static Configuration Instance
+        {
+            get
+            {
+                return instance;
+            }
+        
+        }
+
+        public class Values
+        {
+            public string SafetyCopyPath = "null";
+            public double standartWorkingTime = 8;
+        }
+
+        Values values = new Values();
+
+
+        public string configFileName = "config.xml";
+        
         public void load()
         {
             if (File.Exists(configFileName))
             {
-                Configuration c = Serialization.ReadFromXmlFile<Configuration>(configFileName);
-                SafetyCopyPath = c.SafetyCopyPath;
-                standartWorkingTime = c.standartWorkingTime;
+                values = Serialization.ReadFromXmlFile<Values>(configFileName);
             }
         }
 
 
         public void setSafetyCopyPath(string path)
         {
-            SafetyCopyPath = path;
+            values.SafetyCopyPath = path;
+            safe();
         }
         
         public void setStandartWorkingTime(double time)
         {
-            standartWorkingTime = time;
+            values.standartWorkingTime = time;
             safe();
         }
 
         private void safe()
         {
-            Serialization.WriteToXmlFile<Configuration>(this.configFileName,this);
+            Serialization.WriteToXmlFile<Values>(this.configFileName,values);
+        }
+
+        internal string getSafetyCopyPath()
+        {
+            return values.SafetyCopyPath;
+        }
+
+        internal double getStandartWorkingTime()
+        {
+            return values.standartWorkingTime;
         }
     }
 

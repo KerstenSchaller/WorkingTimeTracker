@@ -14,10 +14,10 @@ namespace WorkingTimeTracker
         private List<Workday> days = new List<Workday>(); // worktimeinfo over all days
         private List<string> data_days_path = new List<string>();
 
-        Configuration config = new Configuration();
+        Configuration config = Configuration.Instance;
         
        
-        public double getStandartWorkingTime() { return config.standartWorkingTime; }
+        public double getStandartWorkingTime() { return config.getStandartWorkingTime(); }
 
 
         int max_period_break_time = 15; /*[minutes]*/
@@ -26,7 +26,6 @@ namespace WorkingTimeTracker
 
         public WorkTimeCalculator()
         {
-            config.load();
             data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days_2019.txt");
             data_days_path.Add(Directory.GetCurrentDirectory() + @"\data_days.txt"); // path to file where worktimeinfo over all days will be stored
             days = ReadData();
@@ -113,7 +112,7 @@ namespace WorkingTimeTracker
                 bool condition_for_adding_days = (days[i-1].date.Date + new TimeSpan(24, 0, 0)).CompareTo(days[i].date.Date) != 0;
                 if (condition_for_adding_days)
                 {
-                    days.Insert(i,new Workday(days[i - 1].date.Date + new TimeSpan(24, 0, 0), config.standartWorkingTime));
+                    days.Insert(i,new Workday(days[i - 1].date.Date + new TimeSpan(24, 0, 0), config.getStandartWorkingTime()));
                 }
                 i++;
             }
@@ -286,7 +285,7 @@ namespace WorkingTimeTracker
             {
             
                 /*Create a new day*/
-                days.Add(new Workday(currentTime, config.standartWorkingTime));
+                days.Add(new Workday(currentTime, config.getStandartWorkingTime()));
                 current_day = days.Last();
                 
 

@@ -19,7 +19,10 @@ namespace WorkingTimeTracker
             
         }
 
-        public Workday() { }
+        public Workday()
+        {
+
+        }
     }
 
     public class Workday_legacy1
@@ -42,9 +45,8 @@ namespace WorkingTimeTracker
 
         public Workday_legacy1()
         {
-            Configuration config = new Configuration();
-            config.load();
-            StandartWorkingTime = config.standartWorkingTime;
+            Configuration config = Configuration.Instance;
+            StandartWorkingTime = config.getStandartWorkingTime();
         }
 
         public double getPMTime()
@@ -84,7 +86,7 @@ namespace WorkingTimeTracker
         }
 
         public void setStartofWorkday(DateTime time) { start_of_workday = time; }
-      public DateTime getStartofWorkday() { return start_of_workday; }
+        public DateTime getStartofWorkday() { return start_of_workday; }
         public string getStartofWorkday_S()
         {
             if (absent_through_sickness == true) return "sick";

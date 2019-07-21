@@ -23,7 +23,7 @@ namespace WorkingTimeTracker
         private IKeyboardMouseEvents m_Events;
         WorkTimeCalculator workTimeCalculator ;
         string calenderweek_chosen = "";
-        Configuration config = new Configuration();
+        Configuration config = Configuration.Instance;
 
 
 
@@ -32,12 +32,9 @@ namespace WorkingTimeTracker
         //Initialize form
         public form1()
         {
-            config.load();
             workTimeCalculator = new WorkTimeCalculator();
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
             
-            if (File.Exists(config.configFileName))
-            config = Serialization.ReadFromXmlFile<Configuration>(config.configFileName);
 
             InitializeComponent();
             StartMouseTracking();
@@ -77,10 +74,10 @@ namespace WorkingTimeTracker
                 case SessionSwitchReason.RemoteDisconnect:
                     break;
                 case SessionSwitchReason.SessionLock:
-                    workTimeCalculator.makeSafetyCopy(config.SafetyCopyPath);
+                    workTimeCalculator.makeSafetyCopy(config.getSafetyCopyPath());
                     break;
                 case SessionSwitchReason.SessionLogoff:
-                    workTimeCalculator.makeSafetyCopy(config.SafetyCopyPath);
+                    workTimeCalculator.makeSafetyCopy(config.getSafetyCopyPath());
                     break;
                 case SessionSwitchReason.SessionLogon:
                     break;
@@ -168,9 +165,9 @@ namespace WorkingTimeTracker
             saveFileDialog1.ShowDialog();
             if (saveFileDialog1.FileName != "")
             {
-                config.SafetyCopyPath = saveFileDialog1.FileName;
-                Serialization.WriteToXmlFile<Configuration>("SafetyStoragePath.xml", config);
-                workTimeCalculator.makeSafetyCopy(config.SafetyCopyPath);
+                config.setSafetyCopyPath(saveFileDialog1.FileName);
+                //Serialization.WriteToXmlFile<Configuration>("SafetyStoragePath.xml", config);
+                workTimeCalculator.makeSafetyCopy(config.getSafetyCopyPath());
             }
         }
 
@@ -772,7 +769,7 @@ namespace WorkingTimeTracker
             chart_workingtimesingle.Series[workingTimeSeries_s]["PixelPointWidth"] = "30";
 
             /*paint bar green if working time reaches end*/
-            if (d[0] >= config.standartWorkingTime)
+            if (d[0] >= config.getStandartWorkingTime())
             {
                 chart_workingtimesingle.Series[workingTimeSeries_s].Color = Color.Green;
             }
