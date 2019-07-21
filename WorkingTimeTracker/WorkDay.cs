@@ -8,24 +8,8 @@ using System.Xml.Serialization;
 
 namespace WorkingTimeTracker
 {
-    public class Workday : Workday_legacy1
-    {
-        public bool no_breakfast = false;
-        public bool No_lunch = false;
-        
 
-        public Workday(DateTime date,double standartWorkingTime):base(date, standartWorkingTime)
-        {
-            
-        }
-
-        public Workday()
-        {
-
-        }
-    }
-
-    public class Workday_legacy1
+    public class Workday
     {
         
         public DateTime date = new DateTime();
@@ -35,15 +19,19 @@ namespace WorkingTimeTracker
         public bool absent_through_sickness = false;
         public bool absent_through_vacation = false;
 
+        public bool no_30_minutes_break = false;
+        public bool no_15_minutes_break = false;
+
+
         private double StandartWorkingTime;
 
-        public Workday_legacy1(DateTime Date, double standartWorkingTime)
+        public Workday(DateTime Date, double standartWorkingTime)
         {
             date = Date;
             StandartWorkingTime = standartWorkingTime;
         }
 
-        public Workday_legacy1()
+        public Workday()
         {
             Configuration config = Configuration.Instance;
             StandartWorkingTime = config.getStandartWorkingTime();
@@ -117,12 +105,19 @@ namespace WorkingTimeTracker
             /*Calc first brake after 6h*/
             if (total_time.Hours >= 6)
             {
-                time_incl_breaks -= new TimeSpan(0,30,0);
+                if (no_30_minutes_break == false)
+                {
+                    time_incl_breaks -= new TimeSpan(0, 30, 0);
+                }
+                
             }
-            /*Calc first brake after 9h*/
+            /*Calc second brake after 9h*/
             if ((total_time.TotalMinutes - 30) >= (9*60))
             {
-                time_incl_breaks -= new TimeSpan(0, 15, 0);
+                if (no_15_minutes_break == false)
+                {
+                    time_incl_breaks -= new TimeSpan(0, 15, 0);
+                }
             }
 
             var ret = time_incl_breaks.Hours + Math.Round((time_incl_breaks.Minutes / 60.0), 2);

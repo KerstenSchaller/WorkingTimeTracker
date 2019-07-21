@@ -38,8 +38,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.calenderweek_listBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.Sickbutton = new System.Windows.Forms.Button();
-            this.vacationbutton = new System.Windows.Forms.Button();
             this.WorkingtimeChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.EditButton = new System.Windows.Forms.Button();
             this.listView_table = new System.Windows.Forms.ListView();
@@ -104,26 +102,6 @@
             this.label3.TabIndex = 30;
             this.label3.Text = "InfoByCalenderweek";
             // 
-            // Sickbutton
-            // 
-            this.Sickbutton.Location = new System.Drawing.Point(855, 51);
-            this.Sickbutton.Name = "Sickbutton";
-            this.Sickbutton.Size = new System.Drawing.Size(99, 23);
-            this.Sickbutton.TabIndex = 35;
-            this.Sickbutton.Text = "Toggle Sick";
-            this.Sickbutton.UseVisualStyleBackColor = true;
-            this.Sickbutton.Click += new System.EventHandler(this.Sickbutton_Click);
-            // 
-            // vacationbutton
-            // 
-            this.vacationbutton.Location = new System.Drawing.Point(855, 83);
-            this.vacationbutton.Name = "vacationbutton";
-            this.vacationbutton.Size = new System.Drawing.Size(99, 23);
-            this.vacationbutton.TabIndex = 36;
-            this.vacationbutton.Text = "Toggle Vacation";
-            this.vacationbutton.UseVisualStyleBackColor = true;
-            this.vacationbutton.Click += new System.EventHandler(this.vacationbutton_Click);
-            // 
             // WorkingtimeChart
             // 
             chartArea1.Name = "ChartArea1";
@@ -139,9 +117,9 @@
             // 
             // EditButton
             // 
-            this.EditButton.Location = new System.Drawing.Point(855, 115);
+            this.EditButton.Location = new System.Drawing.Point(855, 52);
             this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(99, 23);
+            this.EditButton.Size = new System.Drawing.Size(99, 150);
             this.EditButton.TabIndex = 38;
             this.EditButton.Text = "EditDay";
             this.EditButton.UseVisualStyleBackColor = true;
@@ -253,8 +231,6 @@
             this.Controls.Add(this.listView_table);
             this.Controls.Add(this.EditButton);
             this.Controls.Add(this.WorkingtimeChart);
-            this.Controls.Add(this.vacationbutton);
-            this.Controls.Add(this.Sickbutton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.calenderweek_listBox);
             this.Controls.Add(this.label2);
@@ -281,8 +257,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox calenderweek_listBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button Sickbutton;
-        private System.Windows.Forms.Button vacationbutton;
         private System.Windows.Forms.DataVisualization.Charting.Chart WorkingtimeChart;
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.ListView listView_table;
