@@ -151,6 +151,7 @@
             this.Controls.Add(this.Starttimetextbox);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.DateLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "editDayPopup";
             this.Text = "Edit individual Day";
             this.ResumeLayout(false);

@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox_days = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -109,10 +109,10 @@
             // 
             this.WorkingtimeChart.BorderlineColor = System.Drawing.Color.Black;
             this.WorkingtimeChart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea5.Name = "ChartArea1";
-            this.WorkingtimeChart.ChartAreas.Add(chartArea5);
-            legend3.Name = "Legend1";
-            this.WorkingtimeChart.Legends.Add(legend3);
+            chartArea9.Name = "ChartArea1";
+            this.WorkingtimeChart.ChartAreas.Add(chartArea9);
+            legend5.Name = "Legend1";
+            this.WorkingtimeChart.Legends.Add(legend5);
             this.WorkingtimeChart.Location = new System.Drawing.Point(282, 257);
             this.WorkingtimeChart.Name = "WorkingtimeChart";
             this.WorkingtimeChart.Size = new System.Drawing.Size(672, 293);
@@ -181,8 +181,8 @@
             // 
             this.chart_workingtimesingle.BorderlineColor = System.Drawing.Color.Black;
             this.chart_workingtimesingle.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea6.Name = "ChartArea1";
-            this.chart_workingtimesingle.ChartAreas.Add(chartArea6);
+            chartArea10.Name = "ChartArea1";
+            this.chart_workingtimesingle.ChartAreas.Add(chartArea10);
             this.chart_workingtimesingle.Location = new System.Drawing.Point(970, 52);
             this.chart_workingtimesingle.Name = "chart_workingtimesingle";
             this.chart_workingtimesingle.Size = new System.Drawing.Size(146, 498);
@@ -264,6 +264,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox_days);
             this.Controls.Add(this.menuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "form1";

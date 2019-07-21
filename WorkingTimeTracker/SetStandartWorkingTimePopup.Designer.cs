@@ -79,6 +79,7 @@
             this.Controls.Add(this.textBox_workingTime);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_Set);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SetStandartWorkingTimePopup";
             this.Text = "Set Standart Working Time";
             this.ResumeLayout(false);
