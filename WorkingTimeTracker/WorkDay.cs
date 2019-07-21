@@ -72,10 +72,7 @@ namespace WorkingTimeTracker
             absent_through_vacation = value;
 
         }
-
-
-
-
+        
         public string getWeekOfYear()
         {
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
@@ -131,15 +128,6 @@ namespace WorkingTimeTracker
             var ret = time_incl_breaks.Hours + Math.Round((time_incl_breaks.Minutes / 60.0), 2);
             return ret;
         }
-
-
-
-        
-
-        
-
-        
-
         
         public String convertTimeSpantoString(TimeSpan t)
         {
