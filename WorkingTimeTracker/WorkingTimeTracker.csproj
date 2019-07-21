@@ -133,9 +133,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Future-50.ico" />
     <None Include="WarningSign.png" />
-    <Content Include="worktime_icon.ico" />
     <Content Include="worktime_icon2.ico" />
   </ItemGroup>
   <ItemGroup>
