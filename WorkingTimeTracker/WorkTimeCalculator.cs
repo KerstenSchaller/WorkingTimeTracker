@@ -203,7 +203,7 @@ namespace WorkingTimeTracker
 
         private List<Workday> ReadData(string path = null)
         {
-            List<Workday> days = null;
+            List<Workday> days = new List<Workday>();
             if (path != null)
             {
                 days = Serialization.ReadFromXmlFile<List<Workday>>(path);
@@ -235,12 +235,10 @@ namespace WorkingTimeTracker
             bool month_changed = false;
             bool year_changed = false;
 
-         try
+            try
             {
                 // try to load data from passed days
-                
                 days = ReadData();
-
                 // safe back parsed days to file in order to keep the ones which where missing
                 saveData( days);
                 current_day = getWorkdayByDateTime(DateTime.Now);
@@ -249,12 +247,9 @@ namespace WorkingTimeTracker
             }
             catch
             {
-
-
                 // create new File if loading failed
                 saveData(days);
                 file_created = true;
- 
             }
 
             // day of last activity is before now. 
@@ -276,7 +271,7 @@ namespace WorkingTimeTracker
                    year_changed = (current_day.date.Year.CompareTo(currentTime.Year) < 0);// check if year changed
                }
                
-         }
+            }
 
 
             if (day_changed || month_changed || year_changed || file_created || (current_day == null))
@@ -306,17 +301,6 @@ namespace WorkingTimeTracker
             days = findMissingDays(days);
 
         }
-
         
-
-
-
-
-        
-
-
-        
-
-
     }
 }
